@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { SafeAreaView, Text, StyleSheet, View, Dimensions, TouchableOpacity, Image, TextInput } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
-
+import DropDownPicker from 'react-native-dropdown-picker';
 import CustomButton from "../../../common/CustomButton";
 import CustomPicker from "../../../common/CustomPicker";
 import DatePicker from "../../../common/DatePicker";
@@ -25,6 +25,8 @@ const RegisterScreen = ()=>{
         isValidBday: false,
         isValidGender: false,
     });
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
 
     {/* 이름 onchange */}
     const usernameChange = (val) => {
@@ -124,8 +126,19 @@ const RegisterScreen = ()=>{
 
             {/* 성별 */}
             <Text style={styles.text}>성별</Text>
-            <View style={{alignItems: 'center'}}>
-                <CustomPicker placeholder={'성별을 선택해주세요.'} items={genderItem} setSelectedValue={selectChange}/>
+            <View style={{alignItems: 'center'}} zIndex={1}>
+                <DropDownPicker open={open} items={genderItem} value={value}
+                    setOpen={setOpen} onSelectItem={selectChange} setValue={setValue}
+                    showArrowIcon={false}
+                    placeholder={'성별을 선택해주세요.'}
+                    style={[styles.input, {
+                        backgroundColor: 'transparent',
+                        alignSelf: 'center',
+                        marginBottom: 50
+                    }]}
+                    placeholderStyle={{color: '#B7B7B7'}}
+                    dropDownContainerStyle={{backgroundColor: 'transparent', borderColor: '#B7B7B7', width: windowWidth * 0.9, alignSelf: 'center'}}
+                />
                 {data.isValidGender ?
                     <Entypo
                         name="check"
