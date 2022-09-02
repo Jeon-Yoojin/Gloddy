@@ -8,6 +8,7 @@ import PersonalityScreen from '../ui/register/containers/PersonalityScreen';
 import RegisterScreen from '../ui/register/containers/RegisterScreen';
 import CreateGroupScreen from '../ui/group/create/containers/CreateGroupScreen';
 import GroupDetailScreen from '../ui/group/detail/containers/GroupDetailScreen';
+import RoomSettingScreen from '../ui/group/detail/containers/RoomSettingScreen';
 import ApplicationScreen from '../ui/apply/containers/ApplicationScreen';
 import ApplicationManageScreen from '../ui/apply/containers/ApplicationManageScreen';
 import ComplimentScreen from '../ui/review/containers/ComplimentScreen';
@@ -53,6 +54,11 @@ function RootStack() {
             <Stack.Screen
               name="GroupDetailScreen"
               component={GroupDetailScreen}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="RoomSettingScreen"
+              component={RoomSettingScreen}
               options={{headerShown: false}}
             />
             <Stack.Screen
