@@ -8,11 +8,12 @@ import PersonalityScreen from '../ui/register/containers/PersonalityScreen';
 import RegisterScreen from '../ui/register/containers/RegisterScreen';
 import CreateGroupScreen from '../ui/group/create/containers/CreateGroupScreen';
 import GroupDetailScreen from '../ui/group/detail/containers/GroupDetailScreen';
+import RoomSettingScreen from '../ui/group/detail/containers/RoomSettingScreen';
 import ApplicationScreen from '../ui/apply/containers/ApplicationScreen';
 import ApplicationManageScreen from '../ui/apply/containers/ApplicationManageScreen';
 import ComplimentScreen from '../ui/review/containers/ComplimentScreen';
 import BestPartnerScreen from '../ui/review/containers/BestPartnerScreen';
-import GroupingScreen from '../ui/group/grouping/containers/GroupingScreen';
+import MainScreen from '../ui/MainScreen';
 import PostingScreen from '../ui/group/detail/containers/PostingScreen';
 
 const Stack = createNativeStackNavigator();
@@ -56,6 +57,11 @@ function RootStack() {
               options={{headerShown: false}}
             />
             <Stack.Screen
+              name="RoomSettingScreen"
+              component={RoomSettingScreen}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
               name="ApplicationScreen"
               component={ApplicationScreen}
               options={{headerShown: false}}
@@ -76,8 +82,8 @@ function RootStack() {
               options={{headerShown: false}}
             />
             <Stack.Screen
-              name="GroupingScreen"
-              component={GroupingScreen}
+              name="MainScreen"
+              component={MainScreen}
               options={{headerShown: false}}
             />
             <Stack.Screen

@@ -1,35 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, Image, StyleSheet, View, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
-import CustomButton from '../../../../common/CustomButton';
 import GroupDetailHeader from '../components/GroupDetailHeader';
 import DetailInfoTab from '../containers/DetailInfoTab';
 import BoardTab from './BoardTab';
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+
+const FirstRoute = () => {
+    return <DetailInfoTab/>
+}
+
+const SecondRoute = () => {
+    return <BoardTab/>
+}
+
+const renderScene = SceneMap({
+    first: FirstRoute,
+    second: SecondRoute
+});
 
 const GroupDetailScreen = ()=>{
-    const navigation = useNavigation();
+    const [index, setIndex] = useState(0);
+    const [routes] = useState([
+        {key: 'first', title: '상세 정보'},
+        {key: 'second', title: '모임 게시판'}
+    ]);
 
     return(
         <SafeAreaView style={styles.container}>
             {/* Header */}
             <GroupDetailHeader/>
             <Image source={require('../../../../assets/image/group/groupSample_big.png')} style={{width: '100%'}}/>
-            {/* 임시 tab navigator */}
-            <View style={{flexDirection: 'row'}}>
-                <View style={styles.subContainer}>
-                    <Text style={styles.tab}>상세 정보</Text>
-                </View>
-                <View style={[styles.subContainer, {borderBottomColor: '#1249FC', borderBottomWidth: 2,}]}>
-                    <Text style={[{color: '#1249FC', fontWeight: '700'}, styles.tab]}>모임 게시판</Text>
-                </View>
-            </View>
-
-            <BoardTab/>
-
-            <View style={{alignItems: 'center', marginVertical: 5}}>
-                <CustomButton text={'글쓰기'} onPress={()=>{navigation.navigate('PostingScreen')}}/>
-            </View>
+            {/* tab navigator */}
+            <TabView
+                navigationState={{index, routes}}
+                renderScene={renderScene}
+                onIndexChange={setIndex}
+                swipeEnabled={false}
+                renderTabBar={props => (
+                    <TabBar
+                        {...props}
+                        indicatorStyle={{
+                            backgroundColor: '#1249FC'
+                        }}
+                        style={{
+                            backgroundColor: '#FFFFFF'
+                        }}
+                        renderLabel={({route, focused, color}) => (
+                            <Text style={focused ? {color: '#1249FC'} : {color: '#7F7F7F'}}>
+                                {route.title}
+                            </Text>
+                        )}
+                    />
+                )}
+            />
         </SafeAreaView>
     )
 }
