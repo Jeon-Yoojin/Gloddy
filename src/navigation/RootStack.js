@@ -13,7 +13,7 @@ import ApplicationScreen from '../ui/apply/containers/ApplicationScreen';
 import ApplicationManageScreen from '../ui/apply/containers/ApplicationManageScreen';
 import ComplimentScreen from '../ui/review/containers/ComplimentScreen';
 import BestPartnerScreen from '../ui/review/containers/BestPartnerScreen';
-import GroupingScreen from '../ui/group/grouping/containers/GroupingScreen';
+import MainScreen from '../ui/MainScreen';
 import PostingScreen from '../ui/group/detail/containers/PostingScreen';
 
 const Stack = createNativeStackNavigator();
@@ -82,8 +82,8 @@ function RootStack() {
               options={{headerShown: false}}
             />
             <Stack.Screen
-              name="GroupingScreen"
-              component={GroupingScreen}
+              name="MainScreen"
+              component={MainScreen}
               options={{headerShown: false}}
             />
             <Stack.Screen

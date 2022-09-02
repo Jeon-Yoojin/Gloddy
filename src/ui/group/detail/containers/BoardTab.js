@@ -1,10 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
+import CustomButton from '../../../../common/CustomButton';
 import Notice from '../components/Notice';
 import Post from '../components/Post';
 
 const BoardTab = () => {
+    const navigation = useNavigation();
+
     const boardInfo = [
         {
             imgSrc: require('../../../../assets/image/sample/John.jpg'),
@@ -52,6 +56,10 @@ const BoardTab = () => {
                     )
                 })}
             </ScrollView>
+
+            <View style={{alignItems: 'center', marginVertical: 5}}>
+                <CustomButton text={'글쓰기'} onPress={()=>{navigation.navigate('PostingScreen')}}/>
+            </View>
         </>
     )
 }

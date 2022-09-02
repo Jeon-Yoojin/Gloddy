@@ -57,7 +57,7 @@ const PersonalityScreen = ()=>{
 
             {/* Button */}
             <View style={styles.button}>
-                <CustomButton text='다음' onPress={()=>{navigation.navigate('GroupingScreen')}}/>
+                <CustomButton text='다음' onPress={()=>{navigation.navigate('MainScreen')}}/>
             </View>
         </SafeAreaView>
     )
