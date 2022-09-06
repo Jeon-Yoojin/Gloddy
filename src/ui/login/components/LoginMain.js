@@ -40,7 +40,7 @@ const LoginMain = ()=>{
                             </View>
                         </TouchableOpacity>
 
-                        <CustomButton text="확인" onPress={()=>{navigation.navigate('AuthScreen')}}/>
+                        <CustomButton text="확인" onPress={()=>{navigation.navigate('AuthScreen2')}}/>
                     </View>
                 </BasicModal>
             :

@@ -5,8 +5,8 @@ const windowWidth = Dimensions.get('window').width;
 
 const CustomButton = (props) => {
     return(
-            <TouchableOpacity style={[styles.button, props.color? {backgroundColor: props.color}:{}]} onPress={props.onPress}>
-                <Text style={styles.buttonText}>{props.text}</Text>
+            <TouchableOpacity style={[styles.button, props.style, props.color? {backgroundColor: props.color}:{}]} onPress={props.onPress} disabled={props.disabled}>
+                <Text style={[styles.buttonText, props.textColor? {color: props.textColor}:{}]}>{props.text}</Text>
             </TouchableOpacity>
     )
 }
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     button:{
         width: windowWidth*0.9,
         height: 52,
-        backgroundColor: '#404cf2',
+        backgroundColor: '#F6F6F6',
         padding: 15,
         borderRadius: 8,
     },
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         lineHeight: 25,
         textAlign: 'center',
         fontFamily: 'Inter-Bold',
-        color: 'white',
+        color: '#CDCDCD',
         fontWeight: '800',
     }
 })
