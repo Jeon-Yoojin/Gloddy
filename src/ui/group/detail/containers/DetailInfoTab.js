@@ -21,7 +21,12 @@ const DetailInfoTab = ()=>{
             
             {/* 지원 버튼 */}
             <View style={styles.button}>
-                <CustomButton text={'지원하기'} />
+                <CustomButton
+                    text={'지원하기'}
+                    color='#1249FC'
+                    textColor='#FFFFFF'
+                    onPress={()=>{navigation.navigate('PostingScreen')}}
+                />
             </View>
         </>
     )

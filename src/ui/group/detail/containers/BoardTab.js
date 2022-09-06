@@ -58,7 +58,12 @@ const BoardTab = () => {
             </ScrollView>
 
             <View style={{alignItems: 'center', marginVertical: 5}}>
-                <CustomButton text={'글쓰기'} onPress={()=>{navigation.navigate('PostingScreen')}}/>
+                <CustomButton
+                    text={'글쓰기'}
+                    color='#1249FC'
+                    textColor='#FFFFFF'
+                    onPress={()=>{navigation.navigate('PostingScreen')}}
+                />
             </View>
         </>
     )
