@@ -3,7 +3,7 @@ import { SafeAreaView, Text, View, Image, TouchableOpacity, StyleSheet } from 'r
 import { useNavigation } from '@react-navigation/native';
 import CheckButton from '../../../common/CheckButton';
 import CustomButton from '../../../common/CustomButton';
-import { ToSModal } from './ToSModal';
+import { BasicModal } from '../../../common/BasicModal';
 
 const LoginMain = ()=>{
     const navigation = useNavigation();
@@ -29,7 +29,7 @@ const LoginMain = ()=>{
             </TouchableOpacity>
 
             {showBottomSheet?
-                <ToSModal show={showBottomSheet} height={290} onOuterClick={hide}>
+                <BasicModal show={showBottomSheet} height={290} onOuterClick={hide}>
                     <View style={styles.bottomSheetContent}>
                         <Text style={styles.bottomSheetText}>약관 동의</Text>
 
@@ -42,7 +42,7 @@ const LoginMain = ()=>{
 
                         <CustomButton text="확인" onPress={()=>{navigation.navigate('AuthScreen')}}/>
                     </View>
-                </ToSModal> 
+                </BasicModal>
             :
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={[styles.text, { color: 'grey' }]}>이미 계정이 있나요? </Text>

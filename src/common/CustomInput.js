@@ -8,7 +8,7 @@ const CustomInput = (props) => {
 
     return (
             <TextInput
-                style={styles.input}
+                style={[styles.input, props.style]}
                 onChangeText={props.onChangeText}
                 value={props.val}
                 placeholder={props.placeholder}
@@ -22,8 +22,7 @@ const styles = StyleSheet.create({
     input: {
         height: 52,
         width: windowWidth*0.9,
-        borderWidth: 1,
-        borderColor: '#B7B7B7',
+        backgroundColor: '#F6F6F6',
         borderRadius: 10,
         padding: 15,
         fontSize: 16,

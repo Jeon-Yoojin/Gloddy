@@ -21,7 +21,7 @@ const EmailAuthScreen = ()=>{
 
             <View style={{ flexDirection: 'row' }}>
                 <Text style={[styles.text, { color: 'grey' }]}>이미 계정이 있나요? </Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>{navigation.navigate('ModalTestScreen')}}>
                     <Text style={[styles.text, { fontWeight: '900' }]}>로그인</Text>
                 </TouchableOpacity>
             </View>

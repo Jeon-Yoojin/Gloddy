@@ -15,6 +15,9 @@ import BestPartnerScreen from '../ui/review/containers/BestPartnerScreen';
 import GroupingScreen from '../ui/group/grouping/containers/GroupingScreen';
 import PostingScreen from '../ui/group/detail/containers/PostingScreen';
 
+/* 테스트 screen */
+import ModalTestScreen from '../ui/register/containers/ModalTestScreen';
+
 const Stack = createNativeStackNavigator();
 
 function RootStack() {
@@ -83,6 +86,11 @@ function RootStack() {
             <Stack.Screen
               name="PostingScreen"
               component={PostingScreen}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="ModalTestScreen"
+              component={ModalTestScreen}
               options={{headerShown: false}}
             />
       </Stack.Navigator>

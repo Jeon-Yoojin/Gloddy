@@ -5,9 +5,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import RootStack from './src/navigation/RootStack';
 import SplashScreen from 'react-native-splash-screen'
+import MyMap from './src/api/maps/Marker';
+import Search from './src/api/maps/Search';
 
 const App = ()=>{
-
   useEffect(() => {
     try {
       setTimeout(() => {
@@ -26,7 +27,6 @@ const App = ()=>{
       </NavigationContainer>
     </View>
   )
-
 };
 
 export default App;
