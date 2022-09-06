@@ -1,10 +1,13 @@
 import React from 'react';
 import { Image, Text, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
 
 import Header from "../../../../common/Header";
 
 const GroupDetailHeader = ()=>{
+    const navigation = useNavigation();
+
     const BackarrowImg = '../../../../assets/image/backarrow.png'
 
     return (
@@ -14,6 +17,7 @@ const GroupDetailHeader = ()=>{
             leftIcon={< Image source={require(BackarrowImg)} style={styles.backarrow} />}
             leftIconPress={() => { console.log('LeftIcon pressed!') }}
             rightIcon={<Ionicons name='settings-outline' size={20}/>}
+            rightIconPress={() => {navigation.navigate('RoomSettingScreen')}}
         />
     )
 }
