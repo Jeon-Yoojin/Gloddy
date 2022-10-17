@@ -10,6 +10,7 @@ import ProfileIcon from "../components/ProfileIcon";
 import RegisterHeader from "../components/RegisterHeader";
 
 const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const RegisterScreen = ()=>{
     const navigation = useNavigation();
@@ -80,7 +81,7 @@ const RegisterScreen = ()=>{
     }
 
     return(
-        <SafeAreaView>
+        <SafeAreaView style={{flex:1, backgroundColor:'#FFFFFF'}}>
             {/* Header */}
             <RegisterHeader/>
 
@@ -91,66 +92,75 @@ const RegisterScreen = ()=>{
                 </TouchableOpacity>
             </View>
 
-            {/* 이름 */}
-            <Text style={styles.text}>이름</Text>
-            <View style={styles.nameContainer}>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={(val) => usernameChange(val)}
-                    onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                    placeholder='이름을 입력해주세요.'
-                />
-                {data.check_textInputChange ?
-                        <Entypo
-                            name="check"
-                            color="green"
-                            size={20}
-                            style={{position:'absolute', top: 16, right: '10%'}}
+            <View style={{flex:1, justifyContent: 'space-between'}}>
+                <View>
+                    {/* 이름 */}
+                    <Text style={styles.text}>이름</Text>
+                    <View style={styles.nameContainer}>
+                        <TextInput
+                            style={styles.input}
+                            onChangeText={(val) => usernameChange(val)}
+                            onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+                            placeholder='이름을 입력해주세요.'
                         />
-                    : null}
-            </View>
+                        {data.check_textInputChange ?
+                                <Entypo
+                                    name="check"
+                                    color="green"
+                                    size={20}
+                                    style={{position:'absolute', top: 16, right: '10%'}}
+                                />
+                            : null}
+                    </View>
 
-            {/* 생년월일 */}
-            <Text style={styles.text}>생년월일</Text>
-            <View style={{alignItems:'center'}}>
-                <DatePicker setDateValue={dateChange} placeholder={'생년월일을 선택해주세요.'}/>
-                {data.isValidBday ?
-                        <Entypo
-                            name="check"
-                            color="green"
-                            size={20}
-                            style={{position:'absolute', top: 16, right: '10%'}}
+                    {/* 생년월일 */}
+                    <Text style={styles.text}>생년월일</Text>
+                    <View style={{alignItems:'center'}}>
+                        <DatePicker setDateValue={dateChange} placeholder={'생년월일을 선택해주세요.'}/>
+                        {data.isValidBday ?
+                                <Entypo
+                                    name="check"
+                                    color="green"
+                                    size={20}
+                                    style={{position:'absolute', top: 16, right: '10%'}}
+                                />
+                            : null}
+                    </View>
+
+                    {/* 성별 */}
+                    <Text style={styles.text}>성별</Text>
+                    <View style={{alignItems: 'center'}} zIndex={1}>
+                        <DropDownPicker open={open} items={genderItem} value={value}
+                            setOpen={setOpen} onSelectItem={selectChange} setValue={setValue}
+                            showArrowIcon={false}
+                            placeholder={'성별을 선택해주세요.'}
+                            style={[styles.input, {
+                                backgroundColor: 'transparent',
+                                alignSelf: 'center',
+                                marginBottom: 50
+                            }]}
+                            placeholderStyle={{color: '#B7B7B7'}}
+                            dropDownContainerStyle={{backgroundColor: 'transparent', borderColor: '#B7B7B7', width: windowWidth * 0.9, alignSelf: 'center'}}
                         />
-                    : null}
-            </View>
-
-            {/* 성별 */}
-            <Text style={styles.text}>성별</Text>
-            <View style={{alignItems: 'center'}} zIndex={1}>
-                <DropDownPicker open={open} items={genderItem} value={value}
-                    setOpen={setOpen} onSelectItem={selectChange} setValue={setValue}
-                    showArrowIcon={false}
-                    placeholder={'성별을 선택해주세요.'}
-                    style={[styles.input, {
-                        backgroundColor: 'transparent',
-                        alignSelf: 'center',
-                        marginBottom: 50
-                    }]}
-                    placeholderStyle={{color: '#B7B7B7'}}
-                    dropDownContainerStyle={{backgroundColor: 'transparent', borderColor: '#B7B7B7', width: windowWidth * 0.9, alignSelf: 'center'}}
+                        {data.isValidGender ?
+                            <Entypo
+                                name="check"
+                                color="green"
+                                size={20}
+                                style={{ position: 'absolute', top: 16, right: '13%' }}
+                            />
+                            : null}
+                    </View>
+                </View>
+                
+                <CustomButton
+                    text={'다음'}
+                    color={data.isValidUser&&data.isValidBday&&data.isValidGender? '#1249FC' : null}
+                    textColor={data.isValidUser&&data.isValidBday&&data.isValidGender? '#FFFFFF' : null}
+                    style={{bottom: windowHeight*0.04, alignSelf: 'center'}}
+                    onPress={()=>{navigation.navigate('PersonalityScreen')}}
+                    disabled={data.isValidUser&&data.isValidBday&&data.isValidGender? false: false}
                 />
-                {data.isValidGender ?
-                    <Entypo
-                        name="check"
-                        color="green"
-                        size={20}
-                        style={{ position: 'absolute', top: 16, right: '13%' }}
-                    />
-                    : null}
-            </View>
-
-            <View style={{alignItems:'center', marginTop: 40}}>
-                <CustomButton text={'다음'} color={data.isValidUser&&data.isValidBday&&data.isValidGender? '#1249FC' :'#CDCDCD'} onPress={()=>{navigation.navigate('PersonalityScreen')}}/>
             </View>
         </SafeAreaView>
     )

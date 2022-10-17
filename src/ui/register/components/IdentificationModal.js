@@ -7,7 +7,11 @@ import { BasicModal } from "../../../common/BasicModal";
 import CustomButton from "../../../common/CustomButton";
 import CustomInput from "../../../common/CustomInput";
 
-const IdentificationModal = ({showBottomSheet, hide}) => {
+import { useNavigation } from "@react-navigation/native";
+
+const windowHeight = Dimensions.get('window').height;
+
+const IdentificationModal = ({makeUser, showBottomSheet, hide, showBehind}) => {
     return(
         <BasicModal show={showBottomSheet} height={390} onOuterClick={hide}>
             <View style={styles.modalContainer}>
@@ -17,14 +21,20 @@ const IdentificationModal = ({showBottomSheet, hide}) => {
                             name="chevron-left"
                             size={30}
                             style={{ color: '#666666' }}
+                            onPress={showBehind}
                         />
                     </TouchableOpacity>
-                    <AntDesign name='closecircle' size={28}/>
+                    <AntDesign name='closecircle' size={28} onPress={hide}/>
                 </View>
 
                 <View style={styles.bottomSheetContent}>
                     <Text style={styles.bottomSheetText}>회원님의 이메일로{'\n'}인증번호를 전송하였습니다.</Text>
-                    <CustomInput style={styles.customInput} placeholder={'인증번호'}/>
+                    <CustomInput
+                        style={styles.customInput}
+                        placeholder={'인증번호'}
+                        onChangeText={()=>{}}
+                        onEndEditing={()=>{}}
+                    />
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                         <TouchableOpacity><Text style={[styles.bottomSheetSubText, {borderBottomColor: '#CDCDCD', borderBottomWidth: 0.4,}]}>재전송하기</Text></TouchableOpacity>
                         <Text style={[styles.bottomSheetSubText, { color: '#D7533E' }]}>인증번호를 다시 확인해주세요.</Text>
@@ -32,9 +42,11 @@ const IdentificationModal = ({showBottomSheet, hide}) => {
                 </View>
             </View>
 
-            <View style={styles.customButton}>
-                <CustomButton text={'완료'} onPress={()=>{}} />
-            </View>
+            <CustomButton
+                text={'완료'}
+                style={{bottom: windowHeight*0.04, alignSelf: 'center'}}
+                onPress={makeUser}
+            />
         </BasicModal>   
     )
 }
@@ -54,12 +66,7 @@ const styles = StyleSheet.create({
         color: '#CDCDCD',
         marginVertical: 10,
     },
-    customButton:{
-        alignItems: 'center',
-        marginVertical: 10,
-    },
     customInput:{
-        alignItems: 'center',
         marginTop: 23,
         marginBottom: 5, 
     },

@@ -1,10 +1,14 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, Image, Text, ScrollView, View } from "react-native";
-
+import { SafeAreaView, StyleSheet, Image, Text, ScrollView, View, Dimensions } from "react-native";
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import Header from "../../../common/Header";
 import PartnerReason from "../components/PartnerReason";
 import PartnerSelection from "../components/PartnerSelection";
 import CustomButton from "../../../common/CustomButton";
+import { useNavigation } from "@react-navigation/native";
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const User = [
     {
@@ -38,25 +42,19 @@ const User = [
 ]
 
 const BestPartnerScreen = () => {
-    const BackarrowImg = '../../../assets/image/backarrow.png';
+    const navigation = useNavigation();
 
     return (
         <SafeAreaView style={styles.container}>
             <Header
                 title={'최고의 짝꿍'}
                 noIcon={false}
-                leftIcon={< Image source={require(BackarrowImg)} style={styles.backarrow} />}
-                leftIconPress={() => { console.log('pressed!') }}
+                leftIcon={<AntDesign name='left' size={17} />}
+                leftIconPress={() => { console.log('LeftIcon pressed!') }}
             />
-
-            <View>
-                <Text style={styles.description}>
-                    <Text>모임에서 사용자님이 생각한{'\n'}</Text>
-                    <Text style={{color: '#1249FC'}}>최고의 짝꿍</Text>
-                    <Text>을 선정해주세요!</Text>
-                </Text>
-
-                <View style={styles.scrollContainer}>
+            
+            <Text style={styles.description}>최고의 짝궁은 누구인가요?</Text>
+            <View style={{flex:1, justifyContent: 'space-between'}}>
                 <ScrollView style={styles.scrollView}>
                     {User.map((data, index) => {
                         return (
@@ -65,22 +63,20 @@ const BestPartnerScreen = () => {
                                 imgSrc={data.imgSrc}
                                 name={data.name}
                                 imgSize={47}
-                                textSize={14}
+                                textSize={16}
                             />
                         )
                     })}
                 </ScrollView>
-                </View>
-            </View>
 
-            {/* 선정이유 */}
-            <View style={{paddingVertical: 10}}>
-            <PartnerReason/>
-            </View>
-
-            {/* 제출버튼 */}
-            <View style={{alignItems: 'center', justifyContent: 'center', flex: 1, }}>
-                <CustomButton text={'제출하기'} />
+                {/* 제출버튼 */}
+                <CustomButton
+                    text={'완료'}
+                    color={'#1249FC'}
+                    textColor={'#FFFFFF'}
+                    style={{alignSelf: 'center'}}
+                    onPress={()=>{navigation.navigate('MainScreen')}}
+                />
             </View>
         </SafeAreaView>
     )
@@ -89,30 +85,26 @@ const BestPartnerScreen = () => {
 const styles = StyleSheet.create({
     container:{
         flex: 1,
+        backgroundColor: '#FFFFFF'
     },
     scrollContainer:{
         maxHeight: 330,
     },
     scrollView:{
-        marginTop: 14,
+        marginTop: windowHeight*0.04,
         flexGrow: 0,
         //height: 330,
     },
     description:{
-        fontSize: 18,
-        fontWeight: 'bold',
+        fontSize: 24,
+        fontWeight: '700',
         color: '#1A1A1A',
-        marginHorizontal: 14,
-        marginTop: 23,
-        marginBottom: 10,
+        marginHorizontal: 20,
+        marginTop: 30,
     },
     rightBtn: {
         fontSize: 16,
         color: '#1249FC',
-    },
-    backarrow: {
-        width: 14,
-        height: 13,
     }
 })
 

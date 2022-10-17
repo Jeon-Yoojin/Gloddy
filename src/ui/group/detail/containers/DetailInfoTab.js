@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import { View, StyleSheet, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { BasicModal } from '../../../../common/BasicModal';
-
 import DetailInfo from '../components/DetailInfo';
 import UserProfile from '../components/UserProfile';
 import CustomButton from '../../../../common/CustomButton';
@@ -11,7 +10,6 @@ import WarningIcon from '../../../../assets/image/group/detail/warning.svg'
 
 const DetailInfoTab = ()=>{
     const navigation = useNavigation();
-
     const [showBottomSheet, setShowBottomSheet] = useState(false)
 
     const hide = () => {

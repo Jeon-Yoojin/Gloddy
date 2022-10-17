@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import SlideScreen from '../ui/tutorial/containers/SlideScreen';
+import SelectSchool from '../ui/register/containers/SelectSchool';
 import EmailAuthScreen from '../ui/register/containers/EmailAuthScreen';
 import EmailAuthScreen2 from '../ui/register/containers/EmailAuthScreen2';
 import LoginScreen from '../ui/login/containers/LoginScreen';
@@ -13,15 +14,17 @@ import GroupDetailScreen from '../ui/group/detail/containers/GroupDetailScreen';
 import RoomSettingScreen from '../ui/group/detail/containers/RoomSettingScreen';
 import ApplicationScreen from '../ui/apply/containers/ApplicationScreen';
 import ApplicationManageScreen from '../ui/apply/containers/ApplicationManageScreen';
+import MyGroupsScreen from '../ui/mygroup/MyGroupsScreen';
 import ComplimentScreen from '../ui/review/containers/ComplimentScreen';
 import BestPartnerScreen from '../ui/review/containers/BestPartnerScreen';
 import MainScreen from '../ui/MainScreen';
 import PostingScreen from '../ui/group/detail/containers/PostingScreen';
+import GroupMembers from '../ui/group/detail/containers/GroupMembers';
 
 /* 테스트 screen */
-import ModalTestScreen from '../ui/register/containers/ModalTestScreen';
+import TestModalNavigatorScreen from '../ui/register/components/TestModalNavigatorScreen';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 function RootStack() {
     return (
@@ -41,6 +44,18 @@ function RootStack() {
               component={EmailAuthScreen2}
               options={{headerShown: false}}
             />
+            {/* 
+            <Stack.Screen
+              name="CheckModal"
+              component={TestModalNavigatorScreen}
+              options={{
+                headerShown: false,
+                presentation: 'modal',
+                cardStyle: {backgroundColor: 'transparent'},
+                cardOverlayEnabled: true,
+              }}
+            />
+            */}
             <Stack.Screen
               name="LoginScreen"
               component={LoginScreen}
@@ -87,6 +102,11 @@ function RootStack() {
               options={{headerShown: false}}
             />
             <Stack.Screen
+              name="MyGroupsScreen"
+              component={MyGroupsScreen}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
               name="ComplimentScreen"
               component={ComplimentScreen}
               options={{headerShown: false}}
@@ -107,8 +127,8 @@ function RootStack() {
               options={{headerShown: false}}
             />
             <Stack.Screen
-              name="ModalTestScreen"
-              component={ModalTestScreen}
+              name="GroupMembers"
+              component={GroupMembers}
               options={{headerShown: false}}
             />
       </Stack.Navigator>

@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 
@@ -15,21 +16,20 @@ const UserProfileIcon = ({ imgSrc, user }) => {
 }
 
 const UserProfile = () => {
+    const navigation = useNavigation();
+
     return (
-        <>
         <View style={styles.subContainer}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 12, alignItems: 'flex-end'}}>
-                <Text style={styles.title}>모임 멤버</Text>
-                <TouchableOpacity onPress={()=>{}}>
-                    <Feather
-                        name="chevron-right"
-                        size={23}
-                        style={{ color: '#1A1A1A' }}
-                    />
-                </TouchableOpacity>
-            </View>
-        </View>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{marginLeft: 9}}>
+            <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 12, alignItems: 'flex-end'}} onPress={()=>navigation.navigate('GroupMembers')}>
+                <Text style={styles.title}>모임멤버</Text>
+                <Feather
+                    name="chevron-right"
+                    size={20}
+                    style={{ color: '#1A1A1A' }}
+                />
+            </TouchableOpacity>
+
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                 <UserProfileIcon imgSrc={require('../../../../assets/image/sample/John.jpg')} user={'John'}/>
                 <UserProfileIcon imgSrc={require('../../../../assets/image/sample/Maria.png')} user={'Maria'}/>
                 <UserProfileIcon imgSrc={require('../../../../assets/image/sample/Sam.png')} user={'Ki hyeon'}/>
@@ -38,7 +38,7 @@ const UserProfile = () => {
                 <UserProfileIcon imgSrc={require('../../../../assets/image/sample/Lucy.png')} user={'Lucy'}/>
                 <UserProfileIcon imgSrc={require('../../../../assets/image/sample/John.jpg')} user={'1'}/>
             </ScrollView>
-        </>
+        </View>
     )
 }
 
@@ -70,8 +70,9 @@ const styles = StyleSheet.create({
     },
     title:{
         fontSize: 14,
-        fontWeight: '600',
+        fontWeight: '700',
         color: '#1A1A1A',
+        marginLeft: 10
     },
 })
 

@@ -9,18 +9,21 @@ const CustomInput = (props) => {
 
     return (
         <View style={[styles.input, props.style]}>
-            <Text style={{color: '#AAAAAA', fontSize:16}}>{props.placeholder}</Text>
+            <Text style={{color: '#AAAAAA', fontSize:16, flex: 1}}>{props.placeholder}</Text>
             <TextInput
                 style={{width: '80%', height:'100%'}}
                 onChangeText={props.onChangeText}
                 value={props.value}
                 onEndEditing={props.onEndEditing}
                 editable={props.editable}
+                secureTextEntry={props.secureTextEntry}
                 //onChangeText={}
             />
             {props.rightIcon ?
                 <AntDesign name="checkcircle" color="#1249FC" size={16}/>
-                : <View style={{width:16, height:16}}/>
+                : props.rightSpace ?
+                <View style={{width:16, height:16}}/>
+                : null
             }
         </View>
     )
@@ -35,7 +38,9 @@ const styles = StyleSheet.create({
         width: windowWidth*0.9,
         backgroundColor: '#F6F6F6',
         borderRadius: 10,
-        padding: 15,
+        paddingVertical: 7,
+        paddingLeft: 25,
+        paddingRight: 18
     }
 })
 

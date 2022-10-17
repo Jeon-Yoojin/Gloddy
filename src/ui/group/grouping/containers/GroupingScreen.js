@@ -1,7 +1,8 @@
 import React from "react";
-import { SafeAreaView, View, StyleSheet, ScrollView, Image, Pressable, TouchableOpacity } from "react-native";
+import { SafeAreaView, View, StyleSheet, ScrollView, Image, Pressable, TouchableOpacity, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Entypo from "react-native-vector-icons/Entypo";
+import useUser from "../../../../redux/hooks/useUser";
 
 import Header from "../../../../common/Header";
 import GroupElement from "../components/GroupElement";
@@ -146,11 +147,13 @@ const GroupInfo = [
 ]
 
 const GroupingScreen = () => {
+    const user = useUser();
+
     const navigation = useNavigation();
     const PlusIcon = '../../../../assets/image/register/plus.png'
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, {backgroundColor: '#FFFFFF'}]}>
             <View style={{ height: '100%' }}>
                 {/* Header */}
                 <Header
@@ -159,7 +162,15 @@ const GroupingScreen = () => {
                     rightIcon={<Entypo name="magnifying-glass" size={25} />}
                     rightIconPress={() => { console.log('pressed!') }}
                 />
-
+                {/* test - user 정보 띄우기
+                <Text>User email {user.email}</Text>
+                <Text>User name {user.name}</Text>
+                <Text>User school {user.school}</Text>
+                <Text>User birth {user.birth}</Text>
+                <Text>User gender {user.gender}</Text>
+                <Text>User personality {user.personalities}</Text>
+                 */}
+                 
                 {/* Group */}
                 <ScrollView style={{ flexGrow: 1, marginVertical: 13, }}>
                 {GroupInfo.map((data, index) => {

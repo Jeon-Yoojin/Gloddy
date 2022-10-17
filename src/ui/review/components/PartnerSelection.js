@@ -1,18 +1,17 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, Image, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, StyleSheet, Image, Text, TouchableOpacity, View, Dimensions } from "react-native";
 
 import UserProfile from "../../../common/UserProfile";
 import CheckButton from "../../../common/CheckButton";
+
+const windowHeight = Dimensions.get('window').height;
 
 const PartnerSelection = ({ imgSrc, imgSize, name, textSize }) => {
     const [isPress, setIsPress] = useState(false);
 
     return (
-        <TouchableOpacity onPress={() => { setIsPress(!isPress) }}>
-            <View style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={() => { setIsPress(!isPress) }}>
                 <UserProfile imgSrc={imgSrc} imgSize={imgSize} name={name} textSize={textSize} />
-                <CheckButton circleSize={25} isPress={isPress} checkStyle={{width: 10.5, height: 7}}/>
-            </View>
         </TouchableOpacity>
     )
 }
@@ -22,9 +21,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        //backgroundColor: 'yellow',
-        marginHorizontal: 12,
-        paddingVertical: 9,
+        alignSelf: 'center',
+        width: '90%',
+        height: windowHeight*0.08,
+        backgroundColor: '#F5F5F5',
+        borderColor: '#F7F7F7',
+        borderRadius: 8,
+        marginBottom: 12,
+        paddingLeft: 17,
     },
 })
 

@@ -12,7 +12,6 @@ const Card = ({imgSrc, name}) => {
                 <UserProfile imgSrc={imgSrc} name={name} imgSize={53} textSize={14}/>
                 <Attend />
             </View>
-            <Text style={styles.question}>Q. 모임에서 어땠나요?</Text>
             <Character />
         </View>
     )
@@ -21,12 +20,12 @@ const Card = ({imgSrc, name}) => {
 const styles = StyleSheet.create({
     container:{
         //ios의 경우 shadow 컬러 설정 필요
-        borderColor: '#EAEAEA',
+        borderColor: '#F7F7F7',
         borderWidth: 1,
-        borderRadius: 11,
-        //backgroundColor: 'white',
-        marginHorizontal: 14,
-        marginBottom: 14,
+        borderRadius: 8,
+        backgroundColor: '#F5F5F5',
+        marginHorizontal: 20,
+        marginBottom: 12,
         paddingVertical: 14,
     },
     row:{
@@ -34,14 +33,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         marginHorizontal: 13,
-        marginBottom: 14,
+        marginBottom: 20,
     },
-    question:{
-        fontSize: 12,
-        color: '#7F7F7F',
-        marginHorizontal: 14,
-        marginBottom: 11,
-    }
 })
 
 export default Card;
