@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
         flex:1,
     },
     subContainer:{
-        borderBottomColor: '#EAEAEA',
-        borderBottomWidth: 1,
+        //borderBottomColor: '#EAEAEA',
+        //borderBottomWidth: 1,
     },
     button:{
         alignItems: 'center',
@@ -84,6 +84,8 @@ const styles = StyleSheet.create({
         fontSize: 14,
         textAlignVertical: 'top',
         color: '#1A1A1A',
+        backgroundColor: '#F6F6F6',
+        borderRadius: 10,
     },
 })
 

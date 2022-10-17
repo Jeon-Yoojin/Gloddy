@@ -34,14 +34,12 @@ const BoardTab = () => {
     ]
 
     return (
-        <>
+        <ScrollView style={{ backgroundColor: 'white' }}>
             {/* 공지사항 */}
-            <View>
-                <Notice />
-            </View>
+            <Notice />
 
             {/* 게시글 */}
-            <ScrollView style={{ backgroundColor: '#F7F7F7' }}>
+            <ScrollView style={{marginBottom: 16}}>
                 {boardInfo.map((data, index) => {
                     return (
                         <Post
@@ -57,15 +55,15 @@ const BoardTab = () => {
                 })}
             </ScrollView>
 
-            <View style={{alignItems: 'center', marginVertical: 5}}>
+            <View style={{ alignItems: 'center', marginVertical: 5 }}>
                 <CustomButton
                     text={'글쓰기'}
                     color='#1249FC'
                     textColor='#FFFFFF'
-                    onPress={()=>{navigation.navigate('PostingScreen')}}
+                    onPress={() => { navigation.navigate('PostingScreen') }}
                 />
             </View>
-        </>
+        </ScrollView>
     )
 }
 

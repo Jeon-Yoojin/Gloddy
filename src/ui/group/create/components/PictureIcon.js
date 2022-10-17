@@ -15,16 +15,14 @@ const PictureIcon = ()=>{
 
 const styles = StyleSheet.create({
     background:{
-        width:60,
-        height: 60,
+        width:92,
+        height: 92,
         backgroundColor: 'rgb(242, 242, 242)',
-
-        borderWidth: 0.8,
-        borderColor: '#EAEAEA',
         borderRadius: 8,
 
         alignItems: 'center',
         justifyContent: 'center',
+        marginVertical: 23,
     },
     img:{
         width: 24,

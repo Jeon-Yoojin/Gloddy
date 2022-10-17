@@ -23,7 +23,7 @@ const App = ()=>{
   return (
     <View style={{flex: 1}}>
       <NavigationContainer>
-        <RootStack />
+        <RootStack/>
       </NavigationContainer>
     </View>
   )

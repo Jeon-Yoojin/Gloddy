@@ -19,6 +19,18 @@ const renderScene = SceneMap({
     second: SecondRoute
 });
 
+{/* 모임 소개글 */}
+const GroupIntro = ()=>{
+    return(
+        <>
+            <View style={{ paddingHorizontal: 20, paddingBottom: 15, marginTop: 7 }}>
+                <Text style={styles.introTitle}>Let's go for a walk!</Text>
+                <Text style={styles.intro}>It's a group that walks around, talks, {'\n'}and learns languages.</Text>
+            </View>
+        </>
+    )
+}
+
 const GroupDetailScreen = ()=>{
     const [index, setIndex] = useState(0);
     const [routes] = useState([
@@ -30,7 +42,11 @@ const GroupDetailScreen = ()=>{
         <SafeAreaView style={styles.container}>
             {/* Header */}
             <GroupDetailHeader/>
-            <Image source={require('../../../../assets/image/group/groupSample_big.png')} style={{width: '100%'}}/>
+            <Image source={require('../../../../assets/image/group/groupSample_big.png')} style={{width: '100%', borderBottomLeftRadius: 30, borderBottomRightRadius: 30}}/>
+
+            {/* Group 소개글 */}
+            <GroupIntro/>
+
             {/* tab navigator */}
             <TabView
                 navigationState={{index, routes}}
@@ -77,8 +93,14 @@ const styles = StyleSheet.create({
     },
     intro:{
         fontSize: 12,
-        color: '#1A1A1A',
-        marginVertical: 14
+        color: '#AAAAAA',
+        //marginVertical: 14
+    },
+    introTitle:{
+        fontSize: 18,
+        color: '#3A3A3A',
+        fontWeight: 'bold',
+        marginVertical: 8
     },
     button:{
         alignItems: 'center',

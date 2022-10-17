@@ -46,7 +46,9 @@ export default function CustomDatePicker({setDateValue, placeholder, style, righ
 
     return (
       <>
-            <TouchableOpacity onPress={()=>{setOpen(true)}}>
+            <TouchableOpacity
+                onPress={() => { setOpen(true) }}
+            >
                 <TextInput
                     pointerEvents="none"
                     style={style? style:styles.textInput}
@@ -81,6 +83,12 @@ const styles = StyleSheet.create({
         borderColor: '#B7B7B7',
         borderWidth: 1, 
         borderRadius: 10,
-        paddingLeft: 15,
+        backgroundColor: '#F6F6F6',
+    },
+    inputBox:{
+        backgroundColor: '#F6F6F6',
+        borderRadius: 10,
+        paddingHorizontal: 20,
+        paddingVertical: 13,
     }
 })

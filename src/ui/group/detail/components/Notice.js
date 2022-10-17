@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Feather from "react-native-vector-icons/Feather"
+import StarIcon from '../../../../assets/image/staricon.svg';
+import FrontArrow from '../../../../assets/image/frontarrow.svg'
 
 const Line = ({ title, onPress }) => {
     const LineOnPress = () => {
@@ -11,20 +11,12 @@ const Line = ({ title, onPress }) => {
 
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 6, }}>
-            <MaterialCommunityIcons
-                name="star-circle"
-                size={16}
-                color={'#8DD600'}
-                style={{ marginRight: 3 }} />
+            <StarIcon/>
                 
             <TouchableOpacity onPress={LineOnPress}>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={styles.line}>{title}</Text>
-                    <Feather
-                        name="chevron-right"
-                        size={17}
-                        style={{ color: '#CDCDCD' }}
-                    />
+                    <FrontArrow/>
                 </View>
             </TouchableOpacity>
         </View>
@@ -34,7 +26,7 @@ const Line = ({ title, onPress }) => {
 const Notice = () => {
     return (
         <View style={styles.container}>
-            <View style={{ marginHorizontal: 14 }}>
+            <View style={{ marginHorizontal: 14, marginVertical: 15 }}>
                 <Text style={styles.title}>공지사항</Text>
                 <Line title={'가입 인사 작성 방법'} />
                 <Line title={'모임 간 지켜야할 수칙'} />
@@ -45,19 +37,23 @@ const Notice = () => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
-        paddingVertical: 10
+        backgroundColor: '#F6F6F6',
+        borderRadius: 8,
+        marginHorizontal: 21,
+        marginTop: 18
     },
     title: {
         fontSize: 12,
         fontWeight: 'bold',
         color: '#1A1A1A',
-        marginVertical: 5,
+        marginVertical: 8,
     },
     line: {
-        fontSize: 14,
+        fontSize: 12,
         fontWeight: '400',
-        color: '#1A1A1A'
+        color: '#3A3A3A',
+        marginRight: 10,
+        marginLeft: 8,
     }
 })
 

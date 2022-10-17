@@ -16,9 +16,10 @@ const UserProfileIcon = ({ imgSrc, user }) => {
 
 const UserProfile = () => {
     return (
+        <>
         <View style={styles.subContainer}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 12, alignItems: 'flex-end'}}>
-                <Text style={styles.title}>참여 인원 6명</Text>
+                <Text style={styles.title}>모임 멤버</Text>
                 <TouchableOpacity onPress={()=>{}}>
                     <Feather
                         name="chevron-right"
@@ -27,7 +28,8 @@ const UserProfile = () => {
                     />
                 </TouchableOpacity>
             </View>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        </View>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{marginLeft: 9}}>
                 <UserProfileIcon imgSrc={require('../../../../assets/image/sample/John.jpg')} user={'John'}/>
                 <UserProfileIcon imgSrc={require('../../../../assets/image/sample/Maria.png')} user={'Maria'}/>
                 <UserProfileIcon imgSrc={require('../../../../assets/image/sample/Sam.png')} user={'Ki hyeon'}/>
@@ -36,7 +38,7 @@ const UserProfile = () => {
                 <UserProfileIcon imgSrc={require('../../../../assets/image/sample/Lucy.png')} user={'Lucy'}/>
                 <UserProfileIcon imgSrc={require('../../../../assets/image/sample/John.jpg')} user={'1'}/>
             </ScrollView>
-        </View>
+        </>
     )
 }
 
@@ -44,7 +46,7 @@ const icon = StyleSheet.create({
     container: {
         flexDirection: 'column',
         alignItems: 'center',
-        marginVertical: 14,
+        marginTop: 14,
         marginHorizontal: 11,
     },
     img: {
@@ -62,15 +64,13 @@ const icon = StyleSheet.create({
 
 const styles = StyleSheet.create({
     subContainer:{
-        borderBottomColor: '#EAEAEA',
-        borderBottomWidth: 1,
         justifyContent: 'center',
-        marginHorizontal: 14,
+        marginHorizontal: 20,
         //paddingVertical: 15,
     },
     title:{
-        fontSize: 12,
-        fontWeight: 'bold',
+        fontSize: 14,
+        fontWeight: '600',
         color: '#1A1A1A',
     },
 })

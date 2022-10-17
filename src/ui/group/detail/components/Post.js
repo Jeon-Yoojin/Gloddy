@@ -2,13 +2,15 @@ import React from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity, Pressable } from "react-native";
 import Feather from 'react-native-vector-icons/Feather';
 
+import CommentIcon from '../../../../assets/image/comment.svg'
+
 const CommentButton = () => {
     const commentIcon = '../../../../assets/image/group/comment.png'
 
     return (
         <Pressable onPress={() => { console.log('댓글쓰기 event') }}>
             <View style={buttonStyles.container}>
-                <Image source={require(commentIcon)} style={buttonStyles.img} />
+                <CommentIcon/>
                 <Text style={buttonStyles.text}>댓글쓰기</Text>
             </View>
         </Pressable>
@@ -43,7 +45,7 @@ const Post = ({
                 <View>
                     <Text style={styles.post}>{post}</Text>
                 </View>
-                <Text style={styles.comment}>댓글 {comments}</Text>
+                <Text style={styles.comment}>댓글 {comments}개</Text>
 
                 <CommentButton />
             </View>
@@ -53,8 +55,10 @@ const Post = ({
 
 const styles = StyleSheet.create({
     container:{
-        backgroundColor: 'white',
-        marginTop: 14
+        backgroundColor: '#F6F6F6',
+        borderRadius: 8,
+        marginTop: 12,
+        marginHorizontal: 21,
     },
     row: {
         justifyContent: 'center',
@@ -74,7 +78,7 @@ const styles = StyleSheet.create({
     name: {
         fontSize: 14,
         fontWeight: 'bold',
-        color: '#1A1A1A'
+        color: '#3A3A3A'
     },
     date: {
         fontSize: 10,
@@ -82,10 +86,9 @@ const styles = StyleSheet.create({
         marginTop: 2,
     },
     post: {
-        fontSize: 14,
-        fontWeight: '400',
-        color: '#1A1A1A',
-        marginVertical: 17,
+        fontSize: 12,
+        color: '#3A3A3A',
+        marginVertical: 19,
     },
     comment: {
         marginVertical: 6,
@@ -105,7 +108,8 @@ const buttonStyles = StyleSheet.create({
     },
     text: {
         fontSize: 12,
-        color: '#1A1A1A',
+        color: '#AAAAAA',
+        marginLeft: 8
     },
     img: {
         width: 14,

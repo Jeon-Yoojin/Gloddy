@@ -8,7 +8,7 @@ const CreateGroupHeader = () => {
 
     return (
         < Header
-            title={'방 만들기'}
+            title={'모임 개설하기'}
             noIcon={false}
             leftIcon={< Image source={require(BackarrowImg)} style={styles.backarrow} />}
             leftIconPress={() => { console.log('pressed!') }}

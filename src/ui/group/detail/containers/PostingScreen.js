@@ -1,41 +1,72 @@
-import React from "react";
-import { View, SafeAreaView, StyleSheet, Image, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from "react-native";
+import React, { useState } from "react";
+import { View, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, KeyboardAvoidingView } from "react-native";
 
 import CheckButton from "../../../../common/CheckButton";
+import CustomButton from "../../../../common/CustomButton";
 import Header from "../../../../common/Header";
+import GalleryIcon from '../../../../assets/image/galleryIcon.svg';
+import BackArrow from '../../../../assets/image/backarrow.svg';
 
 const PostingScreen = () => {
     const BackarrowImg = '../../../../assets/image/backarrow.png';
+    const [post, setPost] = useState({
+            body: '',
+            isNotice: false,
+        })
+
+    const onChangeBody = (body)=>{
+        setPost({
+            ...post,
+            body:body,
+        })
+    }
+
+    const onPressButton = ()=>{
+        setPost({
+            ...post,
+            isNotice: !post.isNotice,
+        })
+    }
 
     return (
         <SafeAreaView style={styles.container}>
             <Header
                 title={'게시글 작성'}
                 noIcon={false}
-                leftIcon={< Image source={require(BackarrowImg)} style={styles.backarrow} />}
+                leftIcon={<BackArrow width={8} height={15}/>}
                 leftIconPress={() => { console.log('pressed!') }}
-                rightIcon={<Text style={styles.rightIcon}>완료</Text>}
+                rightIcon={<GalleryIcon width={26} height={26}/>}
                 rightIconPress={() => { console.log('pressed!') }}
             />
             <TextInput
                 style={styles.textInput}
+                value={post.body}
+                onChangeText={onChangeBody}
                 underlineColorAndroid='transparent'
                 multiline={true}
                 placeholder="게시글을 작성해보세요."
-                numberOfLines={5}
             />
 
             <KeyboardAvoidingView
                 behavior="padding"
                 enabled
             >
-                <TouchableOpacity>
+                <TouchableOpacity onPress={onPressButton}>
                     <View style={styles.notice}>
-                        <CheckButton circleSize={21} checkStyle={{ width: 9, height: 6 }} />
+                        <CheckButton circleSize={21} checkStyle={{ width: 9, height: 6 }} isPress={post.isNotice}/>
                         <Text style={styles.noticeText}>위 글을 공지로 설정합니다.</Text>
                     </View>
                 </TouchableOpacity>
             </KeyboardAvoidingView>
+
+            <CustomButton
+                text={'글쓰기'}
+                color={post.body.length > 0 ? '#1249FC' : null}
+                textColor={post.body.length > 0 ? '#FFFFFF' : null}
+                style={{ alignSelf: 'center', marginBottom: 21 }}
+                onPress={() => {console.log(post)}}
+                disabled={post.body.length > 0 ? false : true}
+            />
         </SafeAreaView>
     )
 }
@@ -58,7 +89,16 @@ const styles = StyleSheet.create({
         textAlignVertical: 'top',
         color: '#1A1A1A',
         marginHorizontal: 14,
-        paddingTop: 22,
+        paddingVertical: 18,
+        paddingHorizontal: 20,
+        
+        backgroundColor: '#F5F5F5',
+        borderRadius: 10,
+        
+        borderWidth: 1,
+        borderColor: 'black'
+        //paddingVertical: 15,
+        //paddingHorizontal: 13,
     },
     notice: {
         flexDirection: 'row',

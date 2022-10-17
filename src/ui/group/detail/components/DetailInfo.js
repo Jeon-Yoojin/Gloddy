@@ -1,12 +1,35 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-const TimeInfo = ({ title, time }) => {
+const DateInfo = ({ date, time }) => {
 
     return (
-        <View style={styles.timeInfo}>
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.time}>{time}</Text>
+        <View style={[styles.subContainer]}>
+            <View style={styles.row}>
+                <Text style={styles.title}>모임 일시</Text>
+
+                <View style={styles.box}>
+                    <Text style={styles.subText}>{date} {time}</Text>
+                </View>
+            </View>
+        </View>
+    )
+}
+
+const Marker = ({markerTitle, markerType, markerInfo}) => {
+    return (
+        <View style={{ alignItems: 'center' }}>            
+            <View style={styles.box}>
+                {/* TODO: 지도 마커 표시 컴포넌트 */}
+                <Image source={require('../../../../assets/image/group/googlemap.png')} />
+                <View style={{ marginTop: 16, }}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text style={styles.markerTitle}>{markerTitle}</Text>
+                        <Text style={styles.markerType}>{markerType}</Text>
+                    </View>
+                    <Text style={styles.markerInfo}>{markerInfo}</Text>
+                </View>
+            </View>
         </View>
     )
 }
@@ -17,26 +40,15 @@ const DetailInfo = ({attendees, date, startTime, endTime, place}) => {
             {/* 참여 인원 */}
 
             {/* 모임 날짜/시간 */}
-            <View style={[styles.subContainer]}>
-                    <View style={[styles.row, {marginBottom: 10}]}>
-                        <Text style={styles.title}>모임 날짜</Text>
-                        <Text style={styles.colorText}>2022.04.27.FRI 19:00</Text>
-                    </View>
-                    <View style={styles.row}>
-                        <TimeInfo title={'시작 시간'} time={'오후 07:00'} />
-                        <TimeInfo title={'마감 시간'} time={'오후 08:00'} />
-                    </View>
-            </View>
+            <DateInfo date={'2022.04.27.FRI'} time={'19:00'}/>
 
             {/* 모임 위치 */}
             <View style={styles.subContainer}>
                 <View style={styles.row}>
                     <Text style={styles.title}>모임 위치</Text>
-                    <Text style={[styles.colorText, {flex:1, marginRight: 10}]}>서울특별시 동대문구 이문동 32-7 별별피자</Text>
                 </View>
-                <View style={{alignItems: 'center', marginTop: 10}}>
-                    <Image source={require('../../../../assets/image/group/googlemap.png')} />
-                </View>
+                {/* 지도 마커 */}
+                <Marker markerTitle={'경희회관'} markerType={'호프, 요리주점'} markerInfo={'서울 동대문구 경희대로3길 11 지하 1층 (회기동)'}/>
             </View>
         </View>
     )
@@ -48,27 +60,27 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     subContainer:{
-        borderBottomColor: '#EAEAEA',
-        borderBottomWidth: 1,
         justifyContent: 'center',
-        marginHorizontal: 14,
-        paddingVertical: 15,
+        marginHorizontal: 20,
+        paddingVertical: 6,
     },
     row:{
-        flexDirection: 'row',
-        alignItems: 'center',
+        //flexDirection: 'row',
+        //alignItems: 'center',
         alignContent: 'center',
         //backgroundColor: 'orange'
     },
     title:{
-        fontSize: 12,
+        fontSize: 14,
         fontWeight: 'bold',
         color: '#1A1A1A',
+        marginVertical: 10,
     },
-    colorText:{
+    subText:{
         fontSize: 14,
-        color: '#586ff3',
-        marginLeft: 14
+        color: '#1A1A1A',
+        marginLeft: 14,
+        fontWeight: '600'
     },
     time:{
         fontSize: 14,
@@ -81,6 +93,26 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'baseline',
         marginRight:11
+    },
+    box:{
+        backgroundColor: '#F6F6F6',
+        borderRadius: 10,
+        paddingVertical: 15,
+        paddingHorizontal: 13,
+    },
+    markerTitle:{
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: '#1A1A1A',
+        marginRight: 5,
+    },
+    markerType:{
+        fontSize: 10,
+        textAlignVertical: 'bottom'
+    },
+    markerInfo:{
+        fontSize: 12,
+        marginVertical: 2,
     }
 })
 
