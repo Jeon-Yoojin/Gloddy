@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { View, Text, StyleSheet, TouchableOpacity, } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image} from "react-native";
 
 import CheckButton from "../../../common/CheckButton";
 
@@ -8,10 +8,7 @@ const Attend = () => {
 
     return (
         <TouchableOpacity onPress={()=>{setIsPress(!isPress)}}>
-            <View style={{ flexDirection: 'row' }}>
-                <CheckButton checkStyle={{width:9, height: 6,}} isPress={isPress}/>
-                <Text style={styles.text}>모임 불참</Text>
-            </View>
+            <Image source={require('../../../assets/image/review/delete.png')}/>
         </TouchableOpacity>
     )
 }

@@ -1,12 +1,16 @@
 import React, {useEffect} from 'react';
 import { StyleSheet, View, Text, SliderBase } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import rootReducer from './src/redux/slices';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import RootStack from './src/navigation/RootStack';
 import SplashScreen from 'react-native-splash-screen'
-import MyMap from './src/api/maps/Marker';
-import Search from './src/api/maps/Search';
+
+const store = configureStore({reducer: rootReducer});
+const queryClient = new QueryClient();
 
 const App = ()=>{
   useEffect(() => {
@@ -21,11 +25,15 @@ const App = ()=>{
   });
   
   return (
-    <View style={{flex: 1}}>
-      <NavigationContainer>
-        <RootStack />
-      </NavigationContainer>
-    </View>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <View style={{flex: 1}}>
+          <NavigationContainer>
+            <RootStack />
+          </NavigationContainer>
+        </View>
+      </Provider>
+    </QueryClientProvider>
   )
 };
 

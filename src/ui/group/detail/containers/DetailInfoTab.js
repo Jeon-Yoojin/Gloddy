@@ -1,11 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 
 import DetailInfo from '../components/DetailInfo';
 import UserProfile from '../components/UserProfile';
 import CustomButton from '../../../../common/CustomButton';
 
 const DetailInfoTab = ()=>{
+    const navigation = useNavigation();
+
     return(
         <>
             {/* 상세 정보 - 모임 소개글 */}

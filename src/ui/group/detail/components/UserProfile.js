@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 
@@ -15,18 +16,19 @@ const UserProfileIcon = ({ imgSrc, user }) => {
 }
 
 const UserProfile = () => {
+    const navigation = useNavigation();
+
     return (
         <View style={styles.subContainer}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 12, alignItems: 'flex-end'}}>
-                <Text style={styles.title}>참여 인원 6명</Text>
-                <TouchableOpacity onPress={()=>{}}>
-                    <Feather
-                        name="chevron-right"
-                        size={23}
-                        style={{ color: '#1A1A1A' }}
-                    />
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 12, alignItems: 'flex-end'}} onPress={()=>navigation.navigate('GroupMembers')}>
+                <Text style={styles.title}>모임멤버</Text>
+                <Feather
+                    name="chevron-right"
+                    size={20}
+                    style={{ color: '#1A1A1A' }}
+                />
+            </TouchableOpacity>
+
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                 <UserProfileIcon imgSrc={require('../../../../assets/image/sample/John.jpg')} user={'John'}/>
                 <UserProfileIcon imgSrc={require('../../../../assets/image/sample/Maria.png')} user={'Maria'}/>
@@ -69,9 +71,10 @@ const styles = StyleSheet.create({
         //paddingVertical: 15,
     },
     title:{
-        fontSize: 12,
-        fontWeight: 'bold',
+        fontSize: 14,
+        fontWeight: '700',
         color: '#1A1A1A',
+        marginLeft: 10
     },
 })
 
