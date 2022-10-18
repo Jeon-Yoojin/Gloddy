@@ -1,5 +1,13 @@
 import client from './client';
-import {AuthResult, User} from './types';
+import {AuthResult, DupResult, User} from './types';
+
+export async function accountDupCheck(params: DupCheckParams) {
+    const response = await client.post<DupResult>(
+        '/api/v1/auth/email/check',
+        params,
+    )
+    return response.data;
+}
 
 export async function register(params: RegisterParams) {
     const response = await client.post<AuthResult>(
@@ -15,6 +23,10 @@ export async function login(params: LoginParams) {
         params,
     )
     return response.data;
+}
+
+interface DupCheckParams {
+    email: string
 }
 
 interface RegisterParams {

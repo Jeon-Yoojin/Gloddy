@@ -102,6 +102,7 @@ const RegisterScreen = ()=>{
                             onChangeText={(val) => usernameChange(val)}
                             onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
                             placeholder='이름을 입력해주세요.'
+                            placeholderTextColor='#B7B7B7'
                         />
                         {data.check_textInputChange ?
                                 <Entypo

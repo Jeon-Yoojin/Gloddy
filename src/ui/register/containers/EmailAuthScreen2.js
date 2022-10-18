@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import { SafeAreaView, StyleSheet, Text, Dimensions, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useQuery } from 'react-query';
+import { accountDupCheck } from '../../../api/auth';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Header from '../../../common/Header';
 import CustomInput from '../../../common/CustomInput';
@@ -40,22 +42,36 @@ const EmailAuthScreen2 = () => {
     }
     
     const changeID = (val) => {
-        if( val.trim().length >= 1 )
+        if( val.trim().length >= 1 ){
             setAuthUser({...authUser, userID:val, isActive:true});
+        }
+            
         else setAuthUser({...authUser, userID:val, isActive:false});
     }
+
+    const {data, isLoading, refetch} = useQuery('accountDupCheck', ()=>accountDupCheck({email : authUser.userID}), {
+        refetchOnWindowFocus: false,
+        enabled: false, // disable this query from automatically running
+        cacheTime: 0,
+        refetchInterval: 0
+      });
     
     const authentication = (val) => {
         setEmail(authUser.userID);
 
-        if(false){{/* 기존 사용자 */}
+        refetch()
+        .then(response=>console.log(response.data));
+
+        {/*
+        if(false){
             navigation.navigate('LoginScreen', {userID: authUser.userID});
         }
         else{
-            {/* 인증 실패시 회원가입 모달 컴포넌트 */}
+            
             setShowCheckModal(true);
             //navigation.navigate('CheckModal', {userID: authUser.userID});
         }
+        */}
     }
 
     return (

@@ -5,8 +5,6 @@ import Feather from 'react-native-vector-icons/Feather';
 import CommentIcon from '../../../../assets/image/comment.svg'
 
 const CommentButton = () => {
-    const commentIcon = '../../../../assets/image/group/comment.png'
-
     return (
         <Pressable onPress={() => { console.log('댓글쓰기 event') }}>
             <View style={buttonStyles.container}>
