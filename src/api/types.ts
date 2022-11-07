@@ -12,7 +12,13 @@ export interface DupResult{
     aboolean: boolean;
 }
 
-export interface AuthResult{
-    jwt: string;
+export interface RegisterResult{
+    errorCode: string,
+    userId: number,
+    authority: string
+}
+
+export interface LoginResult{
+    token: string;
     user: User;
 }

@@ -1,16 +1,16 @@
 import client from './client';
-import {AuthResult, DupResult, User} from './types';
+import {DupResult, RegisterResult, LoginResult, User} from './types';
 
-export async function accountDupCheck(params: DupCheckParams) {
+export async function accountDupCheck(params: {email: string}) {
     const response = await client.post<DupResult>(
         '/api/v1/auth/email/check',
-        params,
+        {email : params},
     )
-    return response.data;
+    return response;
 }
 
 export async function register(params: RegisterParams) {
-    const response = await client.post<AuthResult>(
+    const response = await client.post<RegisterResult>(
         '/api/v1/auth/sign-up',
         params,
     );
@@ -18,11 +18,11 @@ export async function register(params: RegisterParams) {
 }
 
 export async function login(params: LoginParams) {
-    const response = await client.post<AuthResult>(
+    const response = await client.post<LoginResult>(
         'api/v1/auth/login',
         params,
     )
-    return response.data;
+    return response;
 }
 
 interface DupCheckParams {

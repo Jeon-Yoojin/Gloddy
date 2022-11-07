@@ -11,9 +11,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const LoginScreen = ({navigation: {navigate}, route}) => {
-    const BackarrowImg = '../../../assets/image/backarrow.png'
     const user = useUser();
-    const {mutate: login, isLoading: loginLoading} = useLogin();
 
     const [authUser, setAuthUser] = useState({
         userPW: '',
@@ -27,19 +25,19 @@ const LoginScreen = ({navigation: {navigate}, route}) => {
         else setAuthUser({...authUser, userPW:val, isActive:false});
     }
 
-    const authentication = (val) => {
-        login({email: user.email, password: authUser.userPW});
+    const setPW = (val) => {
+        /* TODO: 해당 이메일의 비밀번호 설정 */
     }
 
     return (
         <SafeAreaView style={{flex:1, backgroundColor:'#FFFFFF'}}>
             <Header
-                    title={"시작하기"}
+                    title={"회원가입"}
                     noIcon={false}
                     leftIcon={<AntDesign name='left' size={17} />}
                     leftIconPress={() => { console.log('LeftIcon pressed!') }}
             />
-            <Text style={styles.title}>비밀번호를{'\n'}입력해주세요</Text>
+            <Text style={styles.title}>비밀번호를{'\n'}설정해주세요</Text>
             <View style={{flex:1, justifyContent: 'space-between'}}>
                 <View>
                     <CustomInput
@@ -56,14 +54,13 @@ const LoginScreen = ({navigation: {navigate}, route}) => {
                         rightSpace={true}
                         secureTextEntry={true}
                     />
-                    <TouchableOpacity><Text style={styles.subText}>PW찾기</Text></TouchableOpacity>
                 </View>
                 <CustomButton
-                    text={'로그인'}
+                    text={'완료'}
                     color={authUser.isActive ? '#1249FC' : null}
                     textColor={authUser.isActive ? '#FFFFFF' : null}
                     style={{bottom: windowHeight*0.04, alignSelf: 'center'}}
-                    onPress={authentication}
+                    onPress={setPW}
                     disabled={authUser.isActive ? false : true}
                 />
             </View>

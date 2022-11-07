@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import { SafeAreaView, StyleSheet, Text, Dimensions, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useQuery } from 'react-query';
 import { accountDupCheck } from '../../../api/auth';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Header from '../../../common/Header';
@@ -48,41 +47,32 @@ const EmailAuthScreen2 = () => {
             
         else setAuthUser({...authUser, userID:val, isActive:false});
     }
-
-    const {data, isLoading, refetch} = useQuery('accountDupCheck', ()=>accountDupCheck({email : authUser.userID}), {
-        refetchOnWindowFocus: false,
-        enabled: false, // disable this query from automatically running
-        cacheTime: 0,
-        refetchInterval: 0
-      });
     
     const authentication = (val) => {
         setEmail(authUser.userID);
+        //navigation.navigate('LoginScreen')
 
-        refetch()
-        .then(response=>console.log(response.data));
-
-        {/*
-        if(false){
-            navigation.navigate('LoginScreen', {userID: authUser.userID});
-        }
-        else{
-            
-            setShowCheckModal(true);
-            //navigation.navigate('CheckModal', {userID: authUser.userID});
-        }
-        */}
+        accountDupCheck(authUser.userID)
+        .then(
+            response=>{
+                if(response.data.aboolean){
+                    console.log('valid user!')
+                    navigation.navigate('LoginScreen')
+                }
+            }
+        )
+        .catch(error=>console.log(error.response));
     }
-
+    
     return (
         <SafeAreaView style={{flex:1, backgroundColor: '#ffffff'}}>
             <Header
-                title={"시작하기"}
+                title={"회원가입"}
                 noIcon={false}
                 leftIcon={<AntDesign name='left' size={17} />}
                 leftIconPress={() => { console.log('LeftIcon pressed!') }}
             />
-            <Text style={styles.title}>학교 이메일을{'\n'}입력해주세요</Text>
+            <Text style={styles.title}>재학생 인증을 위해{'\n'}학교 이메일을 입력해주세요</Text>
             <View style={{flex:1, justifyContent: 'space-between'}}>
                 <View>
                     <CustomInput
@@ -95,7 +85,7 @@ const EmailAuthScreen2 = () => {
                     <Text style={{alignSelf:'center', marginTop: 10, color: '#D7533E'}}>학교 이메일을 다시 확인해주세요.</Text>
                 </View>
                 <CustomButton
-                    text={'시작하기'}
+                    text={'이메일 인증하기'}
                     color={authUser.isActive ? '#1249FC' : null}
                     textColor={authUser.isActive ? '#FFFFFF' : null}
                     style={{bottom: windowHeight*0.04, alignSelf: 'center'}}
