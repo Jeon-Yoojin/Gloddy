@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { SafeAreaView, StyleSheet, Text, Dimensions, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { accountDupCheck } from '../../../api/auth';
+import { accountDupCheck, reqAuthCode } from '../../../api/auth';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Header from '../../../common/Header';
 import CustomInput from '../../../common/CustomInput';
@@ -37,7 +37,7 @@ const EmailAuthScreen2 = () => {
     const goToRegister = () => {
         setAuthUser({...authUser, isValideUser: true});
         setShowIdentifyModal(false);
-        navigation.navigate('RegisterScreen');
+        //navigation.navigate('RegisterScreen');
     }
     
     const changeID = (val) => {
@@ -47,21 +47,37 @@ const EmailAuthScreen2 = () => {
             
         else setAuthUser({...authUser, userID:val, isActive:false});
     }
+
+    const sendAuthCode = () => {
+        reqAuthCode(authUser.userID)
+        .then(
+            response =>{
+                console.log(response);
+            }
+        )
+        .catch(error=>console.log("sendAuthCode error", error));
+
+        setShowCheckModal(false);
+        setShowIdentifyModal(true);
+    } 
     
     const authentication = (val) => {
         setEmail(authUser.userID);
-        //navigation.navigate('LoginScreen')
 
         accountDupCheck(authUser.userID)
         .then(
             response=>{
                 if(response.data.aboolean){
-                    console.log('valid user!')
-                    navigation.navigate('LoginScreen')
+                    console.log('valid user!');
+                    navigation.navigate('LoginScreen');
+                }
+                else{
+                    console.log('없는 계정');
+                    setShowCheckModal(true);
                 }
             }
         )
-        .catch(error=>console.log(error.response));
+        .catch(error=>console.log("accountDupCheckError", error));
     }
     
     return (
@@ -94,7 +110,7 @@ const EmailAuthScreen2 = () => {
                 />
             </View>
             {showCheckModal ?
-                <CheckDuplicateModal showBottomSheet={showCheckModal} hide={hideCheckModal} showNext={()=>{setShowCheckModal(false); setShowIdentifyModal(true)}} userID={authUser.userID}/>
+                <CheckDuplicateModal showBottomSheet={showCheckModal} hide={hideCheckModal} showNext={sendAuthCode} userID={authUser.userID}/>
                 /*<IdentificationModal showBottomSheet={showIdentifyModal} hide={hideIdentifyModal}/>*/
                 : null
             }
