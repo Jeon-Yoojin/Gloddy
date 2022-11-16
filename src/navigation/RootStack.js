@@ -5,7 +5,7 @@ import SlideScreen from '../ui/tutorial/containers/SlideScreen';
 import SelectSchool from '../ui/register/containers/SelectSchool';
 import EmailAuthScreen from '../ui/register/containers/EmailAuthScreen';
 import EmailAuthScreen2 from '../ui/register/containers/EmailAuthScreen2';
-import LoginScreen from '../ui/login/containers/LoginScreen';
+import LoginScreen2 from '../ui/login/containers/LoginScreen2';
 import EmailConfirmScreen from '../ui/register/containers/EmailConfirmScreen';
 import PersonalityScreen from '../ui/register/containers/PersonalityScreen';
 import RegisterScreen from '../ui/register/containers/RegisterScreen';
@@ -65,6 +65,11 @@ function RootStack() {
             <Stack.Screen
               name="LoginScreen"
               component={LoginScreen}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="LoginScreen2"
+              component={LoginScreen2}
               options={{headerShown: false}}
             />
             <Stack.Screen

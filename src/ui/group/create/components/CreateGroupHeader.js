@@ -12,7 +12,6 @@ const CreateGroupHeader = () => {
             noIcon={false}
             leftIcon={< Image source={require(BackarrowImg)} style={styles.backarrow} />}
             leftIconPress={() => { console.log('pressed!') }}
-            rightIcon={<Text style={{fontSize: 16}}>개설</Text>}
         />
     )
 }

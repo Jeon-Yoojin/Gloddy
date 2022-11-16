@@ -1,7 +1,13 @@
 import React, { useCallback } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Image, Text } from 'react-native';
-import MeterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { Text } from 'react-native';
+
+import GroupIcon from '../assets/image/navigator/grouping.svg';
+import GroupActiveIcon from '../assets/image/navigator/groupingActive.svg';
+import MyGroupIcon from '../assets/image/navigator/mine.svg';
+import MyGroupActiveIcon from '../assets/image/navigator/mineActive.svg';
+import ProfileIcon from '../assets/image/navigator/profile.svg';
+import ProfileActiveIcon from '../assets/image/navigator/profileActive.svg';
 
 import GroupingScreen from '../ui/group/grouping/containers/GroupingScreen';
 import MyGroupsScreen from '../ui/mygroup/MyGroupsScreen';
@@ -25,19 +31,33 @@ const MainNavigator = () => {
             },
             tabBarIcon: ({focused, color, size})=>{
                 const {name} = route;
-                let image;
+                let icon;
 
                 if(name == 'GroupingScreen'){
-                    image = focused ? require('../assets/image/navigator/groupingActive.svg') : require('../assets/image/navigator/grouping.svg')
+                    icon = focused ? <GroupActiveIcon/> : <GroupIcon/>;
                 }
-                return <Image source={image} s/>
+                else if(name == 'MyGroupsScreen'){
+                    icon = focused ? <MyGroupActiveIcon/> : <MyGroupIcon/>;
+                }
+                else if(name == 'MyProfileScreen'){
+                    icon = focused ? <ProfileActiveIcon/> : <ProfileIcon/>;
+                }
+
+                return icon;
                 {/* 
                 switch (name){
                     case "GroupingScreen":
                         return <MeterialIcons name="groups" size={size} color={color} />;
                 }
                 */}
-            }
+            },
+            tabBarStyle: {
+                height: 100, 
+                borderTopLeftRadius: 25,
+                borderTopRightRadius: 25,
+                backgroundColor: '#FFFFFF'
+            },
+            style: {backgroundColor: '#FFFFFF'}
         }
     }, []);
 

@@ -18,6 +18,7 @@ import PostingScreen from '../../group/detail/containers/PostingScreen';
 import GroupCategoryScreen from '../../group/grouping/containers/GroupCategoryScreen';
 import MyProfileScreen from '../../myprofile/containers/MyProfileScreen';
 import SelectSchool from '../../register/containers/SelectSchool';
+import LoginScreen2 from '../../login/containers/LoginScreen2';
  
 const styles = StyleSheet.create({
     title: {
@@ -99,7 +100,7 @@ export default class SlideScreen extends React.Component {
   render() {
     if (this.state.showRealApp) {
       return (
-        <SelectSchool/>
+        <LoginScreen2/>
       )
     } else {
       return (

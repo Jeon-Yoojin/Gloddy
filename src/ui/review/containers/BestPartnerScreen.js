@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { SafeAreaView, StyleSheet, Image, Text, ScrollView, View, Dimensions } from "react-native";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Header from "../../../common/Header";
@@ -43,6 +43,7 @@ const User = [
 
 const BestPartnerScreen = () => {
     const navigation = useNavigation();
+    const [selected, setSelected] = useState(null); 
 
     return (
         <SafeAreaView style={styles.container}>
@@ -56,17 +57,12 @@ const BestPartnerScreen = () => {
             <Text style={styles.description}>최고의 짝궁은 누구인가요?</Text>
             <View style={{flex:1, justifyContent: 'space-between'}}>
                 <ScrollView style={styles.scrollView}>
-                    {User.map((data, index) => {
-                        return (
-                            <PartnerSelection
-                                key={index}
-                                imgSrc={data.imgSrc}
-                                name={data.name}
-                                imgSize={47}
-                                textSize={16}
-                            />
-                        )
-                    })}
+                    <PartnerSelection
+                        data={User}
+                        imgSize={47}
+                        textSize={16}
+                        onSelect={(value) => {setSelected(value)}}
+                    />
                 </ScrollView>
 
                 {/* 제출버튼 */}
