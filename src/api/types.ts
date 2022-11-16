@@ -1,3 +1,5 @@
+import GroupInfoInput from "../ui/group/create/components/GroupInfoInput";
+
 export interface User{
     email: string;
     name: string;
@@ -12,6 +14,10 @@ export interface DupResult{
     aboolean: boolean;
 }
 
+export interface VerifyResult{
+    verify: boolean;
+}
+
 export interface RegisterResult{
     errorCode: string,
     userId: number,
@@ -21,4 +27,20 @@ export interface RegisterResult{
 export interface LoginResult{
     token: string;
     user: User;
+}
+
+export interface GroupInfo{
+    content: string;
+    meetDate: string;
+    memberCount: number;
+    place: string;
+    title: string;
+}
+
+export interface GetGroupsResult{
+    contents: Array<GroupInfo>;
+    currentCount: number;
+    currentPage: number;
+    totalCount: number;
+    totalPage: number;
 }

@@ -46,7 +46,7 @@ const Splash = ()=>{
     <>
       {
         isLoading ?
-          <View><Text>True</Text></View>
+          <View><Text>Loading</Text></View>
           : <RootStack/>
       }
     </>

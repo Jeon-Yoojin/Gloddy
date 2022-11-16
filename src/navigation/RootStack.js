@@ -20,6 +20,7 @@ import BestPartnerScreen from '../ui/review/containers/BestPartnerScreen';
 import MainScreen from '../ui/MainScreen';
 import PostingScreen from '../ui/group/detail/containers/PostingScreen';
 import GroupMembers from '../ui/group/detail/containers/GroupMembers';
+import PWSettingScreen from '../ui/register/containers/PWSettingScreen';
 
 /* 테스트 screen */
 import TestModalNavigatorScreen from '../ui/register/components/TestModalNavigatorScreen';
@@ -56,6 +57,11 @@ function RootStack() {
               }}
             />
             */}
+            <Stack.Screen
+              name="PWSettingScreen"
+              component={PWSettingScreen}
+              options={{headerShown: false}}
+            />
             <Stack.Screen
               name="LoginScreen"
               component={LoginScreen}

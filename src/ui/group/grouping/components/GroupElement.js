@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TouchableOpacity, Image, Text, StyleSheet } from "react-native";
+import { View, Image, Text, StyleSheet } from "react-native";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -56,15 +56,15 @@ const Date = ({ date }) => {
     )
 }
 
-const GroupElement = ({ imgSrc, title, introduction, maxNum, place, date }) => {
+const GroupElement = ({ title, introduction, maxNum, place, date }) => {
     const groupSample_small = '../../../../assets/image/group/groupSample_small.png';
-
     return (
-            <View style={styles.container}>
+            <View style={[styles.container]}>
                 <View style={styles.topContainer}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        {/* 그룹 썸네일 이미지 */}
+                        {/* 그룹 썸네일 이미지 
                         <Image source={imgSrc} style={{ width: 60, height: 55, borderRadius: 9 }} />
+                        */}
                         {/* 그룹 제목, 소개글 */}
                         <View style={{ marginHorizontal: 14, }}>
                             <Text style={styles.title}>{title}</Text>

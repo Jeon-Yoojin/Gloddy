@@ -5,6 +5,7 @@ import useAuthActions from '../redux/hooks/useAuthAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/slices';
+import client from '../api/client';
 
 export default function useLogin(){
     const email = useSelector((state:RootState)=>state.auth.user.email)
@@ -14,9 +15,11 @@ export default function useLogin(){
 
     const mutation = useMutation(login,{
         onSuccess: (response)=>{
+            //모든 api 요청 콜마다 token 정보 담기도록
+            client.defaults.headers.common['X-AUTH-TOKEN'] = response.data.token
+            
             setToken(response.data.token);
             console.log('Success', response.data);
-            //token, userID 저장
             
             AsyncStorage.setItem(
                 'authData',
