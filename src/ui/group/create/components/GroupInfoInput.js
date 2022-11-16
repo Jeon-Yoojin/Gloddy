@@ -17,7 +17,7 @@ const GroupInfoInput = ()=>{
                 <Text style={styles.titleText}>방제목</Text>
                 <TextInput
                     style={styles.textInput}
-                    placeholder={'제목을 입력해주세요.'}
+                    placeholder='제목을 입력해주세요.'
                 />
             </View>
 
@@ -29,11 +29,8 @@ const GroupInfoInput = ()=>{
                     underlineColorAndroid='transparent'
                     multiline={true}
                     placeholder='내용을 입력해주세요.'
-                    numberOfLines={5}
                 />
             </View>
-
-            <View style={{flex:1, backgroundColor: '#F7F7F7'}}/>
         </View>
     )
 }
@@ -41,7 +38,9 @@ const GroupInfoInput = ()=>{
 const styles = StyleSheet.create({
     container:{
         flexGrow: 1,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        borderColor: 'black',
+        borderWidth:2
     },
     titleContainer:{
         marginHorizontal: 14,
@@ -49,7 +48,9 @@ const styles = StyleSheet.create({
     },
     subContainer:{
         marginHorizontal: 14,
-        marginTop: 10
+        marginTop: 10,
+        borderColor: 'black',
+        borderWidth:2
     },
     titleText:{
         fontSize: 14,
