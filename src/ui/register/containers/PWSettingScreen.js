@@ -10,7 +10,7 @@ import useLogin from '../../../hooks/useLogin';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const LoginScreen = ({navigation: {navigate}, route}) => {
+const PWSettingScreen = ({navigation: {navigate}, route}) => {
     const user = useUser();
 
     const [authUser, setAuthUser] = useState({
@@ -94,4 +94,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default LoginScreen;
+export default PWSettingScreen;
