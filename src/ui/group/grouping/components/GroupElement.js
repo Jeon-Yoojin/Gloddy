@@ -1,7 +1,9 @@
 import React from "react";
-import { View, Image, Text, StyleSheet } from "react-native";
+import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 
 const User = [
     {
@@ -32,7 +34,7 @@ const Participant = ({ User }) => {
                     )
                 })}
             </View>
-            <Text style={[styles.text, {justifyContent: 'center'}]}>{User.length}명</Text>
+            <Text style={[styles.text, { justifyContent: 'center' }]}>{User.length}명</Text>
         </>
     )
 }
@@ -56,9 +58,20 @@ const Date = ({ date }) => {
     )
 }
 
-const GroupElement = ({ title, introduction, maxNum, place, date }) => {
+const GroupElement = ({ groupId, title, introduction, maxNum, place, date }) => {
+    const navigation = useNavigation();
+
+    const onPress = ()=>{
+        navigation.navigate('GroupDetailScreen', {
+            groupId,
+            title,
+            introduction
+        });
+    }
+
     const groupSample_small = '../../../../assets/image/group/groupSample_small.png';
     return (
+        <Pressable onPress={onPress}>
             <View style={[styles.container]}>
                 <View style={styles.topContainer}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -85,11 +98,12 @@ const GroupElement = ({ title, introduction, maxNum, place, date }) => {
                     <Date date={date} />
                 </View>
             </View>
+        </Pressable>
     )
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         //ios의 경우 shadow 컬러 설정 필요
         borderColor: '#EAEAEA',
         borderWidth: 1,
@@ -99,11 +113,11 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         paddingHorizontal: 14,
     },
-    topContainer:{
+    topContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
-    bottomContainer:{
+    bottomContainer: {
         flexDirection: 'row',
         marginTop: 20,
         alignItems: 'stretch'
@@ -118,7 +132,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 7,
     },
-    place:{
+    place: {
         marginHorizontal: 13,
         flexDirection: 'row'
     },

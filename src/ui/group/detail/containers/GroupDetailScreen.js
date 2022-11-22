@@ -20,18 +20,20 @@ const renderScene = SceneMap({
 });
 
 {/* 모임 소개글 */}
-const GroupIntro = ()=>{
+const GroupIntro = ({introTitle, intro})=>{
     return(
         <>
             <View style={{ paddingHorizontal: 20, paddingBottom: 15, marginTop: 7 }}>
-                <Text style={styles.introTitle}>Let's go for a walk!</Text>
-                <Text style={styles.intro}>It's a group that walks around, talks, {'\n'}and learns languages.</Text>
+                <Text style={styles.introTitle}>{introTitle}</Text>
+                <Text style={styles.intro}>{intro? intro : ''}</Text>
             </View>
         </>
     )
 }
 
-const GroupDetailScreen = ()=>{
+const GroupDetailScreen = ({route})=>{
+    const { title, introduction } = route.params;
+
     const [index, setIndex] = useState(0);
     const [routes] = useState([
         {key: 'first', title: '상세 정보'},
@@ -45,7 +47,7 @@ const GroupDetailScreen = ()=>{
             <Image source={require('../../../../assets/image/group/groupSample_big.png')} style={{width: '100%', borderBottomLeftRadius: 30, borderBottomRightRadius: 30}}/>
 
             {/* Group 소개글 */}
-            <GroupIntro/>
+            <GroupIntro introTitle={title} intro={introduction}/>
 
             {/* tab navigator */}
             <TabView

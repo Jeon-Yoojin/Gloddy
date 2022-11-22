@@ -3,19 +3,23 @@ import React from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 
 import Feather from "react-native-vector-icons/Feather";
+import GalleryIcon from '../../../../assets/image/galleryIcon.svg';
 
 const UserProfileIcon = ({ imgSrc, user }) => {
+    const defaultImg = <GalleryIcon/>
+
     return (
         <TouchableOpacity>
             <View style={icon.container}>
-                <Image source={imgSrc} style={icon.img} />
+                {imgSrc? <Image source={imgSrc} style={icon.img} /> : defaultImg}
                 <Text style={icon.text}>{user}</Text>
             </View>
         </TouchableOpacity>
     )
 }
 
-const UserProfile = () => {
+const UserProfile = ({User}) => {
+    //[TODO]: 이미지 소스 받아오는 코드 추가
     const navigation = useNavigation();
 
     return (
@@ -30,13 +34,11 @@ const UserProfile = () => {
             </TouchableOpacity>
 
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                <UserProfileIcon imgSrc={require('../../../../assets/image/sample/John.jpg')} user={'John'}/>
-                <UserProfileIcon imgSrc={require('../../../../assets/image/sample/Maria.png')} user={'Maria'}/>
-                <UserProfileIcon imgSrc={require('../../../../assets/image/sample/Sam.png')} user={'Ki hyeon'}/>
-                <UserProfileIcon imgSrc={require('../../../../assets/image/sample/WillJones.png')} user={'Yujin'}/>
-                <UserProfileIcon imgSrc={require('../../../../assets/image/sample/Tom.png')} user={'Tom'}/>
-                <UserProfileIcon imgSrc={require('../../../../assets/image/sample/Lucy.png')} user={'Lucy'}/>
-                <UserProfileIcon imgSrc={require('../../../../assets/image/sample/John.jpg')} user={'1'}/>
+                {User && User.map((item, index)=>{
+                    return(
+                        <UserProfileIcon key={index} imgSrc={item.imgSrc? item.imgSrc : ''} user={item.user}/>
+                    )
+                })}
             </ScrollView>
         </View>
     )

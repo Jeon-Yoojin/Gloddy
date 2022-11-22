@@ -4,13 +4,27 @@ import { BasicModal } from '../../../../common/BasicModal';
 import DetailInfo from '../components/DetailInfo';
 import UserProfile from '../components/UserProfile';
 import CustomButton from '../../../../common/CustomButton';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import WarningIcon from '../../../../assets/image/group/detail/warning.svg'
+import { useQuery } from 'react-query';
+import { getGroupDetail } from '../../../../api/group';
 
 const DetailInfoTab = ()=>{
     const navigation = useNavigation();
     const [showBottomSheet, setShowBottomSheet] = useState(false)
+
+    const route = useRoute();
+    const groupId = route.params.groupId;
+    const groupQuery = useQuery(['group', groupId], ()=>getGroupDetail(groupId))
+
+    if(!groupQuery.data){
+        return(
+            /* 로딩바 */
+            <Text>Loading....</Text>
+        )
+    }
+    const {participantNames, meetDate, startTime, endTime, place, place_latitude, place_longitude} = groupQuery.data;
 
     const hide = () => {
       setShowBottomSheet(false)
@@ -19,10 +33,10 @@ const DetailInfoTab = ()=>{
     return(
         <ScrollView>
             {/* 모임 참여 인원 */}
-            <UserProfile/>
+            <UserProfile User={[{'imgSrc': '', 'user': '전유진'}]}/>
 
             {/* 모임 상세 정보 */}
-            <DetailInfo/>
+            <DetailInfo date={meetDate} startTime={startTime} endTime={endTime} place={place}/>
             
             {/* 지원 버튼 */}
             <View style={styles.button}>
@@ -30,7 +44,7 @@ const DetailInfoTab = ()=>{
                     text={'지원하기'}
                     color='#1249FC'
                     textColor='#FFFFFF'
-                    onPress={() => { navigation.navigate('PostingScreen') }}
+                    onPress={() => { navigation.navigate('ApplicationScreen') }}
                 />
             </View>
             

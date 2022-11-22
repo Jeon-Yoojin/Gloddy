@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-const DateInfo = ({ date, time }) => {
+const DateInfo = ({ date, startTime, endTime }) => {
 
     return (
         <View style={[styles.subContainer]}>
@@ -9,7 +9,7 @@ const DateInfo = ({ date, time }) => {
                 <Text style={styles.title}>모임 일시</Text>
 
                 <View style={styles.box}>
-                    <Text style={styles.subText}>{date} {time}</Text>
+                    <Text style={styles.subText}>{date} {startTime}-{endTime}</Text>
                 </View>
             </View>
         </View>
@@ -40,7 +40,7 @@ const DetailInfo = ({attendees, date, startTime, endTime, place}) => {
             {/* 참여 인원 */}
 
             {/* 모임 날짜/시간 */}
-            <DateInfo date={'2022.04.27.FRI'} time={'19:00'}/>
+            <DateInfo date={date} startTime={startTime} endTime={endTime}/>
 
             {/* 모임 위치 */}
             <View style={styles.subContainer}>
@@ -48,7 +48,7 @@ const DetailInfo = ({attendees, date, startTime, endTime, place}) => {
                     <Text style={styles.title}>모임 위치</Text>
                 </View>
                 {/* 지도 마커 */}
-                <Marker markerTitle={'경희회관'} markerType={'호프, 요리주점'} markerInfo={'서울 동대문구 경희대로3길 11 지하 1층 (회기동)'}/>
+                <Marker markerTitle={place} markerType={'호프, 요리주점'} markerInfo={'서울 동대문구 경희대로3길 11 지하 1층 (회기동)'}/>
             </View>
         </View>
     )

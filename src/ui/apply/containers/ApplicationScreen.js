@@ -1,8 +1,20 @@
 import React from "react";
 import { SafeAreaView, View, Text, StyleSheet, TextInput, Image } from "react-native";
+import { applyGroup } from "../../../api/group";
 
 import CustomButton from "../../../common/CustomButton";
 import Header from "../../../common/Header";
+
+const handleOnPress = ()=>{
+    applyGroup(1, {
+        introduce : "introduce",
+        reason : "reason2"
+    }).then(
+        (res) => console.log('response', res)
+    ).catch(
+        (err) => console.log('error', err)
+    )
+}
 
 const ApplicationScreen = ()=>{
     const BackarrowImg = '../../../assets/image/backarrow.png'
@@ -42,7 +54,7 @@ const ApplicationScreen = ()=>{
                 </View>
 
                 <View style={styles.button}>
-                    <CustomButton text={'지원하기'} />
+                    <CustomButton text={'지원하기'} onPress={handleOnPress}/>
                 </View>
             </View>
         </SafeAreaView>

@@ -12,7 +12,6 @@ const GroupDetailHeader = ()=>{
 
     return (
         < Header
-            title={"Let's go for a walk!"}
             noIcon={false}
             leftIcon={< Image source={require(BackarrowImg)} style={styles.backarrow} />}
             leftIconPress={() => { console.log('LeftIcon pressed!') }}

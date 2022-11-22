@@ -44,3 +44,18 @@ export interface GetGroupsResult{
     totalCount: number;
     totalPage: number;
 }
+
+export interface GetGroupDetailResult{
+    myGroup: boolean;
+    title: string;
+    fileUrl: string;
+    content: string;
+    participantNames: Array<string>;
+    meetDate: string;
+    startTime: string;
+    endTime: string;
+    place: string;
+    place_latitude: string;
+    place_longitude: string;
+    countParticipants: number;
+}

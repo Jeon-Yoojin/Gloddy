@@ -3,11 +3,10 @@ import { SafeAreaView, View, StyleSheet, ScrollView, Image, Pressable, Touchable
 import { useNavigation } from "@react-navigation/native";
 import Entypo from "react-native-vector-icons/Entypo";
 import useUser from "../../../../redux/hooks/useUser";
-import { getGroups } from "../../../../api/group";
+import { getGroupDetail, getGroups } from "../../../../api/group";
 import GroupInfo from "../components/GroupInfo";
 
 import Header from "../../../../common/Header";
-import GroupElement from "../components/GroupElement";
 import { useInfiniteQuery } from "react-query";
 
 

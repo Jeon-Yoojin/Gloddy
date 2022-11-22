@@ -1,22 +1,22 @@
 import React from 'react';
-import { FlatList, RefreshControl, View, Text } from 'react-native'
+import { FlatList, RefreshControl } from 'react-native'
 import GroupElement from './GroupElement';
 
-const GroupInfo = ({ groups, isFetchingNextPage, fetchNextPage, refresh, isRefreshing }) => {
+const GroupInfo = ({ groups, fetchNextPage, refresh, isRefreshing }) => {
     return (
-        
         <FlatList
             data={groups}
             renderItem={({item, index})=>{
                 return (
-                    <GroupElement
-                        key={index}
-                        title={item.title}
-                        introduction={item.content}
-                        maxNum={item.memberCount}
-                        place={item.place}
-                        date={item.meetDate}
-                    />
+                        <GroupElement
+                            key={index}
+                            groupId={item.groupId}
+                            title={item.title}
+                            introduction={item.content}
+                            maxNum={item.memberCount}
+                            place={item.place}
+                            date={item.meetDate}
+                        />
                 )
             }}
             keyExtractor={(item, index)=>index.toString()}
