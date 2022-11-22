@@ -21,19 +21,20 @@ const GroupingScreen = () => {
         data,
         isFetchingNextPage,
         fetchNextPage,
-        fetchPreviousPage,
-        isFetchingPreviousPage
+        refetch,
+        isFetching
     } = useInfiniteQuery(
         'groups',
         ({ pageParam = 0 }) => getGroups({ page: pageParam, size: 6, userId: 1 }),
         {
             getNextPageParam: (lastPage) => {
                 return lastPage?.currentCount === 6 ? lastPage.currentPage + 1 : undefined;
-            }
+            },
         },
     );
 
     const groups = useMemo(() => {
+        console.log(data);
         if (!data) {
             return null;
         }
@@ -54,8 +55,8 @@ const GroupingScreen = () => {
                 groups={groups}
                 isFetchingNextPage={isFetchingNextPage}
                 fetchNextPage={fetchNextPage}
-                refresh={fetchPreviousPage}
-                isRefreshing={isFetchingPreviousPage}
+                refresh={refetch}
+                isRefreshing={isFetching && !isFetchingNextPage}
             />
             
             {/* 추가버튼 */}

@@ -39,9 +39,9 @@ export default function CustomDatePicker({setDateValue, placeholder, style, righ
     const handleConfirm = (date) => {
         setOpen(false);
         setDate(date);
-        onChangeText(date.format("yyyy.MM.dd"))
+        onChangeText(date.format("yyyy-MM-dd"))
         
-        setDateValue(date.format("yyyy.MM.dd"))
+        setDateValue(date.format("yyyy-MM-dd"))
     };
 
     return (

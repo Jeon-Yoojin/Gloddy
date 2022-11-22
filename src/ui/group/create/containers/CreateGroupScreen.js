@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView, TextInput, Touchable, TouchableOpacity, Dimensions, ScrollView } from "react-native";
 
 import CreateGroupHeader from "../components/CreateGroupHeader";
@@ -7,16 +7,50 @@ import DatePicker from '../../../../common/DatePicker'
 import GroupInfoInput from "../components/GroupInfoInput";
 import SettingInput from "../components/SettingInput";
 import CustomButton from "../../../../common/CustomButton";
+import { useMutation, useQueryClient, InfiniteData } from "react-query";
+import { createGroup } from "../../../../api/group";
+import { useNavigation } from "@react-navigation/native";
 
 const windowHeight = Dimensions.get('window').height;
 
 const CreateGroupScreen = () => {
+    const navigation = useNavigation();
+    const queryClient = useQueryClient();
     const [data, setData] = useState({
-        date: '',
+        title: '',
+        content: '',
+        maxUser: 0,
+        place: '',
+        place_latitude: '100',
+        place_longitude: '2',
+        meetDate: '',
         startTime: '',
         endTime: '',
-        isValid: true,
+        fileUrl: '',
+        isValidTitle: false,
+        isValidContent: false,
     });
+
+    const onChangeInput = (event, name) => {
+        const {text} = event.nativeEvent;
+        const len = text.trim().length;
+
+        if(name === 'title'){
+            if(len > 0) setData({...data, title: text, isValidTitle: true});
+            else setData({...data, title: text, isValildTitle: false});
+        }
+        else if(name === 'content'){
+            if(len > 0 && len < 30) setData({...data, content: text, isValidContent: true});
+            else if(len >= 30) setData({...data, content: text});
+            else setData({...data, content: text, isValidContent: false});
+        }
+        else if(name === 'place'){
+            setData({...data, place: text});
+        }
+        else if(name === 'maxUser'){
+            setData({...data, maxUser: Number(text)});
+        }
+    }
 
     const startTimeChange = (val) => {
         setData({
@@ -32,12 +66,34 @@ const CreateGroupScreen = () => {
         });
     }
 
-    const dateChange = (val) => {
+    const meetDateChange = (val) => {
         setData({
             ...data,
-            date: val,
+            meetDate: val,
         })
     }
+
+    const {mutate: create} = useMutation(createGroup, {
+        onSuccess: group => {
+            queryClient.refetchQueries({queryKey: ['groups']});
+            navigation.goBack();
+        },
+    });
+
+    const onSubmit = useCallback(()=>{
+        create({
+            content: data.content,
+            endTime: data.endTime,
+            fileUrl: data.fileUrl,
+            maxUser: data.maxUser,
+            meetDate: data.meetDate,
+            place: data.place,
+            place_latitude: data.place_latitude,
+            place_longitude: data.place_longitude,
+            startTime: data.startTime,
+            title: data.title
+        });
+    }, [create, data]);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -56,6 +112,9 @@ const CreateGroupScreen = () => {
                     <TextInput
                         style={styles.inputBox}
                         placeholder="제목을 입력해주세요"
+                        onChange={event => onChangeInput(event, 'title')}
+                        autoCorrect={false}
+                        autoCapitalize={'none'}
                     />
                 </View>
 
@@ -73,6 +132,9 @@ const CreateGroupScreen = () => {
                         multiline={true}
                         maxLength={30}
                         placeholder="내용을 입력해주세요"
+                        onChange={event => onChangeInput(event, 'content')}
+                        autoCorrect={false}
+                        autoCapitalize={'none'}
                     />
                 </View>
 
@@ -84,7 +146,7 @@ const CreateGroupScreen = () => {
                     <View style={styles.inputBox}>
                         <DatePicker
                             placeholder={'모임 일시를 설정해주세요.'}
-                            setDateValue={dateChange}
+                            setDateValue={meetDateChange}
                             style={styles.datePicker}
                         />
                     </View>
@@ -96,6 +158,7 @@ const CreateGroupScreen = () => {
                     <TextInput
                         style={styles.inputBox}
                         placeholder={'모임 위치를 설정해주세요.'}
+                        onChange={event => onChangeInput(event, 'place')}
                     />
                 </View>
 
@@ -105,6 +168,7 @@ const CreateGroupScreen = () => {
                     <TextInput
                         style={styles.inputBox}
                         placeholder={'모임 인원을 설정해주세요.'}
+                        onChange={event => onChangeInput(event, 'maxUser')}
                     />
                 </View>
 
@@ -128,10 +192,10 @@ const CreateGroupScreen = () => {
             <View style={{alignItems: 'center', justifyContent: 'center', bottom: windowHeight*0.01}}>
                 <CustomButton
                     text={'완료'}
-                    color={data.isValid ? '#1249FC' : null}
-                    textColor={data.isValid ? '#FFFFFF' : null}
-                    onPress={() => { }}
-                    disabled={data.isValid ? false : true}
+                    color={data.isValidTitle && data.isValidContent ? '#1249FC' : null}
+                    textColor={data.isValidTitle && data.isValidContent ? '#FFFFFF' : null}
+                    onPress={onSubmit}
+                    disabled={data.isValidTitle && data.isValidContent ? false : true}
                 />
             </View>
 

@@ -44,3 +44,7 @@ export interface GetGroupsResult{
     totalCount: number;
     totalPage: number;
 }
+
+export interface CreateGroupResult{
+    groupId: number;
+}

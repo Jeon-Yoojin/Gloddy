@@ -13,7 +13,7 @@ export default function TimePicker({setTimeValue, placeholder}) {
         setDate(date);
         onChangeText(date.format("a/p hh:mm"))
         
-        setTimeValue(date.format("a/p hh:mm"))
+        setTimeValue(date.format("a/p HH:mm"))
     };
 
     return (
