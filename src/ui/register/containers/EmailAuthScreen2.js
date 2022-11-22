@@ -97,6 +97,8 @@ const EmailAuthScreen2 = () => {
                         onChangeText={changeID}
                         rightSpace={true}
                         editable={showCheckModal | showIdentifyModal ? false : true}
+                        autoCorrect={false}
+                        autoCapitalize={'none'}
                     />  
                     <Text style={{alignSelf:'center', marginTop: 10, color: '#D7533E'}}>학교 이메일을 다시 확인해주세요.</Text>
                 </View>

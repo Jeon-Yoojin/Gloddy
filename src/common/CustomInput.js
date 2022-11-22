@@ -17,6 +17,8 @@ const CustomInput = (props) => {
                 onEndEditing={props.onEndEditing}
                 editable={props.editable}
                 secureTextEntry={props.secureTextEntry}
+                autoCorrect={props.autoCorrect}
+                autoCapitalize={props.autoCapitalize}
                 //onChangeText={}
             />
             {props.rightIcon ?

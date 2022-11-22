@@ -44,7 +44,6 @@ export interface GetGroupsResult{
     totalCount: number;
     totalPage: number;
 }
-
 export interface GetGroupDetailResult{
     myGroup: boolean;
     title: string;
@@ -58,4 +57,7 @@ export interface GetGroupDetailResult{
     place_latitude: string;
     place_longitude: string;
     countParticipants: number;
+}
+export interface CreateGroupResult{
+    groupId: number;
 }
