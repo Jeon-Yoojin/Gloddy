@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import CustomButton from '../../../../common/CustomButton';
 import Notice from '../components/Notice';
@@ -8,6 +8,7 @@ import Post from '../components/Post';
 
 const BoardTab = () => {
     const navigation = useNavigation();
+    const groupId = useRoute().params.groupId;
 
     const boardInfo = [
         {
@@ -60,7 +61,9 @@ const BoardTab = () => {
                     text={'글쓰기'}
                     color='#1249FC'
                     textColor='#FFFFFF'
-                    onPress={() => { navigation.navigate('PostingScreen') }}
+                    onPress={() => { navigation.navigate('PostingScreen',{
+                        groupId: groupId,
+                    }) }}
                 />
             </View>
         </ScrollView>

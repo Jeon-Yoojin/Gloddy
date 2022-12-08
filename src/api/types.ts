@@ -61,3 +61,15 @@ export interface GetGroupDetailResult{
 export interface CreateGroupResult{
     groupId: number;
 }
+export interface CreateArticleResult{
+    commentId: number;
+}
+
+export interface DeleteArticleResult{
+    //commentId: number;
+}
+
+export interface UpdateArticleResult{
+    content: string;
+    notice: boolean;
+}

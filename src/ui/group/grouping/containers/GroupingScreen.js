@@ -33,7 +33,6 @@ const GroupingScreen = () => {
     );
 
     const groups = useMemo(() => {
-        console.log(data);
         if (!data) {
             return null;
         }

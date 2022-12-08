@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { View, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, KeyboardAvoidingView } from "react-native";
 
 import CheckButton from "../../../../common/CheckButton";
@@ -6,8 +6,12 @@ import CustomButton from "../../../../common/CustomButton";
 import Header from "../../../../common/Header";
 import GalleryIcon from '../../../../assets/image/galleryIcon.svg';
 import BackArrow from '../../../../assets/image/backarrow.svg';
+import { useMutation } from "react-query";
+import { createArticle } from "../../../../api/article";
+import { useNavigation } from "@react-navigation/native";
 
-const PostingScreen = () => {
+const PostingScreen = ({route}) => {
+    const navigation = useNavigation();
     const BackarrowImg = '../../../../assets/image/backarrow.png';
     const [post, setPost] = useState({
             body: '',
@@ -27,6 +31,27 @@ const PostingScreen = () => {
             isNotice: !post.isNotice,
         })
     }
+
+    const { mutate: create } = useMutation(createArticle,{
+        onSuccess: data =>{
+            console.log('createArticle Success', data)
+        },
+        onerror: error =>{
+            console.log('createArticle Error', error)
+        },
+        onSettled: () => {
+            navigation.goBack();
+        }
+    })
+
+    const onSubmit = useCallback(()=>{
+        create({
+            groupId: route.params.groupId,
+            request:{
+                content: post.body
+            }
+        })
+    })
 
     return (
         <SafeAreaView style={styles.container}>
@@ -64,7 +89,7 @@ const PostingScreen = () => {
                 color={post.body.length > 0 ? '#1249FC' : null}
                 textColor={post.body.length > 0 ? '#FFFFFF' : null}
                 style={{ alignSelf: 'center', marginBottom: 21 }}
-                onPress={() => {console.log(post)}}
+                onPress={onSubmit}
                 disabled={post.body.length > 0 ? false : true}
             />
         </SafeAreaView>

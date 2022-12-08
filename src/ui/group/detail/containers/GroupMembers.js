@@ -28,6 +28,7 @@ const GroupMembers = () => {
             <Header
                 title={'모임 멤버'}
                 noIcon={false}
+                noBorderLine={true}
                 leftIcon={<AntDesign name='left' size={17} />}
                 leftIconPress={() => { console.log('LeftIcon pressed!') }}
             />

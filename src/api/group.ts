@@ -13,10 +13,7 @@ export async function getGroups(params : GetGroupParams) {
 
 export async function applyGroup(params : ApplyGroupParams){
     const response = await client.post<string>(
-        `/api/v1/groups/${params.groupId}/apply`,
-        {
-            params: params.request
-        }
+        `/api/v1/groups/${params.groupId}/apply`, params.request
     )
     return response.data;
 }
@@ -43,8 +40,8 @@ interface GetGroupParams {
 interface ApplyGroupParams{
     groupId: number;
     request: {
-        "introduce": string,
-        "reason": string
+        introduce : string,
+        reason: string
     };
 }
 interface CreateGroupParams {

@@ -5,19 +5,16 @@ const Header = ({
     title,
     titlePress,
     noIcon,
+    noBorderLine,
     rightIcon,
     rightIconPress,
     leftIcon,
     leftIconPress,
+    headerStyle
 }) => {
 
     return (
-        <View style={styles.container}>
-            <View style={[styles.titleContainer, noIcon ? {} : { alignSelf: 'center' }]}>
-                <View>
-                    <Text style={styles.title}> {title} </Text>
-                </View>
-            </View>
+        <View style={[styles.container, headerStyle]}>
             {leftIcon &&
                 <TouchableOpacity
                     style={styles.leftIcon}
@@ -27,6 +24,11 @@ const Header = ({
                 </TouchableOpacity>
 
             }
+            <View style={[styles.titleContainer, noIcon ? {} : { alignSelf: 'center', }, noBorderLine? {borderBottomWidth: 0} : {}]}>
+                <View>
+                    <Text style={styles.title}> {title} </Text>
+                </View>
+            </View>
             {rightIcon &&
                 <TouchableOpacity
                     style={styles.rightIcon}
@@ -41,32 +43,32 @@ const Header = ({
 
 const styles = StyleSheet.create({
     container: {
-        //height: 50,
+        flexShrink: 0,
+        flexDirection: 'row',
+        justifyContent: 'center',
     },
     titleContainer: {
-        width: "100%",
         padding: 16,
-        borderBottomColor: '#EAEAEA',
-        borderBottomWidth: 1,
+        textAlign: 'center',
+        alignSelf: 'center'
     },
     title:{
         color: '#666666',
         fontSize: 16,
         fontWeight: '700',
         textAlign: 'center',
-        //textAlignVertical: 'center',
     },
     leftIcon: {
-        position: 'absolute',
-        top: 19,
-        left: 14,
+        alignSelf: 'center',
         justifyContent: 'center',
+        position: 'absolute',
+        left: 17
     },
     rightIcon: {
-        position: 'absolute',
-        bottom: 15,
-        right: 14,
+        alignSelf: 'center',
         justifyContent: 'center',
+        position: 'absolute',
+        right: 17,
     }
 })
 

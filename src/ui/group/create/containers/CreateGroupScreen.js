@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView, TextInput, Touchable, TouchableOpacity, Dimensions, ScrollView } from "react-native";
+import Modal from 'react-native-modal';
+import Header from "../../../../common/Header";
 
 import CreateGroupHeader from "../components/CreateGroupHeader";
 import TimePicker from "../components/TimePicker";
@@ -10,12 +12,25 @@ import CustomButton from "../../../../common/CustomButton";
 import { useMutation, useQueryClient, InfiniteData } from "react-query";
 import { createGroup } from "../../../../api/group";
 import { useNavigation } from "@react-navigation/native";
+import CreateGroupModal from "../components/CreateGroupModal";
+import CreateConfirmModal from "../components/CreateConfirmModal";
+//import { BasicModal } from "../../../../common/BasicModal";
+//import { Modal } from "react-native-paper";
 
-const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const CreateGroupScreen = () => {
     const navigation = useNavigation();
     const queryClient = useQueryClient();
+
+    const [confirm, setConfirm] = useState(false);
+    const [showBottomSheet, setShowBottomSheet] = useState(false);
+    const [showCreateConfirmModal, setShowCreateConfirmModal] = useState(false);
+    const toggleModal = ()=>{
+        setShowBottomSheet(!showBottomSheet)
+    }
+
     const [data, setData] = useState({
         title: '',
         content: '',
@@ -80,26 +95,33 @@ const CreateGroupScreen = () => {
         },
     });
 
-    const onSubmit = useCallback(()=>{
-        create({
-            content: data.content,
-            endTime: data.endTime,
-            fileUrl: data.fileUrl,
-            maxUser: data.maxUser,
-            meetDate: data.meetDate,
-            place: data.place,
-            place_latitude: data.place_latitude,
-            place_longitude: data.place_longitude,
-            startTime: data.startTime,
-            title: data.title
-        });
+    const handleOnpress = () => {
+        setShowCreateConfirmModal(true);
+        submit(confirm);
+    }
+
+    const submit = useCallback((confirm)=>{
+        if (confirm===true) {
+            create({
+                content: data.content,
+                endTime: data.endTime,
+                fileUrl: data.fileUrl,
+                maxUser: data.maxUser,
+                meetDate: data.meetDate,
+                place: data.place,
+                place_latitude: data.place_latitude,
+                place_longitude: data.place_longitude,
+                startTime: data.startTime,
+                title: data.title
+            });
+        }
     }, [create, data]);
 
     return (
         <SafeAreaView style={styles.container}>
             <CreateGroupHeader />
             
-            <ScrollView>
+            <ScrollView style={{marginVertical: 18}}>
                 {/* 이미지 */}
                 <View style={{backgroundColor: '#F5F5F5', alignSelf: 'center', marginTop: 25, width: 92, height: 92, borderRadius: 10}}></View>
 
@@ -155,11 +177,34 @@ const CreateGroupScreen = () => {
                 {/* 모임 위치 설정 */}
                 <View style={styles.subContainer}>
                     <Text style={styles.titleText}>모임 위치</Text>
-                    <TextInput
-                        style={styles.inputBox}
-                        placeholder={'모임 위치를 설정해주세요.'}
-                        onChange={event => onChangeInput(event, 'place')}
+                    <CustomButton
+                        text={'모임 위치를 설정해주세요.'}
+                        onPress={() => { setShowBottomSheet(true) }}
                     />
+
+                    <Modal
+                        isVisible={showBottomSheet}
+                        deviceHeight={windowHeight}
+                        deviceWidth={windowWidth}
+                        useNativeDriver={true}
+                        onBackdropPress={() => setShowBottomSheet(false)}
+                        transparent={true}
+                        style={{ justifyContent: 'center', margin: 0, marginTop: 30,}}
+                    >
+                        <View style={{ flex: 1, backgroundColor: "white", borderTopStartRadius: 36, borderTopEndRadius: 36, }}>
+                            <View style={{ justifyContent: 'space-between', flex: 1 }}>
+                                <CreateGroupModal />
+                                <View style={{ alignItems: 'center' }}>
+                                    <CustomButton
+                                        text={'닫기'}
+                                        onPress={toggleModal}
+                                        color={'#1249FC'}
+                                        textColor={'#FFFFFF'}
+                                    />
+                                </View>
+                            </View>
+                        </View>
+                    </Modal>
                 </View>
 
                 {/* 모임 인원 설정 */}
@@ -194,11 +239,13 @@ const CreateGroupScreen = () => {
                     text={'완료'}
                     color={data.isValidTitle && data.isValidContent ? '#1249FC' : null}
                     textColor={data.isValidTitle && data.isValidContent ? '#FFFFFF' : null}
-                    onPress={onSubmit}
+                    onPress={handleOnpress}
                     disabled={data.isValidTitle && data.isValidContent ? false : true}
                 />
             </View>
 
+        {/* 모임 나가기 경고 Modal */}
+        <CreateConfirmModal setConfirm={setConfirm} showBottomSheet={showCreateConfirmModal} hide={()=>{setShowCreateConfirmModal(false)}}/>
         </SafeAreaView>
     )
 }
