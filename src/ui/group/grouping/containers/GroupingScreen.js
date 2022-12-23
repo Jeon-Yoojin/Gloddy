@@ -24,7 +24,7 @@ const GroupingScreen = () => {
         isFetching
     } = useInfiniteQuery(
         'groups',
-        ({ pageParam = 0 }) => getGroups({ page: pageParam, size: 6, userId: 1 }),
+        ({ pageParam = 0 }) => getGroups({ page: pageParam, size: 6, userId: user.userId }),
         {
             getNextPageParam: (lastPage) => {
                 return lastPage?.currentCount === 6 ? lastPage.currentPage + 1 : undefined;

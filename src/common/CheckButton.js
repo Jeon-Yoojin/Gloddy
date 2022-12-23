@@ -6,7 +6,7 @@ import Check from '../assets/image/check.svg'
 const CheckButton = ({isPress, circleSize, checkStyle}) => {
 
     return (
-        <View style={[styles.circle, {backgroundColor: isPress? '#1249FC': '#CDCDCD', borderWidth: isPress? 0 : 1.5, width: circleSize? circleSize : 21, height: circleSize? circleSize : 21}]}>
+        <View style={[styles.circle, {backgroundColor: isPress? '#1249FC': '#CDCDCD', borderWidth: isPress? 0 : 1.5, width: circleSize? circleSize : 21, height: circleSize? circleSize : 21}, checkStyle]}>
                 <Check/>
         </View>
     )

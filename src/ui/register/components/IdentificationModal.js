@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {SafeAreaView, Text, View, TouchableOpacity, StyleSheet, Dimensions, Touchable} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from "react-native-vector-icons/Feather";
@@ -9,18 +9,45 @@ import CustomInput from "../../../common/CustomInput";
 
 import { useNavigation } from "@react-navigation/native";
 import { verifyAuthCode } from "../../../api/auth";
-import useUser from "../../../redux/hooks/useUser";
+import useAuthActions from "../../../redux/hooks/useAuthAction";
+import { reqAuthCode } from "../../../api/auth";
 
 const windowHeight = Dimensions.get('window').height;
 
-const IdentificationModal = ({makeUser, showBottomSheet, hide, showBehind}) => {
+const IdentificationModal = ({completeVerify, showBottomSheet, hide, userID}) => {
     const navigation = useNavigation();
-    const user = useUser();
+    const {setEmail} = useAuthActions();
+    
     const [authUser, setAuthUser] = useState({
         authCode: '',
         isActive: false,
-        showText: false
     })
+    const [confirmMessage, setConfirmMessage] = useState(false);
+
+    const [timer, setTimer] = useState(180000);
+    const [minute, setMinute] = useState(0);
+    const [second, setSecond] = useState(0);
+
+    useEffect(() => {
+        /* 남은시간 분, 초로 변환 */
+        let tempMinute = parseInt(timer/1000/60).toString();
+        let tempSecond = parseInt(timer/1000%60).toString();
+        if(tempSecond.length === 1) tempSecond = "0"+tempSecond;
+        setMinute(tempMinute);
+        setSecond(tempSecond);
+
+        if(timer <= 0){
+            hide();
+        }
+    }, [timer]);
+
+    useEffect(() => {
+        const id = setInterval(()=>{
+            setTimer(time => time-1000);
+        }, 1000);
+
+        return () => clearInterval(id);
+    }, []);
 
     const changeCode = (val) => {
         if(val.trim().length >= 1)
@@ -28,40 +55,46 @@ const IdentificationModal = ({makeUser, showBottomSheet, hide, showBehind}) => {
         else setAuthUser({...authUser, authCode:val, isActive:false});
     }
 
-    const onPressFunc = () => {
-        //verifyAuthCode(authUser)
-        console.log(authUser.authCode);
-        verifyAuthCode({email: user.email, authCode: authUser.authCode})
+    const verifyCode = () => {
+        verifyAuthCode({email: userID, authCode: authUser.authCode})
         .then(
             response=>{
-                console.log("response", response);
+                console.log("verifyAuthCode", response.status);
                 if(response.data.verify == true){
-                    setAuthUser({...authUser, showText: false});
-                    makeUser();
-                    navigation.navigate("RegisterScreen");
+                    setEmail(userID);
+                    setConfirmMessage(false);
+                    completeVerify();
+                    navigation.navigate("PWSettingScreen");
                 }
                 else{
-                    setAuthUser({...authUser, showText: true});
+                    setConfirmMessage(true);
                 }
             }
         )
-        .catch(error=>console.log("onPressFunc error", error));
-        navigation.navigate('PWSettingScreen');
-        //navigation.navigate('RegisterScreen');
+        .catch(error=>{
+            console.log("verityAuthCode error", error);
+            setConfirmMessage(true);
+        });
+    }
+
+    const requestAgain = () => {
+        reqAuthCode(userID)
+        .then(
+            response=>{
+                // 시간 재설정
+            }
+        )
+        .catch(
+            error=>{
+                console.log("requestAgain error ", error);
+            }
+        )
     }
 
     return(
-        <BasicModal show={showBottomSheet} height={390} onOuterClick={hide}>
+        <BasicModal show={showBottomSheet} height={375} onOuterClick={hide}>
             <View style={styles.modalContainer}>
-                <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginHorizontal: 16, marginVertical: 25}}>
-                    <TouchableOpacity>
-                        <Feather
-                            name="chevron-left"
-                            size={30}
-                            style={{ color: '#666666' }}
-                            onPress={showBehind}
-                        />
-                    </TouchableOpacity>
+                <View style={{ flexDirection: 'row-reverse', marginHorizontal: 16, marginVertical: 25}}>
                     <AntDesign name='closecircle' size={28} onPress={hide}/>
                 </View>
 
@@ -72,10 +105,14 @@ const IdentificationModal = ({makeUser, showBottomSheet, hide, showBehind}) => {
                         placeholder={'인증번호'}
                         onChangeText={changeCode}
                         onEndEditing={()=>{}}
+                        short={true}
                     />
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <TouchableOpacity><Text style={[styles.bottomSheetSubText, {borderBottomColor: '#CDCDCD', borderBottomWidth: 0.4,}]}>재전송하기</Text></TouchableOpacity>
-                        {authUser.showText ? <Text style={[styles.bottomSheetSubText, { color: '#D7533E' }]}>인증번호를 다시 확인해주세요.</Text>:<></>}
+                        <TouchableOpacity onPress={requestAgain}>
+                            <Text style={[styles.bottomSheetSubText, {borderBottomColor: '#CDCDCD', borderBottomWidth: 0.4,}]}>재전송하기</Text>
+                        </TouchableOpacity>
+                        {confirmMessage ? <Text style={[styles.bottomSheetSubText, { color: '#D7533E' }]}>인증번호를 다시 확인해주세요.</Text>:<></>}
+                        <Text style={[styles.bottomSheetSubText, { color: '#D7533E' }]}>{minute}:{second}</Text>
                     </View>
                 </View>
             </View>
@@ -84,9 +121,8 @@ const IdentificationModal = ({makeUser, showBottomSheet, hide, showBehind}) => {
                 text={'완료'}
                 color={authUser.isActive ? '#1249FC' : null}
                 textColor={authUser.isActive ? '#FFFFFF' : null}
-                style={{bottom: windowHeight*0.04, alignSelf: 'center'}}
                 disabled={authUser.isActive ? false : true}
-                onPress={onPressFunc}
+                onPress={verifyCode}
             />
         </BasicModal>   
     )

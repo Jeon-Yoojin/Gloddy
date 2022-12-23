@@ -11,13 +11,16 @@ export default function useLogin(){
     const email = useSelector((state:RootState)=>state.auth.user.email)
 
     const navigation = useNavigation();
-    const {setToken} = useAuthActions();
+    const {setToken, signIn, setEmail} = useAuthActions();
 
     const mutation = useMutation(login,{
         onSuccess: (response)=>{
+            const userID = JSON.parse(response.config.data).email;
+            setEmail(userID);
+            
             //모든 api 요청 콜마다 token 정보 담기도록
             client.defaults.headers.common['X-AUTH-TOKEN'] = response.data.token
-            
+
             setToken(response.data.token);
             console.log('Success', response.data);
             
@@ -27,17 +30,14 @@ export default function useLogin(){
                     token: response.data.token,
                     email: email
                 })
-            )
+            );
 
-            if(true){{/* 로그인 성공 */}
-                navigation.navigate('MainScreen');
-            }
-            else{{/* 로그인 실패 */}
+            signIn(response.data.userId);
 
-            }
+            navigation.navigate('MainScreen');
         },
         onError: (error:any)=>{
-            console.log('error', error.response);
+            console.log('login error', error.response.status);
         },
     })
     return mutation;

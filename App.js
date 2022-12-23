@@ -7,11 +7,6 @@ import rootReducer from './src/redux/slices';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import Splash from './src/ui/splash/containers/Splash';
-import RootStack from './src/navigation/RootStack';
-import SplashScreen from 'react-native-splash-screen';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import useAuthActions from './src/redux/hooks/useAuthAction';
-import { useSelector } from 'react-redux';
 
 const store = configureStore({reducer: rootReducer});
 const queryClient = new QueryClient();

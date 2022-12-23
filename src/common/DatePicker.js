@@ -30,7 +30,7 @@ String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s
 String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
 Number.prototype.zf = function(len){return this.toString().zf(len);};
 
-export default function CustomDatePicker({setDateValue, placeholder, style, rightIcon}) {
+export default function CustomDatePicker({setDateValue, placeholder, placeholderStyle, style, rightIcon}) {
     //const placeholder = "생년월일을 선택해주세요.";
     const [date, setDate] = useState(new Date());
     const [open, setOpen] = useState(false);
@@ -53,7 +53,7 @@ export default function CustomDatePicker({setDateValue, placeholder, style, righ
                     pointerEvents="none"
                     style={style? style:styles.textInput}
                     placeholder={placeholder}
-                    placeholderTextColor='#B7B7B7'
+                    placehoderStyle={placeholderStyle}
                     underlineColorAndroid="transparent"
                     editable={false}
                     value={text}

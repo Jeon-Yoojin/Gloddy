@@ -5,7 +5,10 @@ const PersonalityButton = (props) => {
     const [isPress, setIsPress] = useState(false);
     const touchProps = {
         style: isPress ? styles.btnPress : styles.btnNormal,
-        onPress: () => setIsPress(!isPress),
+        onPress: () => {
+            props.onSelect(isPress, props.text);
+            setIsPress(!isPress);
+        },
     }
 
     return(
@@ -21,7 +24,7 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         borderWidth: 1,
-        borderColor: '#EAEAEA',
+        borderColor: '#CDCDCD',
         borderRadius: 25,
         marginVertical: 5,
     },
@@ -35,10 +38,11 @@ const styles = StyleSheet.create({
     },
     buttonText:{
         fontSize: 16,
-        lineHeight: 19,
+        lineHeight: 23,
+        color: '#B7B7B7',
         textAlign: 'center',
         fontFamily: 'Inter-Bold',
-        fontWeight: '700',
+        fontWeight: '500',
     }
 })
 
