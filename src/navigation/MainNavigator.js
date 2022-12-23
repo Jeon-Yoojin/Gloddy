@@ -10,7 +10,7 @@ import ProfileIcon from '../assets/image/navigator/profile.svg';
 import ProfileActiveIcon from '../assets/image/navigator/profileActive.svg';
 
 import GroupingScreen from '../ui/group/grouping/containers/GroupingScreen';
-import MyGroupsScreen from '../ui/mygroup/MyGroupsScreen';
+import MyGroupScreen from '../ui/mygroup/containers/MyGroupScreen';
 import MyProfileScreen from '../ui/myprofile/containers/MyProfileScreen';
 
 const Tab = createBottomTabNavigator();
@@ -24,7 +24,7 @@ const MainNavigator = () => {
                 let label;
 
                 if(name == 'GroupingScreen') label = '그루핑';
-                else if(name == 'MyGroupsScreen') label = '나의모임';
+                else if(name == 'MyGroupScreen') label = '나의모임';
                 else if(name == 'MyProfileScreen') label = '프로필';
                 
                 return <Text style={{color: color, fontSize:10}}>{label}</Text>
@@ -36,7 +36,7 @@ const MainNavigator = () => {
                 if(name == 'GroupingScreen'){
                     icon = focused ? <GroupActiveIcon/> : <GroupIcon/>;
                 }
-                else if(name == 'MyGroupsScreen'){
+                else if(name == 'MyGroupScreen'){
                     icon = focused ? <MyGroupActiveIcon/> : <MyGroupIcon/>;
                 }
                 else if(name == 'MyProfileScreen'){
@@ -68,8 +68,8 @@ const MainNavigator = () => {
                 component={GroupingScreen}
             />
             <Tab.Screen
-                name="MyGroupsScreen"
-                component={MyGroupsScreen}
+                name="MyGroupScreen"
+                component={MyGroupScreen}
             />
             <Tab.Screen
                 name="MyProfileScreen"

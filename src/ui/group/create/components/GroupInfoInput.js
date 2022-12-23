@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
-import CustomInput from "../../../../common/CustomInput";
 
 import PictureIcon from "../components/PictureIcon";
 

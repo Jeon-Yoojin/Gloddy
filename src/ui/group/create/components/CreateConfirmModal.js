@@ -8,6 +8,25 @@ import CustomButton from "../../../../common/CustomButton";
 const width = Dimensions.get('window').width;
 const modalWidth = width * 0.85;
 
+const ModalContent = () =>{
+    return(
+        <View style={styles.content}>
+            <WarningIcon />
+            <Text style={styles.alertTitle}>모임 개설 후 수정이 불가합니다.</Text>
+            <Text style={styles.alertTitle}>계속하시겠어요?</Text>
+        </View>
+    )
+}
+
+const TwoButtons = ({hide, onPressConfirmButton}) =>{
+    return(
+        < View style={styles.twoButtons} >
+            <CustomButton text="네" onPress={() => { onPressConfirmButton(); hide(); }} color={'#D7533E'} textColor={'#FFFFFF'} style={styles.customButtonStyle} />
+            <CustomButton text="아니요" onPress={hide} color={'#CDCDCD'} textColor={'#FFFFFF'} style={styles.customButtonStyle} />
+        </View>
+    )
+}
+
 const CreateConfirmModal = ({setConfirm, showBottomSheet, hide}) => {
     const onPressConfirmButton = () => {
         setConfirm(true);
@@ -21,18 +40,10 @@ const CreateConfirmModal = ({setConfirm, showBottomSheet, hide}) => {
                 onBackdropPress={hide}
                 style={{ alignSelf: 'center' }}
             >
+                {/* modal 내부 content */}
                 <View style={styles.backDrop}>
-                    <View style={styles.content}>
-                        <WarningIcon />
-
-                        <Text style={styles.alertTitle}>모임 개설 후 수정이 불가합니다.</Text>
-                        <Text style={styles.alertTitle}>계속하시겠어요?</Text>
-                    </View>
-
-                    <View style={styles.twoButtons}>
-                        <CustomButton text="네" onPress={()=>{onPressConfirmButton(); hide();}} color={'#D7533E'} textColor={'#FFFFFF'} style={styles.customButtonStyle} />
-                        <CustomButton text="아니요" onPress={hide} color={'#CDCDCD'} textColor={'#FFFFFF'} style={styles.customButtonStyle} />
-                    </View>
+                    <ModalContent/>
+                    <TwoButtons onPressConfirmButton={onPressConfirmButton} hide={hide}/>
                 </View>
             </Modal>
         </View>

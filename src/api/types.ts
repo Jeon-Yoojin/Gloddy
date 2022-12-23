@@ -1,5 +1,3 @@
-import GroupInfoInput from "../ui/group/create/components/GroupInfoInput";
-
 export interface User{
     email: string;
     name: string;
@@ -72,4 +70,10 @@ export interface DeleteArticleResult{
 export interface UpdateArticleResult{
     content: string;
     notice: boolean;
+}
+
+export interface SearchLocationResult{
+    title: string;
+    address: string;
+    roadAddress: string;
 }

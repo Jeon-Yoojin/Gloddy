@@ -7,6 +7,7 @@ import Header from '../../../common/Header';
 import CustomInput from '../../../common/CustomInput';
 import CustomButton from '../../../common/CustomButton';
 import useAuthActions from '../../../redux/hooks/useAuthAction';
+import { searchLocation } from '../../../api/API';
 
 import CheckDuplicateModal from '../components/CheckDuplicateModal';
 import IdentificationModal from '../components/IdentificationModal';

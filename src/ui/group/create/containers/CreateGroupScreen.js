@@ -1,21 +1,16 @@
 import React, { useCallback, useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView, TextInput, Touchable, TouchableOpacity, Dimensions, ScrollView } from "react-native";
 import Modal from 'react-native-modal';
-import Header from "../../../../common/Header";
 
 import CreateGroupHeader from "../components/CreateGroupHeader";
 import TimePicker from "../components/TimePicker";
 import DatePicker from '../../../../common/DatePicker'
-import GroupInfoInput from "../components/GroupInfoInput";
-import SettingInput from "../components/SettingInput";
 import CustomButton from "../../../../common/CustomButton";
 import { useMutation, useQueryClient, InfiniteData } from "react-query";
 import { createGroup } from "../../../../api/group";
 import { useNavigation } from "@react-navigation/native";
 import CreateGroupModal from "../components/CreateGroupModal";
 import CreateConfirmModal from "../components/CreateConfirmModal";
-//import { BasicModal } from "../../../../common/BasicModal";
-//import { Modal } from "react-native-paper";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;

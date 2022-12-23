@@ -15,7 +15,7 @@ import GroupDetailScreen from '../ui/group/detail/containers/GroupDetailScreen';
 import RoomSettingScreen from '../ui/group/detail/containers/RoomSettingScreen';
 import ApplicationScreen from '../ui/apply/containers/ApplicationScreen';
 import ApplicationManageScreen from '../ui/apply/containers/ApplicationManageScreen';
-import MyGroupsScreen from '../ui/mygroup/MyGroupsScreen';
+import MyGroupScreen from '../ui/mygroup/containers/MyGroupScreen';
 import ComplimentScreen from '../ui/review/containers/ComplimentScreen';
 import BestPartnerScreen from '../ui/review/containers/BestPartnerScreen';
 import MainScreen from '../ui/MainScreen';
@@ -114,8 +114,8 @@ function RootStack() {
               options={{headerShown: false}}
             />
             <Stack.Screen
-              name="MyGroupsScreen"
-              component={MyGroupsScreen}
+              name="MyGroupScreen"
+              component={MyGroupScreen}
               options={{headerShown: false}}
             />
             <Stack.Screen

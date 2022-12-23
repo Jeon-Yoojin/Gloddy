@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, View, Image, StyleSheet, ImageBackground } from 'react-native';
+import { TouchableOpacity, Image, StyleSheet, ImageBackground } from 'react-native';
 
 const PictureIcon = ()=>{
     const PictureImg = '../../../../assets/image/group/galleryIcon.png';

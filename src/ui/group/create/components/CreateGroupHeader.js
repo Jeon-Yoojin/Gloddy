@@ -2,16 +2,16 @@ import React from "react";
 import { Text, StyleSheet, Image } from "react-native";
 
 import Header from "../../../../common/Header";
+import BackArrow from '../../../../assets/image/backarrow.svg';
 
 const CreateGroupHeader = () => {
-    const BackarrowImg = '../../../../assets/image/backarrow.png'
 
     return (
         < Header
             title={'모임 개설하기'}
             noIcon={false}
-            leftIcon={< Image source={require(BackarrowImg)} style={styles.backarrow} />}
-            leftIconPress={() => { console.log('pressed!') }}
+            leftIcon={<BackArrow width={8} height={15} />}
+            leftIconPress={() => { navigation.goBack() }}
         />
     )
 }
