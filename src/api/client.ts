@@ -13,6 +13,7 @@ client.interceptors.request.use(
     }
 )
 */
+/*
 client.interceptors.response.use(
     response => {
         return response;
@@ -21,5 +22,5 @@ client.interceptors.response.use(
         return error;
     }
 );
-
+*/
 export default client;

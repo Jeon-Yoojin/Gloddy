@@ -25,8 +25,10 @@ export interface RegisterResult{
 }
 
 export interface LoginResult{
+    authority: string;
+    errorCode: string;
     token: string;
-    user: User;
+    userId: number;
 }
 
 export interface GroupInfo{

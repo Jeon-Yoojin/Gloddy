@@ -1,17 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, Dimensions, Text, SafeAreaView } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 
 import RegisterHeader from "../components/RegisterHeader";
 import CustomButton from "../../../common/CustomButton";
 import PersonalityButton from "../components/PersonalityButton";
+import useUser from "../../../redux/hooks/useUser";
+import { register } from "../../../api/auth";
+import useAuthActions from "../../../redux/hooks/useAuthAction";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const PersonalityScreen = ()=>{
-    const navigation = useNavigation();
-    const BackarrowImg = '../../../assets/image/backarrow.png'
+const PersonalityScreen = ({navigation: {navigate}, route})=>{
+    const user = useUser();
+    const {authorize} = useAuthActions();
+    const [selectedPersonalities, setSelectedPersonalities] = useState([]);
+
+    const registration = () => {
+        /* 회원가입 api 호출 */
+        /* 가입 성공시, redux user 세팅 후 LoginScreen으로 이동 */
+        console.log(selectedPersonalities);
+        const reqBody = {
+            birth: route.params.birthday,
+            email: user.email,
+            gender: route.params.gender,
+            name: route.params.name,
+            password: route.params.userPW,
+            personalities: selectedPersonalities,
+            school: '',
+            profileImage: route.params.profileImage
+        };
+        console.log("register reqBody", reqBody);
+        
+        register(reqBody)
+        .then(response=>{
+            console.log("register response", response);
+            authorize(reqBody);
+            navigate('LoginScreen');
+        })
+        .catch(error=>{
+            console.log("registration error", error);
+        });
+    }
+
+    const onSelect = (isPress, text) => {
+        if(isPress)
+            setSelectedPersonalities(selectedPersonalities.filter(personality => personality != text));
+        else setSelectedPersonalities([...selectedPersonalities, text]);
+    }
 
     return(
         <SafeAreaView style={styles.container}>
@@ -25,32 +61,32 @@ const PersonalityScreen = ()=>{
                 <View style={{}}>
                     {/* 성격 아이콘 */}
                     <View style={styles.rowContainer}>
-                        <PersonalityButton text='외향적인' />
-                        <PersonalityButton text='내향적인' />
+                        <PersonalityButton text='외향적인' onSelect={onSelect}/>
+                        <PersonalityButton text='내향적인' onSelect={onSelect}/>
                     </View>
                     <View style={styles.rowContainer}>
-                        <PersonalityButton text='신중한' />
-                        <PersonalityButton text='친절한' />
+                        <PersonalityButton text='신중한' onSelect={onSelect}/>
+                        <PersonalityButton text='친절한' onSelect={onSelect}/>
                     </View>
                     <View style={styles.rowContainer}>
-                        <PersonalityButton text='유머러스한' />
-                        <PersonalityButton text='낙천적인' />
+                        <PersonalityButton text='유머러스한' onSelect={onSelect}/>
+                        <PersonalityButton text='낙천적인' onSelect={onSelect}/>
                     </View>
                     <View style={styles.rowContainer}>
-                        <PersonalityButton text='사교적인' />
-                        <PersonalityButton text='솔직한' />
+                        <PersonalityButton text='사교적인' onSelect={onSelect}/>
+                        <PersonalityButton text='솔직한' onSelect={onSelect}/>
                     </View>
                     <View style={styles.rowContainer}>
-                        <PersonalityButton text='책임감 있는' />
-                        <PersonalityButton text='이야기하기 좋아하는' />
+                        <PersonalityButton text='책임감 있는' onSelect={onSelect}/>
+                        <PersonalityButton text='차분한' onSelect={onSelect}/>
                     </View>
                     <View style={styles.rowContainer}>
-                        <PersonalityButton text='활동적인' />
-                        <PersonalityButton text='센스있는' />
+                        <PersonalityButton text='활동적인' onSelect={onSelect}/>
+                        <PersonalityButton text='센스있는' onSelect={onSelect}/>
                     </View>
                     <View style={styles.rowContainer}>
-                        <PersonalityButton text='엉뚱한' />
-                        <PersonalityButton text='리더십 있는' />
+                        <PersonalityButton text='엉뚱한' onSelect={onSelect}/>
+                        <PersonalityButton text='리더십 있는' onSelect={onSelect}/>
                     </View>
                 </View>
 
@@ -60,8 +96,7 @@ const PersonalityScreen = ()=>{
                         text='다음'
                         color='#1249FC'
                         textColor='#FFFFFF'
-                        style={{bottom: windowHeight*0.04, alignSelf: 'center'}}
-                        onPress={()=>{navigation.navigate('MainScreen')}}
+                        onPress={registration}
                     />
                 </View>
             </View>
@@ -83,6 +118,7 @@ const styles = StyleSheet.create({
     littleTitle:{
         fontWeight: '500',
         fontSize: 14,
+        lineHeight: 37,
         color: '#AAAAAA',
         marginVertical: 10,
         marginLeft: windowWidth*0.056

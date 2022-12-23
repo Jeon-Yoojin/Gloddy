@@ -21,7 +21,7 @@ export async function reqAuthCode(params: {email: string}){
 export async function verifyAuthCode(params: {email: string, authCode: string}){
     const response = await client.post<VerifyResult>(
         '/api/v1/auth/verify-code',
-        {params}
+        params
     )
     return response;
 }

@@ -1,11 +1,27 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from "react-native";
+import ActiveIcon from "../../../assets/image/review/active.svg";
+import HumorIcon from "../../../assets/image/review/humor.svg";
+import CalmIcon from "../../../assets/image/review/calm.svg";
+import KindIcon from "../../../assets/image/review/kind.svg";
 
-const CharacterIcon = ({text, onPress, backgroundColor, textColor})=>{
+
+const CharacterIcon = ({text, onPress, isSelected})=>{
+    const iconColor = isSelected ? "#1249FC" : "#ABC1FC";
+    const color = isSelected ? '#1249FC' : '#3A3A3A';
+    const weight = isSelected ? '700' : '500';
+
     return (
         <TouchableOpacity onPress={onPress}>
-            <View style={[{ width: 73, height: 32, borderRadius: 36, borderColor: '#EAEAEA', borderWidth: 1, justifyContent: 'center', alignItems: 'center'} ,backgroundColor]}>
-                <Text style={[textColor, {fontSize: 13}]}>{text}</Text>
+            <View style={{backgroundColor: "#F5F5F5"}}>
+                {
+                    text==="적극" ? <ActiveIcon fill={iconColor}/> 
+                    : text==="유머" ? <HumorIcon fill={iconColor}/>
+                    : text==="차분" ? <CalmIcon fill={iconColor}/>
+                    : text==="친절" ? <KindIcon fill={iconColor}/>
+                    : <></>
+                }
+                <Text style={{color: color, fontWeight: weight, fontSize: 12, textAlign: 'center'}}>{text}</Text>
             </View>
         </TouchableOpacity>
     )
@@ -14,22 +30,22 @@ const CharacterIcon = ({text, onPress, backgroundColor, textColor})=>{
 const CharacterList = [
     {
         id: 1,
-        character: '🙂 차분',
+        character: '차분',
         selected: false,
     },
     {
         id: 2,
-        character: '😇 친절',
+        character: '친절',
         selected: false,
     },
     {
         id: 3,
-        character: '😝 적극',
+        character: '적극',
         selected: false,
     },
     {
         id: 4,
-        character: '😎 유머',
+        character: '유머',
         selected: false,
     }
 ]
@@ -49,15 +65,11 @@ const Character = ()=>{
     }
 
     const renderItem = ({ item }) => {
-        const backgroundColor = item.selected ? "#1249FC" : "white";
-        const color = item.selected ? 'white' : '#7F7F7F';
-    
         return (
           <CharacterIcon
             text={item.character}
             onPress={() => handleOnpress(item)}
-            backgroundColor={{ backgroundColor }}
-            textColor={{ color }}
+            isSelected={item.selected}
           />
         );
       };

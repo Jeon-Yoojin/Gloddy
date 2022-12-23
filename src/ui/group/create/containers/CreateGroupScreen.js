@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView, TextInput, Touchable, TouchableOpacity, Dimensions, ScrollView } from "react-native";
 
 import CreateGroupHeader from "../components/CreateGroupHeader";
@@ -27,28 +27,76 @@ const CreateGroupScreen = () => {
         startTime: '',
         endTime: '',
         fileUrl: '',
-        isValidTitle: false,
-        isValidContent: false,
     });
+    const [isValid, setIsValid] = useState({
+        title: false,
+        content: false,
+        maxUser: false,
+        place: false,
+        meetDate: false,
+        startTime: false,
+        endTime: false,
+    })
+    const [disableButton, setDisableButton] = useState(false);
+    const [confirmNan, setConfirmNan] = useState(false);
+
+    useEffect(()=>{
+        setDisableButton(()=>isValid.title && isValid.content && isValid.maxUser && isValid.place && isValid.meetDate && isValid.startTime && isValid.endTime);
+        console.log(disableButton);
+    }, [isValid.title, isValid.content, isValid.maxUser, isValid.place, isValid.meetDate, isValid.startTime, isValid.endTime]);
 
     const onChangeInput = (event, name) => {
         const {text} = event.nativeEvent;
-        const len = text.trim().length;
 
         if(name === 'title'){
-            if(len > 0) setData({...data, title: text, isValidTitle: true});
-            else setData({...data, title: text, isValildTitle: false});
+            if(text.trim().length > 0) {
+                setData({...data, title: text.trim()});
+                setIsValid({...isValid, title: true});
+            }
+            else {
+                setData({...data, title: text.trim()});
+                setIsValid({...isValid, title: false});
+            }
         }
         else if(name === 'content'){
-            if(len > 0 && len < 30) setData({...data, content: text, isValidContent: true});
-            else if(len >= 30) setData({...data, content: text});
-            else setData({...data, content: text, isValidContent: false});
+            if(text.length > 0 && text.length < 30) {
+                setData({...data, content: text});
+                setIsValid({...isValid, content: true});
+            }
+            else if(text.length >= 30) {
+                setData({...data, content: text});
+            }
+            else {
+                setData({...data, content: text});
+                setIsValid({...isValid, content: false});
+            }
         }
         else if(name === 'place'){
-            setData({...data, place: text});
+            if(text.trim().length > 0) {
+                setData({...data, place: text.trim()});
+                setIsValid({...isValid, place: true});
+            }
+            else {
+                setData({...data, place: text.trim()});
+                setIsValid({...isValid, place: false});
+            }
         }
         else if(name === 'maxUser'){
-            setData({...data, maxUser: Number(text)});
+            if(isNaN(text)){
+                setData({...data, maxUser: 0});
+                setIsValid({...isValid, maxUser: false});
+                setConfirmNan(true);
+                return;
+            }
+            setConfirmNan(false);
+            if(text.trim().length > 0) {
+                setData({...data, maxUser: Number(text)});
+                setIsValid({...isValid, maxUser: true});
+            }
+            else {
+                setData({...data, maxUser: Number(text)});
+                setIsValid({...isValid, maxUser: false});
+            }
         }
     }
 
@@ -57,6 +105,7 @@ const CreateGroupScreen = () => {
             ...data,
             startTime: val,
         });
+        setIsValid({...isValid, startTime: true});
     }
 
     const endTimeChange = (val) => {
@@ -64,13 +113,15 @@ const CreateGroupScreen = () => {
             ...data,
             endTime: val,
         });
+        setIsValid({...isValid, endTime: true});
     }
 
     const meetDateChange = (val) => {
         setData({
             ...data,
             meetDate: val,
-        })
+        });
+        setIsValid({...isValid, meetDate: true});
     }
 
     const {mutate: create} = useMutation(createGroup, {
@@ -105,10 +156,7 @@ const CreateGroupScreen = () => {
 
                 {/* 방제목 */}
                 <View style={styles.subContainer}>
-                    <Text style={styles.titleText}>
-                        <Text>방제목</Text>
-                        <Text style={{color: '#D7533E'}}> *</Text>
-                    </Text>
+                    <Text style={styles.titleText}>방제목</Text>
                     <TextInput
                         style={styles.inputBox}
                         placeholder="제목을 입력해주세요"
@@ -123,7 +171,6 @@ const CreateGroupScreen = () => {
                     <View style={{flex: 1}}>
                         <Text style={styles.titleText}>
                             <Text>활동 소개글</Text>
-                            <Text style={{color: '#D7533E'}}> *</Text>
                             <Text style={{color: '#AAAAAA', fontSize: 12, textAlign: 'right'}}>0/30</Text>
                         </Text>
                     </View>
@@ -164,7 +211,14 @@ const CreateGroupScreen = () => {
 
                 {/* 모임 인원 설정 */}
                 <View style={styles.subContainer}>
-                    <Text style={styles.titleText}>모임 인원</Text>
+                    <Text style={styles.titleText}>
+                        <Text>모임 인원</Text>
+                        { confirmNan
+                            ? <Text style={{color: '#D7533E'}}>&nbsp;*숫자만 입력해주세요</Text>
+                            : <></>
+                        }
+                    </Text>
+                    
                     <TextInput
                         style={styles.inputBox}
                         placeholder={'모임 인원을 설정해주세요.'}
@@ -187,17 +241,15 @@ const CreateGroupScreen = () => {
                     </View>
                 </View>
 
-            </ScrollView>
-            
-            <View style={{alignItems: 'center', justifyContent: 'center', bottom: windowHeight*0.01}}>
                 <CustomButton
                     text={'완료'}
-                    color={data.isValidTitle && data.isValidContent ? '#1249FC' : null}
-                    textColor={data.isValidTitle && data.isValidContent ? '#FFFFFF' : null}
+                    color={disableButton ? '#1249FC' : null}
+                    textColor={disableButton ? '#FFFFFF' : null}
+                    style={{marginTop: 10}}
                     onPress={onSubmit}
-                    disabled={data.isValidTitle && data.isValidContent ? false : true}
+                    disabled={disableButton ? false : true}
                 />
-            </View>
+            </ScrollView>
 
         </SafeAreaView>
     )

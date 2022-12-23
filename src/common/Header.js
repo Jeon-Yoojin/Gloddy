@@ -46,8 +46,6 @@ const styles = StyleSheet.create({
     titleContainer: {
         width: "100%",
         padding: 16,
-        borderBottomColor: '#EAEAEA',
-        borderBottomWidth: 1,
     },
     title:{
         color: '#666666',
@@ -58,8 +56,8 @@ const styles = StyleSheet.create({
     },
     leftIcon: {
         position: 'absolute',
-        top: 19,
-        left: 14,
+        top: 18,
+        left: 21,
         justifyContent: 'center',
     },
     rightIcon: {
