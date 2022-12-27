@@ -64,8 +64,8 @@ function RootStack() {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="MyGroupsScreen"
-          component={MyGroupsScreen}
+          name="MyGroupScreen"
+          component={MyGroupScreen}
           options={{headerShown: false}}
         />
         <Stack.Screen

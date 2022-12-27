@@ -1,16 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView, TextInput, Touchable, TouchableOpacity, Dimensions, ScrollView } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, TextInput, Touchable, TouchableOpacity, Dimensions, ScrollView, Image } from "react-native";
 import Modal from 'react-native-modal';
 
 import CreateGroupHeader from "../components/CreateGroupHeader";
 import TimePicker from "../components/TimePicker";
 import DatePicker from '../../../../common/DatePicker'
 import CustomButton from "../../../../common/CustomButton";
-import { useMutation, useQueryClient, InfiniteData } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { createGroup } from "../../../../api/group";
 import { useNavigation } from "@react-navigation/native";
 import CreateGroupModal from "../components/CreateGroupModal";
 import CreateConfirmModal from "../components/CreateConfirmModal";
+
+import GetPermission from "../../../../common/GetPermission";
+import * as ImagePicker from "react-native-image-picker";
+import PlusIcon from "../../../../assets/image/plusIcon.svg";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -27,16 +31,16 @@ const CreateGroupScreen = () => {
     }
 
     const [data, setData] = useState({
-        title: '',
-        content: '',
-        maxUser: 0,
-        place: '',
-        place_latitude: '100',
-        place_longitude: '2',
-        meetDate: '',
-        startTime: '',
-        endTime: '',
-        fileUrl: '',
+        title: null,
+        content: null,
+        maxUser: null,
+        place: null,
+        place_latitude: null,
+        place_longitude: null,
+        meetDate: null,
+        startTime: null,
+        endTime: null,
+        fileUrl: null,
     });
     const [isValid, setIsValid] = useState({
         title: false,
@@ -52,7 +56,6 @@ const CreateGroupScreen = () => {
 
     useEffect(()=>{
         setDisableButton(()=>isValid.title && isValid.content && isValid.maxUser && isValid.place && isValid.meetDate && isValid.startTime && isValid.endTime);
-        console.log(disableButton);
     }, [isValid.title, isValid.content, isValid.maxUser, isValid.place, isValid.meetDate, isValid.startTime, isValid.endTime]);
 
     const onChangeInput = (event, name) => {
@@ -163,13 +166,56 @@ const CreateGroupScreen = () => {
         }
     }, [create, data]);
 
+    const getPhotoWithPermission = async () => {
+        try{
+            const hasPermission = await GetPermission();
+            console.log("hasPermission", hasPermission);
+
+            if(hasPermission){
+                ImagePicker.launchImageLibrary(
+                    {
+                        mediaType: 'photo',
+                    },
+                    (res)=>{
+                        if(res.didCancel){
+                            setData({...data, fileUrl: null});
+                            return;
+                        }
+                        console.log("selected photo", res);
+                        setData({...data, fileUrl: res.assets[0]?.uri});
+                    }
+                )
+            }
+            else{
+                Alert.alert(
+                    "권한이 없습니다",
+                    "갤러리 접근 권한이 필요합니다"
+                );
+            }
+        }catch (error){
+            console.log("getPhotoWithPermission error", error);
+        }
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <CreateGroupHeader />
             
             <ScrollView style={{marginVertical: 18}}>
                 {/* 이미지 */}
-                <View style={{backgroundColor: '#F5F5F5', alignSelf: 'center', marginTop: 25, width: 92, height: 92, borderRadius: 10}}></View>
+                <TouchableOpacity
+                    onPress={getPhotoWithPermission}
+                    style={{backgroundColor: '#F5F5F5', alignSelf: 'center', marginTop: 25, width: 92, height: 92, borderRadius: 10}}
+                >
+                    <Image
+                        style={{width: 92, height: 92, borderRadius: 10}}
+                        source={{uri: data.fileUrl}}
+                    />
+                    <PlusIcon
+                        fill={'#1249FC'}
+                        style={{position: 'absolute', right: -6, top: -6}}
+                    />
+                </TouchableOpacity>
 
                 {/* 방제목 */}
                 <View style={styles.subContainer}>
@@ -185,11 +231,9 @@ const CreateGroupScreen = () => {
 
                 {/* 활동 소개글 */}
                 <View style={styles.subContainer}>
-                    <View style={{flex: 1}}>
-                        <Text style={styles.titleText}>
-                            <Text>활동 소개글</Text>
-                            <Text style={{color: '#AAAAAA', fontSize: 12, textAlign: 'right'}}>0/30</Text>
-                        </Text>
+                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                        <Text style={styles.titleText}>활동 소개글</Text>
+                        <Text style={{color: '#AAAAAA', fontSize: 12}}>0/30</Text>
                     </View>
                     <TextInput
                         style={[styles.inputBox, {paddingTop: 15, height: 110, textAlignVertical: 'top',}]}
@@ -285,8 +329,8 @@ const CreateGroupScreen = () => {
                     text={'완료'}
                     color={disableButton ? '#1249FC' : null}
                     textColor={disableButton ? '#FFFFFF' : null}
-                    style={{marginTop: 10}}
-                    onPress={onSubmit}
+                    style={{marginTop: 30}}
+                    onPress={handleOnpress}
                     disabled={disableButton ? false : true}
                 />
             </ScrollView>

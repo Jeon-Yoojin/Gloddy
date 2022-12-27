@@ -1,20 +1,19 @@
 import React, { useMemo } from "react";
-import { SafeAreaView, View, StyleSheet, ScrollView, Image, Pressable, TouchableOpacity, Text, FlatList } from "react-native";
+import { SafeAreaView, StyleSheet, Pressable, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Entypo from "react-native-vector-icons/Entypo";
-import useUser from "../../../../redux/hooks/useUser";
-import { getGroupDetail, getGroups } from "../../../../api/group";
-import GroupInfo from "../components/GroupInfo";
-
-import Header from "../../../../common/Header";
 import { useInfiniteQuery } from "react-query";
+import useUser from "../../../../redux/hooks/useUser";
+import { getGroups } from "../../../../api/group";
+
+import MagnifyIcon from "../../../../assets/image/magnify.svg";
+import GroupInfo from "../components/GroupInfo";
+import PlusIcon from "../../../../assets/image/plusIcon.svg";
 
 
 const GroupingScreen = () => {
     const user = useUser();
 
     const navigation = useNavigation();
-    const PlusIcon = '../../../../assets/image/register/plus.png'
 
     const {
         data,
@@ -40,14 +39,18 @@ const GroupingScreen = () => {
     }, [data]);
 
     return (
-        <SafeAreaView style={[styles.container, { backgroundColor: '#FFFFFF' }]}>
+        <SafeAreaView style={{flex: 1}}>
             {/* Header */}
-            <Header
-                title={'그루핑'}
-                noIcon={false}
-                rightIcon={<Entypo name="magnifying-glass" size={25} />}
-                rightIconPress={() => { console.log('pressed!') }}
-            />
+            <View style={styles.header}>
+                <Text style={{
+                    fontSize: 16,
+                    fontWeight: '700',
+                    lineHeight: 36,
+
+                }}>그루핑</Text>
+                <MagnifyIcon />
+            </View>
+            
 
             <GroupInfo
                 groups={groups}
@@ -58,14 +61,16 @@ const GroupingScreen = () => {
             />
             
             {/* 추가버튼 */}
-            <Pressable onPress={() => { navigation.navigate('CreateGroupScreen') }}>
-                <View style={styles.plus}>
-                    <Entypo
-                        name="plus"
-                        size={30}
-                        style={{ color: 'white' }}
-                    />
-                </View>
+            <Pressable
+                style={{position: 'absolute', right: 20, bottom: 15}}
+                onPress={() => { navigation.navigate('CreateGroupScreen') }}
+            >
+                <PlusIcon
+                    width={50}
+                    height={50}
+                    fill={"#3A6DFC"}
+                    preserveAspectRatio="none"
+                />
             </Pressable>
 
         </SafeAreaView>
@@ -73,20 +78,13 @@ const GroupingScreen = () => {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    plus: {
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        backgroundColor: '#586ef3',
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        justifyContent: 'center',
-
-        position: 'absolute',
-        right: 20,
-        bottom: 50,
+        marginHorizontal: 20,
+        marginBottom: 15,
+        marginTop: 5
     }
 })
 

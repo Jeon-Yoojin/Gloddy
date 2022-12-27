@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { SafeAreaView, Text, StyleSheet, View, Dimensions, TouchableOpacity, Image, TextInput, PermissionsAndroid, Platform, Alert } from 'react-native';
+import { SafeAreaView, Text, StyleSheet, View, Dimensions, TouchableOpacity, Image, TextInput, Alert } from 'react-native';
+import * as ImagePicker from "react-native-image-picker"
+
 import DropDownPicker from 'react-native-dropdown-picker';
 import CustomButton from "../../../common/CustomButton";
 import CustomPicker from "../../../common/CustomPicker";
 import DatePicker from "../../../common/DatePicker";
+
 import RegisterHeader from "../components/RegisterHeader";
-import * as ImagePicker from "react-native-image-picker"
-import { request, PERMISSIONS, RESULTS } from "react-native-permissions";
+import GetPermission from "../../../common/GetPermission";
+import PlusIcon from '../../../assets/image/plusIcon.svg';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -76,34 +79,9 @@ const RegisterScreen = ({navigation: {navigate}, route})=>{
         }
     }
 
-    const getPermissions = async () => {
-        try{
-            const result = await request(Platform.OS === 'ios' ? PERMISSIONS.IOS.PHOTO_LIBRARY : PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE)
-            switch (result) {
-                case RESULTS.UNAVAILABLE:
-                    console.log('This feature is not available (on this device / in this context)');
-                    return false;
-                case RESULTS.DENIED:
-                    console.log('The permission has not been requested / is denied but requestable');
-                    return false;
-                case RESULTS.LIMITED:
-                    console.log('The permission is limited: some actions are possible');
-                    return false;
-                case RESULTS.GRANTED:
-                    console.log('The permission is granted');
-                    return true;
-                case RESULTS.BLOCKED:
-                    console.log('The permission is denied and not requestable anymore');
-                    return false;
-            }
-        } catch (error){
-            console.log("getPermissions error", error);
-        }
-    };
-    
     const getPhotoWithPermission = async () => {
         try{
-            const hasPermission = await getPermissions();
+            const hasPermission = await GetPermission();
             console.log("hasPermission", hasPermission);
 
             if(hasPermission){
@@ -162,6 +140,10 @@ const RegisterScreen = ({navigation: {navigate}, route})=>{
                 <Image
                     style={{width: 98, height:98, borderRadius: 98/2}}
                     source={{uri: data.profileImage}}
+                />
+                <PlusIcon
+                    fill={'#1249FC'}
+                    style={{position: 'absolute', right:0, bottom: 0}}
                 />
             </TouchableOpacity>
 

@@ -3,11 +3,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text } from 'react-native';
 
 import GroupIcon from '../assets/image/navigator/grouping.svg';
-import GroupActiveIcon from '../assets/image/navigator/groupingActive.svg';
 import MyGroupIcon from '../assets/image/navigator/mine.svg';
-import MyGroupActiveIcon from '../assets/image/navigator/mineActive.svg';
 import ProfileIcon from '../assets/image/navigator/profile.svg';
-import ProfileActiveIcon from '../assets/image/navigator/profileActive.svg';
 
 import GroupingScreen from '../ui/group/grouping/containers/GroupingScreen';
 import MyGroupScreen from '../ui/mygroup/containers/MyGroupScreen';
@@ -31,25 +28,20 @@ const MainNavigator = () => {
             },
             tabBarIcon: ({focused, color, size})=>{
                 const {name} = route;
+                const iconColor = focused ? '#1249FC' : '#E5E5E5';
                 let icon;
 
                 if(name == 'GroupingScreen'){
-                    icon = focused ? <GroupActiveIcon/> : <GroupIcon/>;
+                    icon = <GroupIcon fill={iconColor} />;
                 }
                 else if(name == 'MyGroupScreen'){
-                    icon = focused ? <MyGroupActiveIcon/> : <MyGroupIcon/>;
+                    icon = <MyGroupIcon fill={iconColor} />
                 }
                 else if(name == 'MyProfileScreen'){
-                    icon = focused ? <ProfileActiveIcon/> : <ProfileIcon/>;
+                    icon = <ProfileIcon fill={iconColor} />
                 }
 
                 return icon;
-                {/* 
-                switch (name){
-                    case "GroupingScreen":
-                        return <MeterialIcons name="groups" size={size} color={color} />;
-                }
-                */}
             },
             tabBarStyle: {
                 height: 100, 
