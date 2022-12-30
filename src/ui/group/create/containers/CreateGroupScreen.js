@@ -207,6 +207,10 @@ const CreateGroupScreen = () => {
                 </View>
 
                 {/* 모임 위치 설정 */}
+                <TextInput
+                    placeholder={"모임 위치 설정"}
+                    onChange={event => onChangeInput(event, 'place')}
+                />
                 <View style={styles.subContainer}>
                     <Text style={styles.titleText}>모임 위치</Text>
 
