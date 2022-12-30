@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Text, Dimensions } from 'react-native';
+import { View, StyleSheet, Text, Dimensions, Platform } from 'react-native';
 
 import Modal from 'react-native-modal';
 import WarningIcon from '../../../../assets/image/group/detail/warning.svg'
@@ -18,32 +18,28 @@ const ModalContent = () =>{
     )
 }
 
-const TwoButtons = ({hide, onPressConfirmButton}) =>{
+const TwoButtons = ({submit, hide}) =>{
     return(
         < View style={styles.twoButtons} >
-            <CustomButton text="네" onPress={() => { onPressConfirmButton(); hide(); }} color={'#D7533E'} textColor={'#FFFFFF'} style={styles.customButtonStyle} />
+            <CustomButton text="네" onPress={() => { hide(); submit(); }} color={'#D7533E'} textColor={'#FFFFFF'} style={styles.customButtonStyle} />
             <CustomButton text="아니요" onPress={hide} color={'#CDCDCD'} textColor={'#FFFFFF'} style={styles.customButtonStyle} />
         </View>
     )
 }
 
-const CreateConfirmModal = ({setConfirm, showBottomSheet, hide}) => {
-    const onPressConfirmButton = () => {
-        setConfirm(true);
-    }
-
+const CreateConfirmModal = ({submit, showBottomSheet, hide}) => {
     return (
         <View style={styles.modalContainer}>
             <Modal
                 isVisible={showBottomSheet}
-                useNativeDriver={true}
+                useNativeDriver={Platform.OS === 'android' ? true : false}
                 onBackdropPress={hide}
                 style={{ alignSelf: 'center' }}
             >
                 {/* modal 내부 content */}
                 <View style={styles.backDrop}>
                     <ModalContent/>
-                    <TwoButtons onPressConfirmButton={onPressConfirmButton} hide={hide}/>
+                    <TwoButtons submit={submit} hide={hide}/>
                 </View>
             </Modal>
         </View>

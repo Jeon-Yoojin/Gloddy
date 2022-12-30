@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView, TextInput, Touchable, TouchableOpacity, Dimensions, ScrollView, Image } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, TextInput, Dimensions, ScrollView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import Modal from 'react-native-modal';
 
 import CreateGroupHeader from "../components/CreateGroupHeader";
@@ -8,13 +9,12 @@ import DatePicker from '../../../../common/DatePicker'
 import CustomButton from "../../../../common/CustomButton";
 import { useMutation, useQueryClient } from "react-query";
 import { createGroup } from "../../../../api/group";
-import { useNavigation } from "@react-navigation/native";
+
 import CreateGroupModal from "../components/CreateGroupModal";
 import CreateConfirmModal from "../components/CreateConfirmModal";
 
-import GetPermission from "../../../../common/GetPermission";
-import * as ImagePicker from "react-native-image-picker";
-import PlusIcon from "../../../../assets/image/plusIcon.svg";
+import { uploadFileList } from "../../../../api/file";
+import GroupInfoInput from "../components/GroupInfoInput";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -23,13 +23,13 @@ const CreateGroupScreen = () => {
     const navigation = useNavigation();
     const queryClient = useQueryClient();
 
-    const [confirm, setConfirm] = useState(false);
     const [showBottomSheet, setShowBottomSheet] = useState(false);
     const [showCreateConfirmModal, setShowCreateConfirmModal] = useState(false);
     const toggleModal = ()=>{
         setShowBottomSheet(!showBottomSheet)
     }
 
+    const [selectedImages, setSelectedImages] = useState([]);
     const [data, setData] = useState({
         title: null,
         content: null,
@@ -141,20 +141,18 @@ const CreateGroupScreen = () => {
         onSuccess: group => {
             queryClient.refetchQueries({queryKey: ['groups']});
             navigation.goBack();
-        },
+        }
     });
 
-    const handleOnpress = () => {
-        setShowCreateConfirmModal(true);
-        submit(confirm);
-    }
+    const submit = useCallback(async ()=>{
+        try{
+            const response = await uploadFile();
+            console.log("uploadFile ", response);
 
-    const submit = useCallback((confirm)=>{
-        if (confirm===true) {
             create({
                 content: data.content,
                 endTime: data.endTime,
-                fileUrl: data.fileUrl,
+                fileUrl: response?.fileUrlList[0],
                 maxUser: data.maxUser,
                 meetDate: data.meetDate,
                 place: data.place,
@@ -164,37 +162,27 @@ const CreateGroupScreen = () => {
                 title: data.title
             });
         }
+        catch(error){
+            console.log("submit error ", error);
+        }
     }, [create, data]);
 
-    const getPhotoWithPermission = async () => {
-        try{
-            const hasPermission = await GetPermission();
-            console.log("hasPermission", hasPermission);
+    const uploadFile = () => {
+        if(selectedImages.length<1)
+            return null;
 
-            if(hasPermission){
-                ImagePicker.launchImageLibrary(
-                    {
-                        mediaType: 'photo',
-                    },
-                    (res)=>{
-                        if(res.didCancel){
-                            setData({...data, fileUrl: null});
-                            return;
-                        }
-                        console.log("selected photo", res);
-                        setData({...data, fileUrl: res.assets[0]?.uri});
-                    }
-                )
-            }
-            else{
-                Alert.alert(
-                    "권한이 없습니다",
-                    "갤러리 접근 권한이 필요합니다"
-                );
-            }
-        }catch (error){
-            console.log("getPhotoWithPermission error", error);
-        }
+        var body = new FormData();
+        
+        selectedImages.map((image)=>{
+            var file = {
+                name: image.fileName,
+                type: 'multipart/form-data',
+                uri: image.uri
+            };
+            body.append('fileList', file);
+        })
+        
+        return uploadFileList(body);
     }
 
     return (
@@ -202,49 +190,7 @@ const CreateGroupScreen = () => {
             <CreateGroupHeader />
             
             <ScrollView style={{marginVertical: 18}}>
-                {/* 이미지 */}
-                <TouchableOpacity
-                    onPress={getPhotoWithPermission}
-                    style={{backgroundColor: '#F5F5F5', alignSelf: 'center', marginTop: 25, width: 92, height: 92, borderRadius: 10}}
-                >
-                    <Image
-                        style={{width: 92, height: 92, borderRadius: 10}}
-                        source={{uri: data.fileUrl}}
-                    />
-                    <PlusIcon
-                        fill={'#1249FC'}
-                        style={{position: 'absolute', right: -6, top: -6}}
-                    />
-                </TouchableOpacity>
-
-                {/* 방제목 */}
-                <View style={styles.subContainer}>
-                    <Text style={styles.titleText}>방제목</Text>
-                    <TextInput
-                        style={styles.inputBox}
-                        placeholder="제목을 입력해주세요"
-                        onChange={event => onChangeInput(event, 'title')}
-                        autoCorrect={false}
-                        autoCapitalize={'none'}
-                    />
-                </View>
-
-                {/* 활동 소개글 */}
-                <View style={styles.subContainer}>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Text style={styles.titleText}>활동 소개글</Text>
-                        <Text style={{color: '#AAAAAA', fontSize: 12}}>0/30</Text>
-                    </View>
-                    <TextInput
-                        style={[styles.inputBox, {paddingTop: 15, height: 110, textAlignVertical: 'top',}]}
-                        multiline={true}
-                        maxLength={30}
-                        placeholder="내용을 입력해주세요"
-                        onChange={event => onChangeInput(event, 'content')}
-                        autoCorrect={false}
-                        autoCapitalize={'none'}
-                    />
-                </View>
+                <GroupInfoInput selectedImages={selectedImages} setSelectedImages={setSelectedImages} onChangeInput={onChangeInput} />
 
                 <View style={{backgroundColor: '#F7F7F7', height: 14, marginTop: 18}}></View>
 
@@ -263,34 +209,14 @@ const CreateGroupScreen = () => {
                 {/* 모임 위치 설정 */}
                 <View style={styles.subContainer}>
                     <Text style={styles.titleText}>모임 위치</Text>
-                    <CustomButton
-                        text={'모임 위치를 설정해주세요.'}
-                        onPress={() => { setShowBottomSheet(true) }}
-                    />
 
-                    <Modal
-                        isVisible={showBottomSheet}
-                        deviceHeight={windowHeight}
-                        deviceWidth={windowWidth}
-                        useNativeDriver={true}
-                        onBackdropPress={() => setShowBottomSheet(false)}
-                        transparent={true}
-                        style={{ justifyContent: 'center', margin: 0, marginTop: 30,}}
-                    >
-                        <View style={{ flex: 1, backgroundColor: "white", borderTopStartRadius: 36, borderTopEndRadius: 36, }}>
-                            <View style={{ justifyContent: 'space-between', flex: 1 }}>
-                                <CreateGroupModal />
-                                <View style={{ alignItems: 'center' }}>
-                                    <CustomButton
-                                        text={'닫기'}
-                                        onPress={toggleModal}
-                                        color={'#1249FC'}
-                                        textColor={'#FFFFFF'}
-                                    />
-                                </View>
-                            </View>
-                        </View>
-                    </Modal>
+                    <TextInput
+                        style={styles.inputBox}
+                        placeholder="모임위치를 입력해주세요"
+                        onChange={event => onChangeInput(event, 'place')}
+                        autoCorrect={false}
+                        autoCapitalize={'none'}
+                    />
                 </View>
 
                 {/* 모임 인원 설정 */}
@@ -330,13 +256,13 @@ const CreateGroupScreen = () => {
                     color={disableButton ? '#1249FC' : null}
                     textColor={disableButton ? '#FFFFFF' : null}
                     style={{marginTop: 30}}
-                    onPress={handleOnpress}
+                    onPress={()=>setShowCreateConfirmModal(true)}
                     disabled={disableButton ? false : true}
                 />
             </ScrollView>
 
-        {/* 모임 나가기 경고 Modal */}
-        <CreateConfirmModal setConfirm={setConfirm} showBottomSheet={showCreateConfirmModal} hide={()=>{setShowCreateConfirmModal(false)}}/>
+        {/* 모임 개설 경고 Modal */}
+        <CreateConfirmModal submit={submit} showBottomSheet={showCreateConfirmModal} hide={()=>{setShowCreateConfirmModal(false)}}/>
         </SafeAreaView>
     )
 }

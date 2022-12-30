@@ -82,6 +82,7 @@ const IdentificationModal = ({completeVerify, showBottomSheet, hide, userID}) =>
         .then(
             response=>{
                 // 시간 재설정
+                setTimer(180000);
             }
         )
         .catch(

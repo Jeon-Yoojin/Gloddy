@@ -52,7 +52,7 @@ const EmailAuthScreen = () => {
             }
         })
         .catch(error=>{
-            setShowIdentifyModal(false);
+            setShowIdentifyModal(true);
             console.log("authentication error", error);
         })
     }

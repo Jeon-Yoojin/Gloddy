@@ -69,7 +69,7 @@ const LoginScreen = () => {
                 </View>
                 <View style={styles.alertContainer}>
                     <View style={[styles.alertTriangle, {borderBottomColor: confirmMessage ? '#D7533E' : 'transparent'}]}></View>
-                    <Text style={[styles.alertText, {color: confirmMessage ? '#D7533E' : '#FFFFFF'}]}>비밀번호를 다시 확인해주세요.</Text>
+                    <Text style={[styles.alertText, {color: confirmMessage ? '#D7533E' : '#FFFFFF'}]}>아이디 또는 비밀번호를 다시 확인해주세요.</Text>
                 </View>
                 
                 <CustomButton

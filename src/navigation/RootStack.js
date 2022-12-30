@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import SlideScreen from '../ui/tutorial/containers/SlideScreen';
 import LoginScreen from '../ui/login/containers/LoginScreen';
-import SelectSchool from '../ui/register/containers/SelectSchool';
+import SelectSchoolScreen from '../ui/register/containers/SelectSchoolScreen';
 import EmailAuthScreen from '../ui/register/containers/EmailAuthScreen';
 import PWSettingScreen from '../ui/register/containers/PWSettingScreen';
 import PWConfirmScreen from '../ui/register/containers/PWConfirmScreen';
@@ -108,7 +108,7 @@ function RootStack() {
         />
         <Stack.Screen
           name="SelectSchoolScreen"
-          component={SelectSchool}
+          component={SelectSchoolScreen}
           options={{headerShown: false}}
         />
         <Stack.Screen

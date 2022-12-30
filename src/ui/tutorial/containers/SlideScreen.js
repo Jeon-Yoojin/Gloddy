@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, SliderBase, Image, Button, TouchableOpacity} from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 
-import SelectSchool from '../../register/containers/SelectSchool';
+import SelectSchoolScreen from '../../register/containers/SelectSchoolScreen';
 import LoginScreen from '../../login/containers/LoginScreen';
  
 const styles = StyleSheet.create({
