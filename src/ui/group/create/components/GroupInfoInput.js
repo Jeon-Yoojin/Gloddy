@@ -5,7 +5,7 @@ import * as ImagePicker from "react-native-image-picker";
 import PlusIcon from "../../../../assets/image/plusIcon.svg";
 
 
-const GroupInfoInput = ({selectedImages, setSelectedImages, onChangeInput})=>{
+const GroupInfoInput = ({selectedImages, setSelectedImages, onChangeInput, contentLength})=>{
     const getPhotoWithPermission = async () => {
         try{
             const hasPermission = await GetPermission();
@@ -70,7 +70,7 @@ const GroupInfoInput = ({selectedImages, setSelectedImages, onChangeInput})=>{
             <View style={styles.subContainer}>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                     <Text style={styles.titleText}>활동 소개글</Text>
-                    <Text style={{color: '#AAAAAA', fontSize: 12}}>0/30</Text>
+                    <Text style={{color: '#AAAAAA', fontSize: 12}}>{contentLength}/30</Text>
                 </View>
                 <TextInput
                     style={[styles.inputBox, {paddingTop: 15, height: 110, textAlignVertical: 'top',}]}

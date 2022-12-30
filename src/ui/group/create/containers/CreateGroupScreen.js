@@ -53,6 +53,7 @@ const CreateGroupScreen = () => {
     })
     const [disableButton, setDisableButton] = useState(false);
     const [confirmNan, setConfirmNan] = useState(false);
+    const [contentLength, setContentLength] = useState(0);
 
     useEffect(()=>{
         setDisableButton(()=>isValid.title && isValid.content && isValid.maxUser && isValid.place && isValid.meetDate && isValid.startTime && isValid.endTime);
@@ -72,16 +73,15 @@ const CreateGroupScreen = () => {
             }
         }
         else if(name === 'content'){
-            if(text.length > 0 && text.length < 30) {
+            if(text.length > 0) {
                 setData({...data, content: text});
                 setIsValid({...isValid, content: true});
+                setContentLength(text.length);
             }
-            else if(text.length >= 30) {
-                setData({...data, content: text});
-            }
-            else {
-                setData({...data, content: text});
+            else{
+                setData({...data, content: null});
                 setIsValid({...isValid, content: false});
+                setContentLength(0);
             }
         }
         else if(name === 'place'){
@@ -190,7 +190,7 @@ const CreateGroupScreen = () => {
             <CreateGroupHeader />
             
             <ScrollView style={{marginVertical: 18}}>
-                <GroupInfoInput selectedImages={selectedImages} setSelectedImages={setSelectedImages} onChangeInput={onChangeInput} />
+                <GroupInfoInput selectedImages={selectedImages} setSelectedImages={setSelectedImages} onChangeInput={onChangeInput} contentLength={contentLength} />
 
                 <View style={{backgroundColor: '#F7F7F7', height: 14, marginTop: 18}}></View>
 
@@ -206,21 +206,36 @@ const CreateGroupScreen = () => {
                     </View>
                 </View>
 
-                {/* 모임 위치 설정 */}
-                <TextInput
-                    placeholder={"모임 위치 설정"}
-                    onChange={event => onChangeInput(event, 'place')}
-                />
+                 {/* 모임 위치 설정 */}
                 <View style={styles.subContainer}>
                     <Text style={styles.titleText}>모임 위치</Text>
 
-                    <TextInput
-                        style={styles.inputBox}
-                        placeholder="모임위치를 입력해주세요"
-                        onChange={event => onChangeInput(event, 'place')}
-                        autoCorrect={false}
-                        autoCapitalize={'none'}
+                    <CustomButton
+                        text={'모임 위치를 설정해주세요.'}
+                        onPress={() => { setShowBottomSheet(true) }}
                     />
+
+                    <Modal
+                        isVisible={showBottomSheet}
+                        deviceHeight={windowHeight}
+                        deviceWidth={windowWidth}
+                        useNativeDriver={true}
+                        onBackdropPress={() => setShowBottomSheet(false)}
+                        transparent={true}
+                        style={{ justifyContent: 'center', margin: 0, marginTop: 30, }}
+                    >
+                        <View style={{ flex: 1, backgroundColor: "white", borderTopStartRadius: 36, borderTopEndRadius: 36, }}>
+                            <View style={{ justifyContent: 'space-between', flex: 1 }}>
+                                <CreateGroupModal />
+                            </View>
+                            <CustomButton
+                                text={'닫기'}
+                                onPress={toggleModal}
+                                color={'#1249FC'}
+                                textColor={'#FFFFFF'}
+                            />
+                        </View>
+                    </Modal>
                 </View>
 
                 {/* 모임 인원 설정 */}
