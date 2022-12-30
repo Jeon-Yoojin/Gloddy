@@ -2,7 +2,8 @@ import React from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
+import GloddyZone from '../../../../assets/image/gloddyzone.svg'
+import GroupingIcon from '../../../../assets/image/group/groupingicon.svg'
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 
 const User = [
@@ -20,10 +21,10 @@ const User = [
     },
 ]
 
-const Participant = ({ User }) => {
+const Participant = ({ User, maxNum }) => {
     return (
         <>
-            <View style={{ width: 55 }}>
+            {/*<View style={{ width: 55 }}>
                 {User.slice(0, 3).map((data, index) => {
                     return (
                         <Image
@@ -33,8 +34,11 @@ const Participant = ({ User }) => {
                         />
                     )
                 })}
-            </View>
-            <Text style={[styles.text, { justifyContent: 'center' }]}>{User.length}명</Text>
+            </View>*/}
+            <GroupingIcon style={[styles.iconMargin, {alignSelf: 'center'}]}/>
+            <Text style={[styles.text, { justifyContent: 'center', fontWeight: 'bold'}]}>{User.length}명</Text>
+            <Text> / </Text>
+            <Text style={[styles.text, { justifyContent: 'center' }]}>{maxNum}명</Text>
         </>
     )
 }
@@ -42,11 +46,7 @@ const Participant = ({ User }) => {
 const Place = ({ place }) => {
     return (
         <View style={styles.place}>
-            <Ionicons
-                name="location-sharp"
-                color={'#b4c1f7'}
-                size={17}
-            />
+            <GloddyZone style={[styles.iconMargin, { alignSelf: 'center' }]} />
             <Text style={styles.text}>{place}</Text>
         </View>
     )
@@ -69,7 +69,6 @@ const GroupElement = ({ groupId, title, introduction, maxNum, place, date }) => 
         });
     }
 
-    const groupSample_small = '../../../../assets/image/group/groupSample_small.png';
     return (
         <Pressable onPress={onPress}>
             <View style={[styles.container]}>
@@ -93,7 +92,7 @@ const GroupElement = ({ groupId, title, introduction, maxNum, place, date }) => 
 
                 {/* 인원/장소/날짜 */}
                 <View style={styles.bottomContainer}>
-                    <Participant User={User} />
+                    <Participant User={User} maxNum={maxNum}/>
                     <Place place={place} />
                     <Date date={date} />
                 </View>
@@ -105,10 +104,12 @@ const GroupElement = ({ groupId, title, introduction, maxNum, place, date }) => 
 const styles = StyleSheet.create({
     container: {
         //ios의 경우 shadow 컬러 설정 필요
+        backgroundColor: '#FFFFFF',
         borderColor: '#EAEAEA',
         borderWidth: 1,
         borderRadius: 11,
-        marginHorizontal: 14,
+        width: '92%',
+        alignSelf: 'center',
         marginBottom: 14,
         paddingVertical: 15,
         paddingHorizontal: 14,
@@ -120,6 +121,7 @@ const styles = StyleSheet.create({
     bottomContainer: {
         flexDirection: 'row',
         marginTop: 20,
+        marginHorizontal: 14,
         alignItems: 'stretch'
     },
     text: {
@@ -158,6 +160,9 @@ const styles = StyleSheet.create({
         height: 21,
         borderRadius: 11,
     },
+    iconMargin:{
+        marginRight: 4
+    }
 })
 
 export default GroupElement;

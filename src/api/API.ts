@@ -4,15 +4,13 @@ import { SearchLocationResult } from './types';
 
 export async function searchLocation(params: string) {
     const response = await axios.get<SearchLocationResult>(
-        'https://openapi.naver.com/v1/search/local.json',
+        'https://dapi.kakao.com/v2/local/search/keyword.json',
         {
             headers: {
-                'X-Naver-Client-Id' : Config.X_Naver_Client_ID,
-                'X-Naver-Client-Secret': Config.X_Naver_Client_Secret
+                'Authorization' : Config.KAKAO_REST_API_KEY
             },
             params: {
                 query: params,
-                display: 10,
             }
         }
     )

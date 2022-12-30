@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Animated, Dimensions } from "react-native";
 
 const ProgressBar = ({ fullWidth, Height, widthPct }) => {
     const barWidth = React.useRef(new Animated.Value(0)).current;
-    const finalWidth = (fullWidth * widthPct) / 10;
+    const finalWidth = (fullWidth * widthPct)/100;
 
     useEffect(() => {
         Animated.spring(barWidth, {
@@ -27,11 +27,12 @@ const styles = StyleSheet.create({
     barContainer: fullWidth=>({
         //marginHorizontal: 40,
         width: fullWidth,
-        backgroundColor: '#CCCCCC',
+        backgroundColor: '#F7F7F7',
         borderRadius: 15,
+        alignSelf: 'center'
     }),
     progressBar: Height=>({
-        backgroundColor: '#2c4d81',
+        backgroundColor: '#1249FC',
         height: Height,
         borderRadius: 15,
         alignItems: 'flex-end',

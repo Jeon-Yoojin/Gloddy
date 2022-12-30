@@ -2,24 +2,11 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { SafeAreaView, TouchableOpacity, Text, View, } from "react-native";
-import GroupList from "../components/GroupList";
+import ParticipatingGroupScreen from "./ParticipatingGroupScreen";
+import WishlistGroupScreen from "./WishlistGroupScreen";
+import GroupList from "../components/ParticipatingGroupList";
 
 const Tab = createMaterialTopTabNavigator();
-
-const ParticipatingGroupScreen = () =>{
-    return (
-        <>
-            <Text>참여 모임</Text>
-            
-        </>
-    )
-}
-
-const WishlistGroupScreen = ()=>{
-    return(
-        <Text>찜한 모임</Text>
-    )
-}
 
 const TopTabNavigator = () => {
     return (

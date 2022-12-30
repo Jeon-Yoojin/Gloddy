@@ -52,7 +52,7 @@ const CreateGroupScreen = () => {
 
     useEffect(()=>{
         setDisableButton(()=>isValid.title && isValid.content && isValid.maxUser && isValid.place && isValid.meetDate && isValid.startTime && isValid.endTime);
-        console.log(disableButton);
+        //console.log(disableButton);
     }, [isValid.title, isValid.content, isValid.maxUser, isValid.place, isValid.meetDate, isValid.startTime, isValid.endTime]);
 
     const onChangeInput = (event, name) => {
@@ -217,6 +217,10 @@ const CreateGroupScreen = () => {
                 </View>
 
                 {/* 모임 위치 설정 */}
+                <TextInput
+                    placeholder={"모임 위치 설정"}
+                    onChange={event => onChangeInput(event, 'place')}
+                />
                 <View style={styles.subContainer}>
                     <Text style={styles.titleText}>모임 위치</Text>
                     <CustomButton
@@ -286,7 +290,7 @@ const CreateGroupScreen = () => {
                     color={disableButton ? '#1249FC' : null}
                     textColor={disableButton ? '#FFFFFF' : null}
                     style={{marginTop: 10}}
-                    onPress={onSubmit}
+                    onPress={handleOnpress}
                     disabled={disableButton ? false : true}
                 />
             </ScrollView>
