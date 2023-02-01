@@ -14,7 +14,8 @@ function ReviewDeleteModal({author, visible, setVisible}) {
               />
             </View>
             <View style={styles.textContainer}>
-              <Text style={[styles.normalText, {lineHeight: 30}]}>
+              <Text
+                style={[styles.normalText, {lineHeight: 30, color: 'black'}]}>
                 {author} 님의{'\n'}후기를 삭제하시겠어요?
               </Text>
             </View>
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffffffdf',
+    backgroundColor: '#ffffff',
     padding: 30,
   },
   upperContainer: {

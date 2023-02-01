@@ -24,6 +24,7 @@ import GroupMembers from '../ui/group/detail/containers/GroupMembers';
 import GroupReviewScreen from '../ui/myprofile/containers/GroupReviewScreen';
 
 import {useSelector} from 'react-redux';
+import MyComplimentScreen from '../ui/myprofile/containers/MyComplimentScreen';
 
 const Stack = createStackNavigator();
 
@@ -98,6 +99,11 @@ function RootStack() {
             name="GroupReviewScreen"
             component={GroupReviewScreen}
             options={{headerShown: true, title: '모임후기'}}
+          />
+          <Stack.Screen
+            name="MyComplimentScreen"
+            component={MyComplimentScreen}
+            options={{headerShown: true, title: '받은칭찬'}}
           />
         </>
       ) : (

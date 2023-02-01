@@ -24,7 +24,9 @@ const Review = ({content}) => {
         </View>
         <View style={styles.textContainer}>
           <View style={styles.textContainer1}>
-            <Text style={styles.titleText}>{content.author}</Text>
+            <Text style={[styles.titleText, {color: 'black'}]}>
+              {content.author}
+            </Text>
           </View>
           <View style={styles.textContainer2}>
             <Text style={styles.subText}>
@@ -42,7 +44,7 @@ const Review = ({content}) => {
         </View>
       </View>
       <View style={styles.ReviewLowerContainer}>
-        <Text style={{lineHeight: 22}}>{content.text}</Text>
+        <Text style={{lineHeight: 22, color: 'black'}}>{content.text}</Text>
       </View>
     </View>
   );

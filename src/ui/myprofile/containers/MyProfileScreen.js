@@ -71,12 +71,17 @@ const Rating = ({compliment, review}) => {
             marginHorizontal: 10,
           }}
         />
-        <View>
-          <Text style={styles.text}>받은 칭찬</Text>
-          <Text style={[styles.text, {fontSize: 20, fontWeight: 'bold'}]}>
-            15
-          </Text>
-        </View>
+        <Pressable
+          onPress={() => {
+            navigation.navigate('MyComplimentScreen');
+          }}>
+          <View>
+            <Text style={styles.text}>받은 칭찬</Text>
+            <Text style={[styles.text, {fontSize: 20, fontWeight: 'bold'}]}>
+              15
+            </Text>
+          </View>
+        </Pressable>
       </View>
       <View style={{width: '50%', flexDirection: 'row'}}>
         <View
