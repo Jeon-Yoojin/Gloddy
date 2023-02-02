@@ -1,6 +1,8 @@
-import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { useQuery } from 'react-query';
+import { getArticles } from '../../../../api/article'
 
 import CustomButton from '../../../../common/CustomButton';
 import Notice from '../components/Notice';
@@ -10,6 +12,15 @@ const BoardTab = () => {
     const navigation = useNavigation();
     const groupId = useRoute().params.groupId;
 
+    const articleQuery = useQuery(['article', groupId], () => getArticles({groupId: groupId}))
+
+    if (!articleQuery.data) {
+        return (
+            <ActivityIndicator size="large" style={styles.spinner} color="black" />
+        )
+    }
+    const articles = articleQuery.data.previews?.contents;
+    
     const boardInfo = [
         {
             profileImgSrc: require('../../../../assets/image/sample/John.jpg'),
@@ -41,15 +52,16 @@ const BoardTab = () => {
                 <Notice />
 
                 {/* 게시글 */}
-                {boardInfo.map((data, index) => {
+                {articles.map((data, index) => {
                     return (
                         <Post
                             key={index}
-                            profileImgSrc={data.profileImgSrc}
+                            notice={data.notice}
                             name={data.name}
                             date={data.date}
-                            post={data.post}
-                            comments={data.comments}
+                            post={data.content}
+                            comments={data.commentCount}
+                            profileImgSrc={require('../../../../assets/image/sample/Sam.png')}
                         />
 
                     )
@@ -59,13 +71,20 @@ const BoardTab = () => {
                 text={'글쓰기'}
                 color='#1249FC'
                 textColor='#FFFFFF'
-                onPress={() => { navigation.navigate('PostingScreen') }}
+                onPress={() => {
+                    navigation.navigate('PostingScreen', {
+                        groupId
+                    })
+                }}
             />
         </>
     )
 }
 
 const styles = StyleSheet.create({
+    spinner: {
+        flex: 1,
+    }
 })
 
 export default BoardTab;

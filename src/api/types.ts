@@ -1,3 +1,5 @@
+import { PagerViewOnPageScrollEvent } from "react-native-pager-view";
+
 export interface User{
     email: string;
     name: string;
@@ -61,6 +63,24 @@ export interface GetGroupDetailResult{
 export interface CreateGroupResult{
     groupId: number;
 }
+
+export interface GetArticleResult{
+    totalCount: number,
+    currentCount: number,
+    currentPage: number,
+    totalPage: number,
+    contents: Array<Comment>
+}
+
+export interface Comment{
+    name: string,
+    date: string,
+    content: string,
+    notice: boolean,
+    commentCount: number,
+    images: {url: string}
+}
+
 export interface CreateArticleResult{
     commentId: number;
 }

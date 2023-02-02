@@ -16,9 +16,7 @@ const ProgressBar = ({ fullWidth, Height, widthPct }) => {
 
     return (
         <View style={styles.barContainer(fullWidth)}>
-            <Animated.View style={[styles.progressBar(Height), { width: barWidth }]}>
-                <View style={{width: Height*0.8, height: Height*0.8, borderRadius: Height*0.8, backgroundColor: 'white', marginRight: Height*0.2}}></View>
-            </Animated.View>
+            <Animated.View style={[styles.progressBar(Height), { width: barWidth }]}/>
         </View>
     );
 };

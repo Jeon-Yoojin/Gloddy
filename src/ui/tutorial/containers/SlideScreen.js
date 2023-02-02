@@ -4,6 +4,8 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 
 import SelectSchoolScreen from '../../register/containers/SelectSchoolScreen';
 import LoginScreen from '../../login/containers/LoginScreen';
+import RegisterScreen from '../../register/containers/RegisterScreen';
+import TestReviewModal from '../../review/components/TestReviewModal';
  
 const styles = StyleSheet.create({
   title: {
@@ -85,7 +87,7 @@ export default class SlideScreen extends React.Component {
   render() {
     if (this.state.showRealApp) {
       return (
-        <LoginScreen/>
+        <TestReviewModal/>
       )
     } else {
       return (

@@ -6,7 +6,7 @@ const windowHeight = Dimensions.get('window').height;
 
 const CustomButton = (props) => {
     return(
-            <TouchableOpacity style={[styles.button, props.style, props.color? {backgroundColor: props.color}:{}]} onPress={props.onPress} disabled={props.disabled}>
+            <TouchableOpacity style={[styles.button, props.style, props.color? {backgroundColor: props.color}:{}, props.disabled? {}:styles.activeButton]} onPress={props.onPress} disabled={props.disabled}>
                 <Text style={[styles.buttonText, props.textColor? {color: props.textColor}:{}]}>{props.text}</Text>
             </TouchableOpacity>
     )

@@ -5,12 +5,8 @@ import Header from "../../../../common/Header";
 import SearchResultList from "./SearchResultList";
 import { searchLocation } from "../../../../api/API";
 
-import X_shape from '../../../../assets/image/X_shape.svg';
-import BackArrow from '../../../../assets/image/backarrow.svg';
 import Magnify from '../../../../assets/image/magnify.svg';
-
-
-const windowWidth = Dimensions.get("window").width;
+import ModalHeader from "./ModalHeader";
 
 const GroupModalHeader = () => {
     return(
@@ -61,7 +57,7 @@ const GroupModalBody = () => {
 const CreateGroupModal = () => {
     return (
         <View style={styles.backdrop}>
-            <GroupModalHeader/>
+            <ModalHeader title={'모임위치'}/>
             {/* 모임 위치 검색 */}
             <GroupModalBody />
         </View>

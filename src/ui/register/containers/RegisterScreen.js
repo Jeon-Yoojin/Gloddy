@@ -10,11 +10,12 @@ import DatePicker from "../../../common/DatePicker";
 import RegisterHeader from "../components/RegisterHeader";
 import GetPermission from "../../../common/GetPermission";
 import PlusIcon from '../../../assets/image/plusIcon.svg';
+import GenderSelectionModal from "../components/GenderSelectionModal";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const RegisterScreen = ({navigation: {navigate}, route})=>{
+const RegisterScreen = ({/*navigation: {navigate}, */route})=>{
     const genderItem = [{ label: '남성', value: 'male' }, { label: '여성', value: 'female' }];
 
     const [data, setData] = useState({
@@ -29,6 +30,7 @@ const RegisterScreen = ({navigation: {navigate}, route})=>{
     });
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
+    const [showGenderSelectionModal, setShowGenderSelectionModal] = useState(false);
 
     {/* 닉네임 onchange */}
     const nameChange = (val) => {
@@ -167,24 +169,15 @@ const RegisterScreen = ({navigation: {navigate}, route})=>{
 
                     {/* 성별 */}
                     <Text style={styles.text}>성별</Text>
-                    <View zIndex={1}>
-                        <DropDownPicker open={open} items={genderItem} value={value}
-                            setOpen={setOpen} onSelectItem={selectChange} setValue={setValue}
-                            showArrowIcon={false}
-                            placeholder={'성별을 선택해주세요.'}
-                            placeholderStyle={styles.placeholder}
-                            textStyle={styles.value}
-                            style={styles.input}
-                            dropDownContainerStyle={styles.drop}                            
-                        />
-                    </View>
+                    <Text onPress={()=>{setShowGenderSelectionModal(true)}}>성별모달띄우기</Text>
+                    <GenderSelectionModal showBottomSheet={showGenderSelectionModal} hide={() => setShowGenderSelectionModal(false)}/>
                 </View>
                 
                 <CustomButton
                     text={'다음'}
                     color={data.isValidName&&data.isValidBday&&data.isValidGender? '#1249FC' : null}
                     textColor={data.isValidName&&data.isValidBday&&data.isValidGender? '#FFFFFF' : null}
-                    onPress={()=>{navigate('PersonalityScreen', {userPW: route.params.userPW, profileImage: data.profileImage, name: data.name, birthday: data.birthday, gender: data.gender.value})}}
+                    onPress={()=>{/*navigate('PersonalityScreen', {userPW: route.params.userPW, profileImage: data.profileImage, name: data.name, birthday: data.birthday, gender: data.gender.value})*/}}
                     disabled={data.isValidName&&data.isValidBday&&data.isValidGender? false: false}
                 />
             </View>

@@ -12,9 +12,11 @@ import { createGroup } from "../../../../api/group";
 
 import CreateGroupModal from "../components/CreateGroupModal";
 import CreateConfirmModal from "../components/CreateConfirmModal";
+import MemberCountModal from "../components/MemberCountModal";
 
 import { uploadFileList } from "../../../../api/file";
 import GroupInfoInput from "../components/GroupInfoInput";
+
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -25,6 +27,7 @@ const CreateGroupScreen = () => {
 
     const [showBottomSheet, setShowBottomSheet] = useState(false);
     const [showCreateConfirmModal, setShowCreateConfirmModal] = useState(false);
+    const [showMemberCountModal, setShowMemberCountModal] = useState(false);
     const toggleModal = ()=>{
         setShowBottomSheet(!showBottomSheet)
     }
@@ -253,6 +256,8 @@ const CreateGroupScreen = () => {
                         placeholder={'모임 인원을 설정해주세요.'}
                         onChange={event => onChangeInput(event, 'maxUser')}
                     />
+                    <Text onPress={()=>setShowMemberCountModal(true)}>모임인원</Text>
+                    <MemberCountModal showBottomSheet={showMemberCountModal} hide={() => setShowMemberCountModal(false)} setMemberCount={(count) => { onChangeInput(event, 'maxUser') }} />
                 </View>
 
                 <View style={styles.subContainer}>

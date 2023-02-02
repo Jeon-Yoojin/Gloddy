@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
-import { Dimensions, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { Dimensions, TextInput, StyleSheet, TouchableOpacity, View } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import { managePanProps } from 'react-native-gesture-handler/lib/typescript/handlers/PanGestureHandler';
+import Modal from 'react-native-modal';
+import ModalHeader from '../ui/group/create/components/ModalHeader';
+import CustomButton from './CustomButton';
 
 Date.prototype.format = function(f) {
   if (!this.valueOf()) return " ";
@@ -32,22 +35,16 @@ Number.prototype.zf = function(len){return this.toString().zf(len);};
 
 export default function CustomDatePicker({setDateValue, placeholder, placeholderStyle, style, rightIcon}) {
     //const placeholder = "생년월일을 선택해주세요.";
-    const [date, setDate] = useState(new Date());
     const [open, setOpen] = useState(false);
+    const [showBottomSheet, setShowBottomSheet] = useState(false);
     const [text, onChangeText] = useState("");
-
-    const handleConfirm = (date) => {
-        setOpen(false);
-        setDate(date);
-        onChangeText(date.format("yyyy-MM-dd"))
-        
-        setDateValue(date.format("yyyy-MM-dd"))
-    };
+    
+    const hide = ()=> {setShowBottomSheet(false)}
 
     return (
       <>
             <TouchableOpacity
-                onPress={() => { setOpen(true) }}
+                onPress={() => { setOpen(true); setShowBottomSheet(true) }}
             >
                 <TextInput
                     pointerEvents="none"
@@ -59,17 +56,54 @@ export default function CustomDatePicker({setDateValue, placeholder, placeholder
                     value={text}
                     //onEndEditing={onEndEditing}
                 />
-                <DatePicker
-                    modal
-                    mode="date"
-                    open={open}
-                    onConfirm={handleConfirm}
-                    onCancel={()=>{setOpen(false)}}
-                    date={date}
-                />
+                <DateModal showBottomSheet={showBottomSheet} hide={hide}/>
             </TouchableOpacity>
             </>
   );
+}
+
+const DateModal = ({showBottomSheet, hide})=>{
+    const [date, setDate] = useState(new Date());
+    const handleConfirm = (date) => {
+        setOpen(false);
+        setDate(date);
+        onChangeText(date.format("yyyy-MM-dd"))
+        
+        setDateValue(date.format("yyyy-MM-dd"))
+    };
+
+    return(
+        <Modal
+            isVisible={showBottomSheet}
+            useNativeDriver={true}
+            onBackdropPress={hide}
+            transparent={true}
+            style={{ justifyContent: 'flex-end', margin: 0 }}
+        >
+            <View style={styles.backDrop}>
+                <View style={{paddingVertical: 5}}>
+                <ModalHeader title={'생년월일'} />
+                </View>
+                <DatePicker
+                    mode="date"
+                    androidVariant='nativeAndroid'
+                    locale='ko'
+                    maximumDate={new Date("2010-12-31")}
+                    minimumDate={new Date("1990-01-01")}
+                    onConfirm={handleConfirm}
+                    date={date}
+                    style={{ justifyContent: 'center', alignContent: 'center', alignSelf: 'center'}}
+                />
+                <CustomButton
+                    text={'완료'}
+                    color={'#1249FC'}
+                    textColor={'#FFFFFF'}
+                    onPress={() => { console.log('pressed') }}
+                    style={{ alignItem: 'center' }}
+                />
+            </View>
+        </Modal>
+    )
 }
 
 const windowWidth = Dimensions.get('window').width;
@@ -90,5 +124,13 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingHorizontal: 20,
         paddingVertical: 13,
-    }
+    },
+    backDrop: {
+        justifyContent: 'space-between',
+        backgroundColor: 'white',
+        borderTopStartRadius: 36,
+        borderTopEndRadius: 36,
+        height: 350,
+        width: '100%',
+    },
 })

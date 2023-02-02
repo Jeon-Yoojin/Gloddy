@@ -21,6 +21,7 @@ const GroupInfo = ({ groups, fetchNextPage, refresh, isRefreshing }) => {
             }}
             keyExtractor={(item, index)=>index.toString()}
             onEndReachThreshold={0.5}
+            disableVirtualization={false}
             onEndReached={fetchNextPage}
             refreshControl={
                 <RefreshControl onRefresh={refresh} refreshing={isRefreshing}/>

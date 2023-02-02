@@ -8,10 +8,12 @@ import GalleryIcon from '../../../../assets/image/galleryIcon.svg';
 import BackArrow from '../../../../assets/image/backarrow.svg';
 import { useMutation } from "react-query";
 import { createArticle } from "../../../../api/article";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
-const PostingScreen = ({route}) => {
+const PostingScreen = () => {
     const navigation = useNavigation();
+    const { groupId } = useRoute().params;
+
     const BackarrowImg = '../../../../assets/image/backarrow.png';
     const [post, setPost] = useState({
             body: '',
@@ -46,7 +48,7 @@ const PostingScreen = ({route}) => {
 
     const onSubmit = useCallback(()=>{
         create({
-            groupId: route.params.groupId,
+            groupId: groupId,
             request:{
                 content: post.body
             }

@@ -5,14 +5,18 @@ const SearchResultList = ({results}) =>{
     return(
         <FlatList
             data={results}
-            renderItem={(item) => <SearchResult item={item}/>}
+            renderItem={(item) => console.log(item)}
             keyExtractor={(item, index) => index}
+            contentContainerStyle={{paddingBottom: 100}}
         />
     )
 }
 
+const onPress = () => {
+    //해당 장소 이름, 위도, 경도 모임위치에 set
+}
+
 const SearchResult = ({item}) =>{
-    console.log(item.item)
     const {place_name, address_name} = item.item;
 
     return(
