@@ -1,44 +1,53 @@
 import React from 'react';
-import { StyleSheet, View, Text, SliderBase, Image, Button, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  SliderBase,
+  Image,
+  Button,
+  TouchableOpacity,
+} from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 
 import SelectSchoolScreen from '../../register/containers/SelectSchoolScreen';
 import LoginScreen from '../../login/containers/LoginScreen';
 import RegisterScreen from '../../register/containers/RegisterScreen';
 import TestReviewModal from '../../review/components/TestReviewModal';
- 
+import MyProfileScreen from '../../myprofile/containers/MyProfileScreen';
+
 const styles = StyleSheet.create({
   title: {
-      fontSize: 28,
-      fontFamily: 'Inter-ExtraBold',
-      fontWeight: '700', 
-      margin: 20,
-      color: '#1249FC'
+    fontSize: 28,
+    fontFamily: 'Inter-ExtraBold',
+    fontWeight: '700',
+    margin: 20,
+    color: '#1249FC',
   },
   text: {
-      fontSize: 24,
-      lineHeight: 29,
-      textAlign: 'center',
-      fontFamily: 'Inter-Bold',
-      marginTop: 25,
-      color: 'black',
-      fontWeight: '800'
+    fontSize: 24,
+    lineHeight: 29,
+    textAlign: 'center',
+    fontFamily: 'Inter-Bold',
+    marginTop: 25,
+    color: 'black',
+    fontWeight: '800',
   },
-  button:{
-      backgroundColor: '#1249FC',
-      padding: 15,
-      marginBottom: 40,
-      borderRadius: 8
+  button: {
+    backgroundColor: '#1249FC',
+    padding: 15,
+    marginBottom: 40,
+    borderRadius: 8,
   },
-  buttonText:{
-      fontSize: 18,
-      lineHeight: 25,
-      textAlign: 'center',
-      fontFamily: 'Inter-Bold',
-      color: 'white',
-      fontWeight: '800',
-  }
-})
+  buttonText: {
+    fontSize: 18,
+    lineHeight: 25,
+    textAlign: 'center',
+    fontFamily: 'Inter-Bold',
+    color: 'white',
+    fontWeight: '800',
+  },
+});
 
 const slides = [
   {
@@ -56,30 +65,34 @@ const slides = [
     backgroundColor: '#febe29',
   },
 ];
- 
+
 export default class SlideScreen extends React.Component {
-  constructor(props){
-      super(props);
-      this.state = {
-          showRealApp: false
-      };
+  constructor(props) {
+    super(props);
+    this.state = {
+      showRealApp: false,
+    };
   }
-  
-  _renderItem = ({ item }) => {
+
+  _renderItem = ({item}) => {
     return (
-      <View style={{flex:0.9, justifyContent:'center', alignItems: 'center'}}>
+      <View style={{flex: 0.9, justifyContent: 'center', alignItems: 'center'}}>
         <Text style={styles.title}>{item.title}</Text>
         <Image style={styles.image} source={item.image} />
         <Text style={styles.text}>{item.text}</Text>
       </View>
     );
-  }
+  };
   _onDone = () => {
-    this.setState({ showRealApp: true });
-  }
+    this.setState({showRealApp: true});
+  };
   _renderDoneButton = () => {
     return (
-      <TouchableOpacity style={styles.button} onPress={()=>{this.setState({ showRealApp: true });}}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          this.setState({showRealApp: true});
+        }}>
         <Text style={styles.buttonText}>친구 만나러 가기</Text>
       </TouchableOpacity>
     );
@@ -89,6 +102,7 @@ export default class SlideScreen extends React.Component {
       return (
         <LoginScreen/>
       )
+
     } else {
       return (
         <AppIntroSlider
@@ -99,9 +113,8 @@ export default class SlideScreen extends React.Component {
           showNextButton={false}
           bottomButton={true}
           renderDoneButton={this._renderDoneButton}
-      />
+        />
       );
     }
   }
 }
-

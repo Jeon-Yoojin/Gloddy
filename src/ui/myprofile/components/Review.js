@@ -55,12 +55,12 @@ export default Review;
 const styles = StyleSheet.create({
   // 리뷰
   ReviewContainer: {
-    backgroundColor: '#F5F5F5',
-    width: '90%',
-    borderRadius: 10,
-    padding: 13,
-    marginTop: 30,
     alignItems: 'center',
+    width: '90%',
+    marginTop: 30,
+    padding: 15,
+    borderRadius: 10,
+    backgroundColor: '#F5F5F5',
   },
   // 리뷰 - 컨테이너 상단
   // 1:4:1
@@ -88,10 +88,11 @@ const styles = StyleSheet.create({
 
   // 리뷰- 컨테이너 하단
   ReviewLowerContainer: {
-    borderRadius: 10,
+    width: '100%',
+    marginTop: 8,
     padding: 20,
     backgroundColor: 'white',
-    marginTop: 8,
+    borderRadius: 10,
   },
   // 세부 스타일
   titleText: {fontWeight: 'bold', fontSize: 17},

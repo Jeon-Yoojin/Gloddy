@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import SlideScreen from '../ui/tutorial/containers/SlideScreen';
@@ -25,6 +25,13 @@ import GroupReviewScreen from '../ui/myprofile/containers/GroupReviewScreen';
 
 import {useSelector} from 'react-redux';
 import MyComplimentScreen from '../ui/myprofile/containers/MyComplimentScreen';
+import EnvironmentScreen from '../ui/environment/containers/EnvironmentScreen';
+import AccountModifyScreen from '../ui/environment/containers/AccountModifyScreen';
+import ProduceModifyScreen from '../ui/environment/containers/ProduceModifyScreen';
+import PersonalitySelectionScreen from '../ui/environment/containers/PersonalitySelectionScreen';
+import ServiceTermScreen from '../ui/environment/containers/ServiceTermScreen';
+import PrivacyPolicyScreen from '../ui/environment/containers/PrivacyPolicyScreen';
+import RecentGroup from '../ui/myprofile/containers/RecentGroup';
 
 const Stack = createStackNavigator();
 
@@ -105,6 +112,41 @@ function RootStack() {
             component={MyComplimentScreen}
             options={{headerShown: true, title: '받은칭찬'}}
           />
+          <Stack.Screen
+            name="EnvironmentScreen"
+            component={EnvironmentScreen}
+            options={{headerShown: true, title: '환경설정'}}
+          />
+          <Stack.Screen
+            name="AccountModifyScreen"
+            component={AccountModifyScreen}
+            options={{headerShown: true, title: '회원정보 수정'}}
+          />
+          <Stack.Screen
+            name="ProduceModifyScreen"
+            component={ProduceModifyScreen}
+            options={{headerShown: true, title: '프로필 수정'}}
+          />
+          <Stack.Screen
+            name="PersonalitySelectionScreen"
+            component={PersonalitySelectionScreen}
+            options={{headerShown: true, title: '성격'}}
+          />
+          <Stack.Screen
+            name="ServiceTermScreen"
+            component={ServiceTermScreen}
+            options={{headerShown: true, title: '서비스 약관'}}
+          />
+          <Stack.Screen
+            name="PrivacyPolicyScreen"
+            component={PrivacyPolicyScreen}
+            options={{headerShown: true, title: '개인정보처리방침'}}
+          />
+          <Stack.Screen
+            name="RecentGroup"
+            component={RecentGroup}
+            options={{headerShown: true, title: '최근 모임'}}
+          />
         </>
       ) : (
         <>
@@ -152,6 +194,53 @@ function RootStack() {
             name="MainScreen"
             component={MainScreen}
             options={{headerShown: false}}
+          />
+
+          {/* 임시추가 - 로그인 했다치고.. */}
+          <Stack.Screen
+            name="GroupReviewScreen"
+            component={GroupReviewScreen}
+            options={{headerShown: true, title: '모임후기'}}
+          />
+          <Stack.Screen
+            name="MyComplimentScreen"
+            component={MyComplimentScreen}
+            options={{headerShown: true, title: '받은칭찬'}}
+          />
+          <Stack.Screen
+            name="EnvironmentScreen"
+            component={EnvironmentScreen}
+            options={{headerShown: true, title: '환경설정'}}
+          />
+          <Stack.Screen
+            name="AccountModifyScreen"
+            component={AccountModifyScreen}
+            options={{headerShown: true, title: '회원정보 수정'}}
+          />
+          <Stack.Screen
+            name="ProduceModifyScreen"
+            component={ProduceModifyScreen}
+            options={{headerShown: true, title: '프로필 수정'}}
+          />
+          <Stack.Screen
+            name="PersonalitySelectionScreen"
+            component={PersonalitySelectionScreen}
+            options={{headerShown: true, title: '성격'}}
+          />
+          <Stack.Screen
+            name="ServiceTermScreen"
+            component={ServiceTermScreen}
+            options={{headerShown: true, title: '서비스 약관'}}
+          />
+          <Stack.Screen
+            name="PrivacyPolicyScreen"
+            component={PrivacyPolicyScreen}
+            options={{headerShown: true, title: '개인정보처리방침'}}
+          />
+          <Stack.Screen
+            name="RecentGroup"
+            component={RecentGroup}
+            options={{headerShown: true, title: '최근 모임'}}
           />
         </>
       )}
