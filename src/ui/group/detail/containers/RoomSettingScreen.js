@@ -2,6 +2,7 @@ import React from 'react';
 import { SafeAreaView, View, TouchableOpacity, Text, Image, Dimensions, StyleSheet } from 'react-native';
 import { Badge } from 'react-native-paper';
 import Header from "../../../../common/Header";
+import { useNavigation } from '@react-navigation/native';
 
 const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
@@ -19,6 +20,7 @@ const HorizontalLine = () => {
 }
 
 const RoomSettingScreen = ()=>{
+    const navigation = useNavigation();
     const BackarrowImg = '../../../../assets/image/backarrow.png'
 
     return (
@@ -55,7 +57,7 @@ const RoomSettingScreen = ()=>{
             <View style={styles.container}>
                 <View style={styles.menu}><Text style={styles.headerText}>멤버 관리</Text></View>
                 <HorizontalLine />
-                <TouchableOpacity style={[styles.menu, {flexDirection: 'row', justifyContent:'space-between', alignItems:'center'}]}>
+                <TouchableOpacity style={[styles.menu, {flexDirection: 'row', justifyContent:'space-between', alignItems:'center'}]} onPress={()=>{navigation.navigate('ApplicationManageScreen')}}>
                     <View style={{flexDirection: 'row'}}>
                         <Text style={styles.normalText}>지원서 관리</Text>
                         <Badge style={{backgroundColor:'#8DD600', color: 'white', marginLeft: 5}}>2</Badge>

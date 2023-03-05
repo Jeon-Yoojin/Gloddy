@@ -45,7 +45,9 @@ const MyProfileScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView>
+            <ScrollView
+                
+            >
                 <View style={{ borderBottomEndRadius: 35, borderBottomStartRadius: 35, backgroundColor: '#FFFFFF' }}>
                     {/* 상단 이름, 나이, 거주지 */}
                     <Profile name={'글로디관리자'} gender={'남성'} age={'22'} school={'경희대학교 서울캠퍼스'} since={{ year: '2022', month: '02', day: '18' }} />

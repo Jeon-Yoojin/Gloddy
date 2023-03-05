@@ -87,7 +87,7 @@ export default class SlideScreen extends React.Component {
   render() {
     if (this.state.showRealApp) {
       return (
-        <TestReviewModal/>
+        <LoginScreen/>
       )
     } else {
       return (
