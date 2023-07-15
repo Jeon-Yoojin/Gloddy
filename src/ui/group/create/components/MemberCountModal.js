@@ -10,8 +10,8 @@ const items = [' ', 2, 3, 4, 5, 6, 7, 8, 9, 10, ' '];
 const WINDOW_WIDTH = Dimensions.get("window").width;
 const BUTTON_WIDTH = 130;
 
-const NumberPicker = ()=> {
-    const [count, setCount] = useState(2);
+const NumberPicker = ({setMemberCount})=> {
+ 
     const refCount = useRef(null);
 
     const animatedValue = React.useRef(new Animated.Value(0)).current;
@@ -26,7 +26,7 @@ const NumberPicker = ()=> {
         if (nextCount < 0) {
             return;
         }
-        setCount(items[nextCount]);
+        setMemberCount(items[nextCount]);
         refCount.current.scrollTo({ x: nextCount * BUTTON_WIDTH - WINDOW_WIDTH / 2 + BUTTON_WIDTH / 2, animated: true })
     }
 
@@ -96,7 +96,7 @@ const OverlayView = ()=>{
 }
 
 const MemberCountModal = ({ showBottomSheet, hide , setMemberCount}) => {
-    
+    const [count, setCount] = useState(2);
 
     return (
         <Modal
@@ -108,12 +108,12 @@ const MemberCountModal = ({ showBottomSheet, hide , setMemberCount}) => {
         >
             <View style={styles.backDrop}>
                 <ModalHeader title={'모임인원'} />
-                <NumberPicker setMemberCount={setMemberCount} />
+                <NumberPicker setMemberCount={setCount} />
                 <CustomButton
                     text={'완료'}
                     color={'#1249FC'}
                     textColor={'#FFFFFF'}
-                    onPress={() => { console.log('pressed') }}
+                    onPress={() => { setMemberCount(count) }}
                     style={{alignItem: 'center'}}
                 />
             </View>

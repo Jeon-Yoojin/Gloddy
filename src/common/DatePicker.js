@@ -6,7 +6,7 @@ import Modal from 'react-native-modal';
 import ModalHeader from '../ui/group/create/components/ModalHeader';
 import CustomButton from './CustomButton';
 
-Date.prototype.format = function(f) {
+/*Date.prototype.format = function(f) {
   if (!this.valueOf()) return " ";
 
   var weekName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
@@ -27,13 +27,13 @@ Date.prototype.format = function(f) {
           default: return $1;
       }
   });
-};
+};*/
 
-String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
-String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
-Number.prototype.zf = function(len){return this.toString().zf(len);};
+//String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
+//String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
+//Number.prototype.zf = function(len){return this.toString().zf(len);};
 
-export default function CustomDatePicker({setDateValue, placeholder, placeholderStyle, style, rightIcon}) {
+export default function CustomDatePicker({setDateValue, placeholder, placeholderStyle, style, rightIcon, headerTitle}) {
     //const placeholder = "생년월일을 선택해주세요.";
     const [open, setOpen] = useState(false);
     const [showBottomSheet, setShowBottomSheet] = useState(false);
@@ -56,13 +56,13 @@ export default function CustomDatePicker({setDateValue, placeholder, placeholder
                     value={text}
                     //onEndEditing={onEndEditing}
                 />
-                <DateModal showBottomSheet={showBottomSheet} hide={hide}/>
+                <DateModal showBottomSheet={showBottomSheet} headerTitle={headerTitle} hide={hide}/>
             </TouchableOpacity>
             </>
   );
 }
 
-const DateModal = ({showBottomSheet, hide})=>{
+const DateModal = ({showBottomSheet, hide, headerTitle})=>{
     const [date, setDate] = useState(new Date());
     const handleConfirm = (date) => {
         setOpen(false);
@@ -82,7 +82,7 @@ const DateModal = ({showBottomSheet, hide})=>{
         >
             <View style={styles.backDrop}>
                 <View style={{paddingVertical: 5}}>
-                <ModalHeader title={'생년월일'} />
+                <ModalHeader title={headerTitle} />
                 </View>
                 <DatePicker
                     mode="date"

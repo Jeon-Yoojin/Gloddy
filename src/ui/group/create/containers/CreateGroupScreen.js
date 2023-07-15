@@ -63,7 +63,7 @@ const CreateGroupScreen = () => {
     }, [isValid.title, isValid.content, isValid.maxUser, isValid.place, isValid.meetDate, isValid.startTime, isValid.endTime]);
 
     const onChangeInput = (event, name) => {
-        const {text} = event.nativeEvent;
+        const {text} = (event && event.nativeEvent) || '';
 
         if(name === 'title'){
             if(text.trim().length > 0) {
@@ -98,21 +98,25 @@ const CreateGroupScreen = () => {
             }
         }
         else if(name === 'maxUser'){
-            if(isNaN(text)){
+            /*if(isNaN(count)){
                 setData({...data, maxUser: 0});
                 setIsValid({...isValid, maxUser: false});
-                setConfirmNan(true);
+                //setConfirmNan(true);
                 return;
             }
-            setConfirmNan(false);
-            if(text.trim().length > 0) {
-                setData({...data, maxUser: Number(text)});
+            //setConfirmNan(false);
+            if(event.length > 0) {
+                setData({...data, maxUser: Number(event)});
                 setIsValid({...isValid, maxUser: true});
+                console.log(data.maxUser)
             }
             else {
-                setData({...data, maxUser: Number(text)});
+                setData({...data, maxUser: Number(event)});
                 setIsValid({...isValid, maxUser: false});
             }
+            */
+            setData({...data, maxUser: Number(event)});
+            setIsValid({...isValid, maxUser: true});
         }
     }
 
@@ -203,6 +207,7 @@ const CreateGroupScreen = () => {
                     <View style={styles.inputBox}>
                         <DatePicker
                             placeholder={'모임 일시를 설정해주세요.'}
+                            headerTitle={'모임 일시'}
                             setDateValue={meetDateChange}
                             style={styles.datePicker}
                         />
@@ -257,7 +262,7 @@ const CreateGroupScreen = () => {
                         onChange={event => onChangeInput(event, 'maxUser')}
                     />
                     <Text onPress={()=>setShowMemberCountModal(true)}>모임인원</Text>
-                    <MemberCountModal showBottomSheet={showMemberCountModal} hide={() => setShowMemberCountModal(false)} setMemberCount={(count) => { onChangeInput(event, 'maxUser') }} />
+                    <MemberCountModal showBottomSheet={showMemberCountModal} hide={() => setShowMemberCountModal(false)} setMemberCount={(count) => { onChangeInput(count, 'maxUser') }} />
                 </View>
 
                 <View style={styles.subContainer}>
